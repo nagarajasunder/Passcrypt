@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Passcrypt</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="set_your_master_password">Set up your Master Password</string>
+    <string name="note">Note</string>
+    <string name="content_desc_warning_icon">warning_icon</string>
+    <string name="master_pass_instruction">The master password you give will be used to decrypt the database where your other passwords are stored. This means if you forget the master password you cannot able to access your other passwords</string>
+    <string name="enter_your_master_password">Enter your Master Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="set_master_password">Set Master Password</string>
 </resources>
