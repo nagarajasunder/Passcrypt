@@ -9,4 +9,6 @@
     <string name="enter_your_master_password">Enter your Master Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="set_master_password">Set Master Password</string>
+    <string name="enter_your_password_here">Enter your password here</string>
+    <string name="unlock">Unlock</string>
 </resources>

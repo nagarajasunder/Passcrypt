@@ -9,10 +9,10 @@ import com.geekydroid.passcrypt.entities.User
 interface UserDao {
 
     @Insert
-    fun insertUser(user: User)
+    suspend fun insertUser(user: User):Long
 
     @Query("SELECT * FROM USER")
-    fun getUser(): User
+    suspend fun getUser(): User?
 
     @Query("SELECT isMasterPassSet FROM USER")
     fun isMasterPasswordSet(): Boolean
