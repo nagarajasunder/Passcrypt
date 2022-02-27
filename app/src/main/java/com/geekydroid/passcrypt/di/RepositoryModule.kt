@@ -1,6 +1,7 @@
 package com.geekydroid.passcrypt.di
 
 import com.geekydroid.passcrypt.datasources.LocalDataSource
+import com.geekydroid.passcrypt.repository.EnterMasterPasswordRepository
 import com.geekydroid.passcrypt.repository.SetMasterPasswordRepository
 import dagger.Module
 import dagger.Provides
@@ -16,6 +17,12 @@ object RepositoryModule {
     @Singleton
     fun providesSetMasterPasswordRepo(database: LocalDataSource): SetMasterPasswordRepository {
         return SetMasterPasswordRepository(database)
+    }
+
+    @Provides
+    @Singleton
+    fun providesEnterMasterPasswordRepo(database: LocalDataSource): EnterMasterPasswordRepository {
+        return EnterMasterPasswordRepository(database)
     }
 
 }

@@ -9,10 +9,11 @@
         android:id="@+id/enterMasterPasswordFragment"
         android:name="com.geekydroid.passcrypt.ui.EnterMasterPasswordFragment"
         android:label="fragment_enter_master_password"
-        tools:layout="@layout/fragment_enter_master_password" >
+        tools:layout="@layout/fragment_enter_master_password">
         <action
             android:id="@+id/action_enterMasterPasswordFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@layout/fragment_enter_master_password"/>
     </fragment>
     <fragment
         android:id="@+id/homeFragment"

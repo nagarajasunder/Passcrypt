@@ -29,8 +29,9 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
         { result ->
             if (result == true) {
                 showSnackBar("Master password set successfully!!")
-                fragmentView.findNavController().navigate(R.id.homeFragment)
-
+                val action =
+                    SetMasterPassFragmentDirections.actionSetMasterPassFragmentToHomeFragment()
+                fragmentView.findNavController().navigate(action)
 
             } else {
                 showSnackBar("Cannot set Master password please try again :(")

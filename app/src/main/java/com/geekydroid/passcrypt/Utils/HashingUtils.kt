@@ -4,6 +4,7 @@ import java.math.BigInteger
 import java.security.SecureRandom
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
+import kotlin.experimental.xor
 
 private const val SHA1PRNG = "SHA1PRNG"
 private const val PBKDF2WithHmacSHA1 = "PBKDF2WithHmacSHA1"
@@ -42,4 +43,34 @@ object HashingUtils {
         }
     }
 
+    private fun hexToDecimal(hex: String): ByteArray {
+        val bytes = ByteArray(hex.length / 2)
+        for (i in bytes.indices) {
+            bytes[i] = Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16).toByte()
+        }
+
+        return bytes
+    }
+
+    fun verifyPassword(userEnteredPassword: String, storedPassword: String): Boolean {
+        val parts = storedPassword.split(":")
+
+        val iterations = parts[0].toInt()
+        val salt = hexToDecimal(parts[1])
+        val hash = hexToDecimal(parts[2])
+
+        val spec = PBEKeySpec(userEnteredPassword.toCharArray(), salt, iterations, hash.size * 8)
+        val skf = SecretKeyFactory.getInstance(PBKDF2WithHmacSHA1)
+        val testHash = skf.generateSecret(spec).encoded
+        var diff: Int = hash.size.xor(testHash.size)
+        var i = 0
+        while (i < hash.size && i < testHash.size) {
+            diff = diff.or(hash[i].xor(testHash[i]).toInt())
+            i++
+        }
+
+
+        return diff == 0
+
+    }
 }
