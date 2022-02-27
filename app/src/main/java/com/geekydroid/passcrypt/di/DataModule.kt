@@ -3,6 +3,7 @@ package com.geekydroid.passcrypt.di
 import android.content.Context
 import androidx.room.Room
 import com.geekydroid.passcrypt.dao.UserDao
+import com.geekydroid.passcrypt.datasources.EncryptedDataSource
 import com.geekydroid.passcrypt.datasources.LocalDataSource
 import dagger.Module
 import dagger.Provides
@@ -27,6 +28,17 @@ object DataModule {
             context,
             LocalDataSource::class.java,
             "Passcrypt.db"
+        ).build()
+    }
+
+
+    @Singleton
+    @Provides
+    fun providesEncryptedDataSource(@ApplicationContext context: Context): EncryptedDataSource {
+        return Room.databaseBuilder(
+            context,
+            EncryptedDataSource::class.java,
+            "Passcrypt-encrypt.db"
         ).build()
     }
 

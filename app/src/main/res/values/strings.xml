@@ -11,4 +11,9 @@
     <string name="set_master_password">Set Master Password</string>
     <string name="enter_your_password_here">Enter your password here</string>
     <string name="unlock">Unlock</string>
+    <string name="store_new_password">Store New Password</string>
+    <string name="enter_site_name_url">Enter Site Name or URL</string>
+    <string name="enter_username_or_email">Enter Username or Email</string>
+    <string name="enter_password">Enter password</string>
+    <string name="content_desc_check_icon">Check Icon</string>
 </resources>
