@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".ui.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/purple_500"
+        android:contentDescription="@string/content_desc_add"
+        android:src="@drawable/add"
+        app:tint="@color/white" />
 
-</FrameLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fab_add"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/content_desc_add_account"
+        android:src="@drawable/account"
+        android:visibility="invisible"
+        app:tint="@color/white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_bank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fab_add_account"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/content_desc_add_bank"
+        android:src="@drawable/bank"
+        android:visibility="invisible"
+
+        app:tint="@color/white" />
+
+
+</RelativeLayout>

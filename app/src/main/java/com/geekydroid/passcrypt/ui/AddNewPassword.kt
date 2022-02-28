@@ -18,6 +18,7 @@ class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
     private lateinit var etSiteName: TextInputLayout
     private lateinit var etUserName: TextInputLayout
     private lateinit var etPassword: TextInputLayout
+    private lateinit var etComments: TextInputLayout
     private lateinit var btnAdd: FloatingActionButton
     private val viewmodel: AddNewPasswordViewmodel by viewModels()
 
@@ -35,11 +36,12 @@ class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
         val siteName = etSiteName.editText?.text.toString()
         val userName = etUserName.editText?.text.toString()
         val passwordText = etPassword.editText?.text.toString()
+        val commentsText = etComments.editText?.text.toString()
 
         if (siteName.isEmpty() || userName.isEmpty() || passwordText.isEmpty()) {
-            showSnackBar("Please enter all the fields")
+            showSnackBar("Please enter the mandatory fields")
         } else {
-            viewmodel.storePassword(siteName, userName, passwordText)
+            viewmodel.storePassword(siteName, userName, passwordText, commentsText)
         }
     }
 
@@ -52,6 +54,7 @@ class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
         etSiteName = fragmentView.findViewById(R.id.et_site_name)
         etUserName = fragmentView.findViewById(R.id.et_user_name)
         etPassword = fragmentView.findViewById(R.id.et_password)
+        etComments = fragmentView.findViewById(R.id.et_comments)
         btnAdd = fragmentView.findViewById(R.id.btn_add_password)
     }
 }
