@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    tools:context=".ui.AddNewBankCred">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_bank_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/bank_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_account_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_bank_name"
+            android:layout_marginTop="8dp"
+            android:hint="@string/account_number">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_ifsc_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_account_number"
+            android:layout_marginTop="8dp"
+            android:hint="@string/ifsc_code">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_customer_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_ifsc_code"
+            android:layout_marginTop="8dp"
+            android:hint="@string/customer_id">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_card_details"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_customer_id"
+            android:layout_marginTop="8dp"
+            android:text="@string/card_details"
+            android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_card_details"
+            android:layout_marginTop="8dp"
+            app:cardBackgroundColor="#DFB176"
+            app:cardCornerRadius="8dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_card_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/card_number"
+                    android:textStyle="bold|italic" />
+
+                <LinearLayout
+                    android:id="@+id/card_number_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_card_number"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <EditText
+                        android:id="@+id/et_card_num_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:hint="@string/card_number_hint"
+                        android:imeOptions="actionNext"
+                        android:maxLength="4"
+                        android:textAlignment="center"
+                        android:textStyle="italic" />
+
+                    <EditText
+                        android:id="@+id/et_card_num_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:hint="@string/card_number_hint"
+                        android:maxLength="4"
+                        android:textAlignment="center"
+                        android:textStyle="italic" />
+
+                    <EditText
+                        android:id="@+id/et_card_num_3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLength="4"
+                        android:inputType="number"
+                        android:hint="@string/card_number_hint"
+                        android:textAlignment="center"
+                        android:textStyle="italic" />
+
+                    <EditText
+                        android:id="@+id/et_card_num_4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/card_number_hint"
+                        android:maxLength="4"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textStyle="italic" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_expiry_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/card_number_layout"
+                    android:layout_alignStart="@+id/et_expiry_date"
+                    android:layout_alignEnd="@+id/et_expiry_date"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/expiry_date"
+                    android:textStyle="bold|italic" />
+
+                <EditText
+                    android:id="@+id/et_expiry_date"
+                    android:layout_width="121dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_expiry_date"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="8dp"
+                    android:inputType="date"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="58dp"
+                    android:layout_toStartOf="@+id/et_center_dummy"
+                    android:hint="@string/expiry_hint"
+                    android:maxLength="5"
+                    android:textAlignment="center"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/et_center_dummy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_expiry_date"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="48dp"
+                    android:visibility="invisible" />
+
+
+                <EditText
+                    android:id="@+id/et_cvv_number"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_cvv_number"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="52dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_toEndOf="@+id/et_center_dummy"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/tv_cvv_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/card_number_layout"
+                    android:layout_alignStart="@+id/et_cvv_number"
+                    android:layout_alignEnd="@+id/et_cvv_number"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/cvv_hint"
+                    android:textStyle="bold|italic" />
+
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="8dp"
+        android:contentDescription="@string/content_desc_add"
+        android:src="@drawable/check" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

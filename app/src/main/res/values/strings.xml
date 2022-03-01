@@ -20,4 +20,14 @@
     <string name="content_desc_add">Add</string>
     <string name="content_desc_add_account">Add Account</string>
     <string name="content_desc_add_bank">Add Bank</string>
+    <string name="bank_name">Bank Name</string>
+    <string name="account_number">Account Number</string>
+    <string name="ifsc_code">IFSC Code</string>
+    <string name="customer_id">Customer ID</string>
+    <string name="card_number">Card Number</string>
+    <string name="card_number_hint">0000</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="expiry_hint">MM/YY</string>
+    <string name="cvv_hint">CVV</string>
+    <string name="card_details">Card Details</string>
 </resources>

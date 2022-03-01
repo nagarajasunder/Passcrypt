@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.viewmodels.AddNewPasswordViewmodel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -42,6 +43,8 @@ class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
             showSnackBar("Please enter the mandatory fields")
         } else {
             viewmodel.storePassword(siteName, userName, passwordText, commentsText)
+            showSnackBar("Account password saved securely!")
+            fragmentView.findNavController().navigateUp()
         }
     }
 

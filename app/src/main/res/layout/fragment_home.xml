@@ -28,7 +28,7 @@
         android:layout_marginBottom="16dp"
         android:contentDescription="@string/content_desc_add_account"
         android:src="@drawable/account"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:tint="@color/white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -40,7 +40,7 @@
         android:layout_marginBottom="16dp"
         android:contentDescription="@string/content_desc_add_bank"
         android:src="@drawable/bank"
-        android:visibility="invisible"
+        android:visibility="visible"
 
         app:tint="@color/white" />
 

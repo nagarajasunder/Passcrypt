@@ -7,13 +7,15 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.geekydroid.passcrypt.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
-private  val TAG = "HomeFragment"
+private val TAG = "HomeFragment"
+
 @AndroidEntryPoint
 class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home) {
     private lateinit var fragmentView: View
@@ -55,14 +57,16 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home) {
         setUI()
 
         fabAdd.setOnClickListener {
-            onAddButtonClicked()
+//            onAddButtonClicked()
         }
 
         fabAccount.setOnClickListener {
-            Toast.makeText(requireContext(), "Account", Toast.LENGTH_SHORT).show()
+            val action = HomeFragmentDirections.actionHomeFragmentToAddNewPassword()
+            fragmentView.findNavController().navigate(action)
         }
         fabBank.setOnClickListener {
-            Toast.makeText(requireContext(), "Bank", Toast.LENGTH_SHORT).show()
+            val action = HomeFragmentDirections.actionHomeFragmentToAddNewBankCred()
+            fragmentView.findNavController().navigate(action)
         }
     }
 
