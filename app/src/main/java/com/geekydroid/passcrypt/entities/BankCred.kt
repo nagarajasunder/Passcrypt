@@ -7,11 +7,12 @@ import androidx.room.PrimaryKey
 data class BankCred(
     @PrimaryKey(autoGenerate = true)
     val credId: Int = 0,
-    var bankName: String,
+    var bankName: String = "",
     var cardNumber: String = "",
     var cvv: String = "",
     var accountNumber: String = "",
-    var cardPinNumber: String,
+    var cardPinNumber: String = "",
+    var cardExpiryDate:String = "",
     var ifscCode: String = "",
     var customerId: String = "",
     var comments: String = "",

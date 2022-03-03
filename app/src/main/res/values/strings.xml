@@ -25,9 +25,12 @@
     <string name="ifsc_code">IFSC Code</string>
     <string name="customer_id">Customer ID</string>
     <string name="card_number">Card Number</string>
-    <string name="card_number_hint">0000</string>
+    <string name="card_number_hint">XXXX</string>
     <string name="expiry_date">Expiry Date</string>
     <string name="expiry_hint">MM/YY</string>
     <string name="cvv_hint">CVV</string>
     <string name="card_details">Card Details</string>
+    <string name="bank_details">Bank Details</string>
+    <string name="hint_pin">PIN</string>
+    <string name="content_desc_credit_card">Credit Card</string>
 </resources>
