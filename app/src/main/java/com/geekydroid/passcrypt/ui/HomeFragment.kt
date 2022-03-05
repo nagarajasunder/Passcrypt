@@ -78,6 +78,7 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home) {
         }
 
         viewmodel.accountCred.observe(viewLifecycleOwner) {
+            Log.d(TAG, "onViewCreated: $it")
             if (!it.isNullOrEmpty()) {
                 adapter.submitList(it)
             }

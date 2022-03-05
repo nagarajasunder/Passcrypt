@@ -14,12 +14,8 @@ class HomeFragmentViewmodel @Inject constructor(private val repository:HomeFragm
 
     val accountSearchText: MutableLiveData<String> = MutableLiveData()
 
-    val accountCred = getAccountCreds()
+    val accountCred = repository.getAccountCreds()
 
-    private fun getAccountCreds() : LiveData<List<AccountCred>> {
-        return Transformations.switchMap(accountSearchText){
-            repository.getAccountCreds(it)
-        }
-    }
+
 
 }

@@ -2,10 +2,7 @@ package com.geekydroid.passcrypt.di
 
 import com.geekydroid.passcrypt.datasources.EncryptedDataSource
 import com.geekydroid.passcrypt.datasources.LocalDataSource
-import com.geekydroid.passcrypt.repository.AddNewBankCredRepository
-import com.geekydroid.passcrypt.repository.AddNewPasswordRepository
-import com.geekydroid.passcrypt.repository.EnterMasterPasswordRepository
-import com.geekydroid.passcrypt.repository.SetMasterPasswordRepository
+import com.geekydroid.passcrypt.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,6 +35,12 @@ object RepositoryModule {
     @Singleton
     fun providesAddNewBankCredRepo(database: EncryptedDataSource): AddNewBankCredRepository {
         return AddNewBankCredRepository(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideHomeFragmentRepo(database: EncryptedDataSource): HomeFragmentRepository {
+        return HomeFragmentRepository(database)
     }
 
 }
