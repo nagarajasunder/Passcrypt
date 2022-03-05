@@ -5,16 +5,21 @@ import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.geekydroid.passcrypt.R
+import com.geekydroid.passcrypt.adapters.AccountCredAdapter
+import com.geekydroid.passcrypt.viewmodels.HomeFragmentViewmodel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
-private val TAG = "HomeFragment"
+private const val TAG = "HomeFragment"
 
 @AndroidEntryPoint
 class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home) {
@@ -23,6 +28,9 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home) {
     private lateinit var fabAccount: FloatingActionButton
     private lateinit var fabBank: FloatingActionButton
     private var addButtonClicked = false
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: AccountCredAdapter
+    private val viewmodel: HomeFragmentViewmodel by viewModels()
 
     private val rotateOpen: Animation by lazy {
         AnimationUtils.loadAnimation(
@@ -68,6 +76,12 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home) {
             val action = HomeFragmentDirections.actionHomeFragmentToAddNewBankCred()
             fragmentView.findNavController().navigate(action)
         }
+
+        viewmodel.accountCred.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                adapter.submitList(it)
+            }
+        }
     }
 
     private fun onAddButtonClicked() {
@@ -108,6 +122,13 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home) {
         fabAdd = fragmentView.findViewById(R.id.fab_add)
         fabAccount = fragmentView.findViewById(R.id.fab_add_account)
         fabBank = fragmentView.findViewById(R.id.fab_add_bank)
+        recyclerView = fragmentView.findViewById(R.id.recycler_view)
+
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.itemAnimator = DefaultItemAnimator()
+        adapter = AccountCredAdapter()
+        recyclerView.adapter = adapter
 
     }
 }

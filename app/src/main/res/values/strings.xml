@@ -33,4 +33,5 @@
     <string name="bank_details">Bank Details</string>
     <string name="hint_pin">PIN</string>
     <string name="content_desc_credit_card">Credit Card</string>
+    <string name="content_desc_copy_password">Copy Password</string>
 </resources>

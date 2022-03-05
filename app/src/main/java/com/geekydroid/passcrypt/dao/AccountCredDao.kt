@@ -12,8 +12,10 @@ interface AccountCredDao {
     @Insert
     suspend fun insertCred(cred: AccountCred)
 
-    @Query("SELECT * FROM ACCOUNT_CRED")
-    fun getAllCreds(): LiveData<List<AccountCred>>
+    @Query("SELECT * FROM ACCOUNT_CRED WHERE siteName LIKE '%' || :searchText || '%' " +
+            "OR userName LIKE '%' || :searchText || '%' " +
+            "OR comments LIKE '%' || :searchText || '%'")
+    fun getAllCreds(searchText: String): LiveData<List<AccountCred>>
 
     @Query("SELECT * FROM ACCOUNT_CRED WHERE credId = :credId")
     fun getCredById(credId: Int): AccountCred
