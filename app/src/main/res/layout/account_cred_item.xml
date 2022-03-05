@@ -12,10 +12,13 @@
         app:cardBackgroundColor="#1976d2"
         app:cardElevation="8dp">
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp">
+
+
 
             <ImageView
                 android:id="@+id/iv_copy"

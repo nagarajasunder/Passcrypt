@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/the_developer/AndroidStudioProjects/Passcrypt/app/src/main/res/drawable/bank_img_foreground.xml" value="0.137" />
+        <entry key="..\:/Users/the_developer/AndroidStudioProjects/Passcrypt/app/src/main/res/layout/account_cred_item.xml" value="0.25052083333333336" />
         <entry key="..\:/Users/the_developer/AndroidStudioProjects/Passcrypt/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/the_developer/AndroidStudioProjects/Passcrypt/app/src/main/res/layout/bank_card_layout.xml" value="0.20512820512820512" />
+        <entry key="..\:/Users/the_developer/AndroidStudioProjects/Passcrypt/app/src/main/res/layout/bank_cred_item.xml" value="0.25" />
         <entry key="..\:/Users/the_developer/AndroidStudioProjects/Passcrypt/app/src/main/res/layout/cred_item.xml" value="0.25" />
         <entry key="..\:/Users/the_developer/AndroidStudioProjects/Passcrypt/app/src/main/res/layout/fragment_add_new_bank_cred.xml" value="0.2222222222222222" />
         <entry key="..\:/Users/the_developer/AndroidStudioProjects/Passcrypt/app/src/main/res/layout/fragment_add_new_password.xml" value="0.1875" />

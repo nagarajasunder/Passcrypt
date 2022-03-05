@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.geekydroid.passcrypt.R
-import com.geekydroid.passcrypt.entities.AccountCred
+import com.geekydroid.passcrypt.entities.CredWrapper
 
 class AccountCredAdapter :
-    ListAdapter<AccountCred, AccountCredAdapter.ViewHolder>(AccountCredCallBack()) {
+    ListAdapter<CredWrapper, AccountCredAdapter.ViewHolder>(AccountCredCallBack()) {
     /**
      * Called when RecyclerView needs a new [ViewHolder] of the given type to represent
      * an item.
@@ -40,7 +40,8 @@ class AccountCredAdapter :
         parent: ViewGroup,
         viewType: Int
     ): AccountCredAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.cred_item, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.account_cred_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -67,8 +68,8 @@ class AccountCredAdapter :
      */
     override fun onBindViewHolder(holder: AccountCredAdapter.ViewHolder, position: Int) {
         val currentCred = currentList[position]
-        holder.tvSiteName.text = currentCred.siteName
-        holder.tvComments.text = currentCred.comments
+        holder.tvSiteName.text = currentCred.credName
+        holder.tvComments.text = currentCred.credComments
         holder.tvCreatedOn.text = currentCred.createdOnFormatted
     }
 
@@ -82,7 +83,7 @@ class AccountCredAdapter :
     }
 
 
-    class AccountCredCallBack : DiffUtil.ItemCallback<AccountCred>() {
+    class AccountCredCallBack : DiffUtil.ItemCallback<CredWrapper>() {
         /**
          * Called to check whether two objects represent the same item.
          *
@@ -100,8 +101,8 @@ class AccountCredAdapter :
          *
          * @see Callback.areItemsTheSame
          */
-        override fun areItemsTheSame(oldItem: AccountCred, newItem: AccountCred): Boolean {
-            return oldItem.credId == newItem.credId
+        override fun areItemsTheSame(oldItem: CredWrapper, newItem: CredWrapper): Boolean {
+            return oldItem.credType == newItem.credType && oldItem.credId == newItem.credId
         }
 
         /**
@@ -133,8 +134,8 @@ class AccountCredAdapter :
          *
          * @see Callback.areContentsTheSame
          */
-        override fun areContentsTheSame(oldItem: AccountCred, newItem: AccountCred): Boolean {
-            return oldItem == newItem
+        override fun areContentsTheSame(oldItem: CredWrapper, newItem: CredWrapper): Boolean {
+            return oldItem.credType == newItem.credType && oldItem == newItem
         }
 
     }
