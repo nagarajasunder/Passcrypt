@@ -3,22 +3,42 @@ package com.geekydroid.passcrypt.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
+import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.geekydroid.passcrypt.R
+import com.geekydroid.passcrypt.datasources.EncryptedDataSource
+import com.geekydroid.passcrypt.entities.User
 import com.geekydroid.passcrypt.viewmodels.EnterMasterPasswordViewModel
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_password) {
     private lateinit var etPassword: TextInputLayout
     private lateinit var btnVerify: Button
     private lateinit var fragmentView: View
+    private lateinit var warningCard: MaterialCardView
+    private lateinit var attemptsCard: MaterialCardView
+    private lateinit var tvAttempts: TextView
     private val viewmodel: EnterMasterPasswordViewModel by viewModels()
+    private var selfDestructive = false
+    private var numberOfAttempts = 0
+    private lateinit var currentUser:User
+
+    @Inject
+    lateinit var database: EncryptedDataSource
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,26 +46,83 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
         fragmentView = view
         setUI()
 
+        viewmodel.user.observe(viewLifecycleOwner) {
+            if (it != null && it.selfDestructive) {
+                currentUser = it
+                selfDestructive = true
+                numberOfAttempts = it.selfDestructiveCount
+                showSelfDestructiveCards()
+            }
+        }
+
         viewmodel.userAuthFlag.observe(viewLifecycleOwner) { result ->
             if (result) {
                 navigateToHome()
             } else {
                 showSnackBar("Master password doesn't match Please try again")
                 etPassword.editText?.text?.clear()
+                if (selfDestructive) {
+                    if (numberOfAttempts == 0) {
+                        navigateToSetPassword()
+                    } else {
+                        showWarning()
+                    }
+                }
+
             }
         }
 
         btnVerify.setOnClickListener {
             verifyUser()
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                /**
+                 * Callback for handling the [OnBackPressedDispatcher.onBackPressed] event.
+                 */
+                override fun handleOnBackPressed() {
+                    currentUser.selfDestructiveCount = numberOfAttempts
+                    viewmodel.updateUser(currentUser)
+                }
+
+            })
+    }
+
+    private fun navigateToSetPassword() {
+        viewmodel.deleteDatabase()
+        requireContext().deleteDatabase("Passcrypt-encrypt.db")
+        CoroutineScope(IO).launch {
+//            database.getAccountCredDao().deleteDatabase()
+            withContext(Main)
+            {
+                val action =
+                    EnterMasterPasswordFragmentDirections.actionEnterMasterPasswordFragmentToSetMasterPassFragment()
+                findNavController().navigate(action)
+            }
+        }
+
+    }
+
+
+    private fun showWarning() {
+        --numberOfAttempts
+        tvAttempts.text = getString(R.string.number_of_attempts, numberOfAttempts.toString())
+
+    }
+
+    private fun showSelfDestructiveCards() {
+        attemptsCard.visibility = View.VISIBLE
+        warningCard.visibility = View.VISIBLE
+        tvAttempts.text = getString(R.string.number_of_attempts, numberOfAttempts.toString())
     }
 
     private fun navigateToHome() {
 //        showSnackBar("Authentication Successful!")
-        val action = EnterMasterPasswordFragmentDirections.actionEnterMasterPasswordFragmentToHomeFragment()
+        val action =
+            EnterMasterPasswordFragmentDirections.actionEnterMasterPasswordFragmentToHomeFragment()
         fragmentView.findNavController().navigate(action)
     }
-
 
 
     private fun verifyUser() {
@@ -64,5 +141,15 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
     private fun setUI() {
         etPassword = fragmentView.findViewById(R.id.ed_password)
         btnVerify = fragmentView.findViewById(R.id.btn_verify_password)
+        warningCard = fragmentView.findViewById(R.id.warning_card)
+        attemptsCard = fragmentView.findViewById(R.id.attempts_card)
+        tvAttempts = fragmentView.findViewById(R.id.tv_attempts)
     }
+
+    enum class HomeNavigationModes {
+        MODE_NORMAL,
+        MODE_TRUNCATE
+    }
+
+
 }

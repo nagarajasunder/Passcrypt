@@ -2,6 +2,9 @@ package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -62,6 +65,7 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         fragmentView = view
+        setHasOptionsMenu(true)
         setUI()
 
         fabAdd.setOnClickListener {
@@ -130,5 +134,21 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home) {
         adapter = AccountCredAdapter()
         recyclerView.adapter = adapter
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home_options_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.settings -> {
+                val action = HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
+                fragmentView.findNavController().navigate(action)
+            }
+        }
+
+        return true
     }
 }

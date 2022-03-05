@@ -7,9 +7,9 @@ import javax.inject.Inject
 class EnterMasterPasswordRepository @Inject constructor(private val dataSource: LocalDataSource) {
 
 
-
-    suspend fun getUser():User?
-    {
-        return dataSource.getUserdao().getUser()
+     fun getUser() = dataSource.getUserdao().getUser()
+    suspend fun updateUser(user: User) {
+        dataSource.getUserdao().updateUser(user)
     }
+
 }

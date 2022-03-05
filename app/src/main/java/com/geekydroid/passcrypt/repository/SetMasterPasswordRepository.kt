@@ -9,4 +9,8 @@ class SetMasterPasswordRepository @Inject constructor(private val database: Loca
     suspend fun insertUser(user: User): Long {
         return database.getUserdao().insertUser(user)
     }
+
+    fun truncateDatabase() {
+
+    }
 }

@@ -29,9 +29,7 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
         { result ->
             if (result == true) {
                 showSnackBar("Master password set successfully!!")
-                val action =
-                    SetMasterPassFragmentDirections.actionSetMasterPassFragmentToHomeFragment()
-                fragmentView.findNavController().navigate(action)
+                navigateToHome()
 
             } else {
                 showSnackBar("Cannot set Master password please try again :(")
@@ -42,6 +40,13 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
         btnSetup.setOnClickListener {
             setUpMasterPassword()
         }
+    }
+
+
+    private fun navigateToHome() {
+        val action =
+            SetMasterPassFragmentDirections.actionSetMasterPassFragmentToHomeFragment()
+        fragmentView.findNavController().navigate(action)
     }
 
     private fun clearData() {
@@ -70,4 +75,6 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
         etConfirmPassword = fragmentView.findViewById(R.id.ed_confirm_password)
         btnSetup = fragmentView.findViewById(R.id.btn_set_password)
     }
+
+
 }

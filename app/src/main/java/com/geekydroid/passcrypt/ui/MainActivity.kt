@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             navController = navHostFragment.navController
             val graphInflater = navController.navInflater
             navGraph = graphInflater.inflate(R.navigation.nav_graph)
-            val user: User? = database.getUserdao().getUser()
+            val user: User? = database.getUserdao().getUserForAuth()
             if (user != null && user.isMasterPassSet) {
                 Log.d(TAG, "authenticateUser: if $user")
                 navGraph.setStartDestination(R.id.enterMasterPasswordFragment)

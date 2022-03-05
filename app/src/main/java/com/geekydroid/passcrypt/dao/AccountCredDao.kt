@@ -4,11 +4,24 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import com.geekydroid.passcrypt.entities.AccountCred
 import com.geekydroid.passcrypt.entities.CredWrapper
 
 @Dao
 interface AccountCredDao {
+
+    @Transaction
+    suspend fun deleteDatabase() {
+        truncateAccounts()
+        truncateBanks()
+    }
+
+    @Query("DELETE FROM ACCOUNT_CRED")
+    suspend fun truncateAccounts()
+
+    @Query("DELETE FROM BANK_CRED")
+    suspend fun truncateBanks()
 
     @Insert
     suspend fun insertCred(cred: AccountCred)

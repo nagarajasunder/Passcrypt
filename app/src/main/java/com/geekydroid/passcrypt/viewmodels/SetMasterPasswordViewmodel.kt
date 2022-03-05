@@ -31,4 +31,8 @@ class SetMasterPasswordViewmodel @Inject constructor(private val repository: Set
 
         }
     }
+
+    fun truncateDatabase() {
+        repository.truncateDatabase()
+    }
 }

@@ -43,4 +43,11 @@ object RepositoryModule {
         return HomeFragmentRepository(database)
     }
 
+    @Provides
+    @Singleton
+    fun providesSettingsFragmentRepo(database: LocalDataSource): SettingsFragmentRepository {
+        return SettingsFragmentRepository(database)
+    }
+
+
 }

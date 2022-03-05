@@ -35,4 +35,7 @@
     <string name="content_desc_credit_card">Credit Card</string>
     <string name="content_desc_copy_password">Copy Password</string>
     <string name="content_desc_cred_type">Type of Credential</string>
+    <string name="menu_option_settings">Settings</string>
+    <string name="number_of_attempts">Number of Attempts - %1s</string>
+    <string name="self_destruction_warning">Self Destruction Enabled - The data will be lost in case of unsuccessful attempts.</string>
 </resources>

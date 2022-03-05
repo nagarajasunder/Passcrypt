@@ -14,6 +14,9 @@
             android:id="@+id/action_enterMasterPasswordFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@layout/fragment_enter_master_password"/>
+        <action
+            android:id="@+id/action_enterMasterPasswordFragment_to_setMasterPassFragment"
+            app:destination="@id/setMasterPassFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -26,6 +29,9 @@
         <action
             android:id="@+id/action_homeFragment_to_addNewBankCred"
             app:destination="@id/addNewBankCred" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/setMasterPassFragment"
@@ -46,4 +52,9 @@
         android:name="com.geekydroid.passcrypt.ui.AddNewBankCred"
         android:label="fragment_add_new_bank_cred"
         tools:layout="@layout/fragment_add_new_bank_cred" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.geekydroid.passcrypt.ui.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

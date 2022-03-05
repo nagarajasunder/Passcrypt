@@ -19,6 +19,7 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
 //    id 'dagger.hilt.android.plugin' version '2.41' apply false
 
+
 }
 
 
