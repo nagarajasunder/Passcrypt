@@ -3,9 +3,11 @@ package com.geekydroid.passcrypt.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.geekydroid.passcrypt.PasscryptApp
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.viewmodels.SetMasterPasswordViewmodel
 import com.google.android.material.snackbar.Snackbar
@@ -44,6 +46,7 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
 
 
     private fun navigateToHome() {
+
         val action =
             SetMasterPassFragmentDirections.actionSetMasterPassFragmentToHomeFragment()
         fragmentView.findNavController().navigate(action)
@@ -63,8 +66,17 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
             showSnackBar("Passwords doesn't match.")
         } else {
             viewmodel.createUser(passwordText)
+            updatePrefs()
         }
     }
+
+    private fun updatePrefs() {
+        val prefs = requireContext().getSharedPreferences("myPrefs", AppCompatActivity.MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putBoolean((requireActivity().application as PasscryptApp).FIRST_LAUNCH, false)
+        editor.apply()
+    }
+
 
     private fun showSnackBar(message: String) {
         Snackbar.make(fragmentView, message, Snackbar.LENGTH_SHORT).show()

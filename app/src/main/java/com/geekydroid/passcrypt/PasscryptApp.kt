@@ -8,5 +8,5 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class PasscryptApp : Application()
 {
-
+    val FIRST_LAUNCH = "FIRST_LAUNCH"
 }

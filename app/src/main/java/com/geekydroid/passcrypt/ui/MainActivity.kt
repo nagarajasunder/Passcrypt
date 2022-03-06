@@ -6,15 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
+import com.geekydroid.passcrypt.PasscryptApp
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.datasources.LocalDataSource
-import com.geekydroid.passcrypt.entities.User
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 private const val TAG = "MainActivity"
@@ -33,30 +28,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val prefs = getSharedPreferences("myPrefs", MODE_PRIVATE)
+        val isFirstLaunch = prefs.getBoolean((application as PasscryptApp).FIRST_LAUNCH, true)
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
-
-        authenticateUser()
-
-    }
-
-    private fun authenticateUser() {
-        CoroutineScope(IO).launch {
-            navController = navHostFragment.navController
-            val graphInflater = navController.navInflater
-            navGraph = graphInflater.inflate(R.navigation.nav_graph)
-            val user: User? = database.getUserdao().getUserForAuth()
-            if (user != null && user.isMasterPassSet) {
-                Log.d(TAG, "authenticateUser: if $user")
-                navGraph.setStartDestination(R.id.enterMasterPasswordFragment)
-            } else {
-                Log.d(TAG, "authenticateUser: else")
-                navGraph.setStartDestination(R.id.setMasterPassFragment)
-            }
-            withContext(Dispatchers.Main)
-            {
-                navController.graph = navGraph
-            }
+        navController = navHostFragment.navController
+        val graphInflater = navHostFragment.navController.navInflater
+        navGraph = graphInflater.inflate(R.navigation.nav_graph)
+        if (isFirstLaunch) {
+            navGraph.setStartDestination(R.id.setMasterPassFragment)
         }
+        navController.graph = navGraph
+
+
     }
+
 }

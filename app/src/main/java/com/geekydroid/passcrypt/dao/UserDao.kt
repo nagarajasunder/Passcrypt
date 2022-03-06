@@ -17,7 +17,7 @@ interface UserDao {
     fun getUser(): LiveData<User>
 
     @Query("SELECT * FROM USER")
-    fun getUserForAuth(): User?
+    suspend fun getUserForAuth(): User?
 
     @Query("SELECT isMasterPassSet FROM USER")
     fun isMasterPasswordSet(): Boolean

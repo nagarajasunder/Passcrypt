@@ -1,6 +1,7 @@
 package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -35,7 +36,7 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
     private val viewmodel: EnterMasterPasswordViewModel by viewModels()
     private var selfDestructive = false
     private var numberOfAttempts = 0
-    private lateinit var currentUser:User
+    private lateinit var currentUser: User
 
     @Inject
     lateinit var database: EncryptedDataSource
@@ -44,16 +45,18 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
         super.onViewCreated(view, savedInstanceState)
 
         fragmentView = view
-        setUI()
-
         viewmodel.user.observe(viewLifecycleOwner) {
+            Log.d("DEBUG:", "onViewCreated: livedata called")
             if (it != null && it.selfDestructive) {
                 currentUser = it
                 selfDestructive = true
-                numberOfAttempts = it.selfDestructiveCount
+                numberOfAttempts = it.selfDestructiveCount - 1
                 showSelfDestructiveCards()
             }
         }
+        setUI()
+
+
 
         viewmodel.userAuthFlag.observe(viewLifecycleOwner) { result ->
             if (result) {
@@ -61,8 +64,11 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
             } else {
                 showSnackBar("Master password doesn't match Please try again")
                 etPassword.editText?.text?.clear()
+                --numberOfAttempts
                 if (selfDestructive) {
-                    if (numberOfAttempts == 0) {
+                    if (numberOfAttempts < 0) {
+                        currentUser.selfDestructiveCount = numberOfAttempts
+                        viewmodel.updateUser(currentUser)
                         navigateToSetPassword()
                     } else {
                         showWarning()
@@ -71,6 +77,7 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
 
             }
         }
+
 
         btnVerify.setOnClickListener {
             verifyUser()
@@ -82,8 +89,12 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
                  * Callback for handling the [OnBackPressedDispatcher.onBackPressed] event.
                  */
                 override fun handleOnBackPressed() {
-                    currentUser.selfDestructiveCount = numberOfAttempts
-                    viewmodel.updateUser(currentUser)
+                    Log.d("DEBUG:", "handleOnBackPressed: called")
+                    if (selfDestructive) {
+                        currentUser.selfDestructiveCount = numberOfAttempts
+                        viewmodel.updateUser(currentUser)
+                    }
+                    activity?.finish()
                 }
 
             })
@@ -106,7 +117,6 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
 
 
     private fun showWarning() {
-        --numberOfAttempts
         tvAttempts.text = getString(R.string.number_of_attempts, numberOfAttempts.toString())
 
     }
