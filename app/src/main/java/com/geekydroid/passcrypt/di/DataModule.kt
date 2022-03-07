@@ -18,6 +18,7 @@ import javax.inject.Singleton
 object DataModule {
 
 
+
     @Provides
     @Singleton
     fun providesDao(database: LocalDataSource): UserDao {

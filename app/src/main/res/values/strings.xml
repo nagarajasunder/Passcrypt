@@ -38,4 +38,6 @@
     <string name="menu_option_settings">Settings</string>
     <string name="number_of_attempts">Remaining Number of Attempts - %1s</string>
     <string name="self_destruction_warning">Self Destruction Enabled - The data will be lost in case of unsuccessful attempts.</string>
+    <string name="limit_crossed_text">You have crossed the number of limits. You cannot recover your data. Set a new Master password to proceed.</string>
+    <string name="set_new_master_password">Set new master password</string>
 </resources>

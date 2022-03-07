@@ -10,16 +10,21 @@
         android:name="com.geekydroid.passcrypt.ui.EnterMasterPasswordFragment"
         android:label="fragment_enter_master_password"
         tools:layout="@layout/fragment_enter_master_password">
+
+
         <action
             android:id="@+id/action_enterMasterPasswordFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/enterMasterPasswordFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_enterMasterPasswordFragment_to_setMasterPassFragment"
+            android:id="@+id/action_set_master_fragment"
             app:destination="@id/setMasterPassFragment"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/enterMasterPasswordFragment"/>
+            app:popUpTo="@id/enterMasterPasswordFragment"
+            app:popUpToInclusive="true">
+
+
+        </action>
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -41,6 +46,12 @@
         android:name="com.geekydroid.passcrypt.ui.SetMasterPassFragment"
         android:label="fragment_set_master_pass"
         tools:layout="@layout/fragment_set_master_pass">
+
+        <argument
+            android:name="mode"
+            android:defaultValue="NORMAL_MODE"
+            app:argType="com.geekydroid.passcrypt.enums.NavigationMode" />
+
         <action
             android:id="@+id/action_setMasterPassFragment_to_homeFragment"
             app:destination="@id/homeFragment"

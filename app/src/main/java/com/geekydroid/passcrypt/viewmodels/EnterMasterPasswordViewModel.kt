@@ -35,11 +35,7 @@ class EnterMasterPasswordViewModel @Inject constructor(private val repo: EnterMa
         userAuthFlag.postValue(auth)
     }
 
-    fun deleteDatabase() {
-        CoroutineScope(IO).launch {
 
-        }
-    }
 
     fun updateUser(user:User) {
         viewModelScope.launch {

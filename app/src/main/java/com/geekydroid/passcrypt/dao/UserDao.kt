@@ -1,10 +1,7 @@
 package com.geekydroid.passcrypt.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.geekydroid.passcrypt.entities.User
 
 @Dao
@@ -27,4 +24,14 @@ interface UserDao {
 
     @Update
     suspend fun updateUser(user: User)
+
+    @Transaction
+    suspend fun resetUser(passwordHash: String) {
+        val user = getUserForAuth()
+        user?.let {
+            user.selfDestructiveCount = 0
+            user.selfDestructive = false
+            updateUser(user)
+        }
+    }
 }

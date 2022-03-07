@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.geekydroid.passcrypt.PasscryptApp
 import com.geekydroid.passcrypt.R
+import com.geekydroid.passcrypt.enums.NavigationMode
 import com.geekydroid.passcrypt.viewmodels.SetMasterPasswordViewmodel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -21,9 +23,13 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
     private lateinit var btnSetup: Button
     private lateinit var fragmentView: View
     private val viewmodel: SetMasterPasswordViewmodel by viewModels()
+    private lateinit var NAVIGATION_MODE: NavigationMode
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        NAVIGATION_MODE = NavigationMode.PASSWORD_RESET_MODE
+
 
         fragmentView = view
         setUI()
@@ -40,6 +46,7 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
         }
 
         btnSetup.setOnClickListener {
+
             setUpMasterPassword()
         }
     }
@@ -65,7 +72,7 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
         } else if (!passwordText.contentEquals(confirmPasswordText)) {
             showSnackBar("Passwords doesn't match.")
         } else {
-            viewmodel.createUser(passwordText)
+            viewmodel.createUser(passwordText, NAVIGATION_MODE)
             updatePrefs()
         }
     }
