@@ -1,7 +1,6 @@
 package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
@@ -26,19 +25,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
-        val prefs = getSharedPreferences("myPrefs", MODE_PRIVATE)
-        val isFirstLaunch = prefs.getBoolean((application as PasscryptApp).FIRST_LAUNCH, true)
+
+//        val prefs = getSharedPreferences("myPrefs", MODE_PRIVATE)
+//        val isFirstLaunch = prefs.getBoolean((application as PasscryptApp).FIRST_LAUNCH, true)
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.navController
-        val graphInflater = navHostFragment.navController.navInflater
-        navGraph = graphInflater.inflate(R.navigation.nav_graph)
-        if (isFirstLaunch) {
-            navGraph.setStartDestination(R.id.setMasterPassFragment)
-        }
-        navController.graph = navGraph
+//        val graphInflater = navHostFragment.navController.navInflater
+//        navGraph = graphInflater.inflate(R.navigation.nav_graph)
+//        if (isFirstLaunch) {
+//
+//            EnterMasterPasswordFragmentDirections.actionEnterMasterPasswordFragmentToSetMasterPassFragment(
+//                (application as PasscryptApp).NAVIGATION_MODE_NORMAL
+//            )
+//
+//        }
+//        navController.graph = navGraph
 
 
     }

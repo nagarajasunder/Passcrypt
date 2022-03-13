@@ -22,13 +22,11 @@ class SetMasterPasswordViewmodel @Inject constructor(private val repository: Set
     fun createUser(password: String, MODE: NavigationMode) {
         CoroutineScope(IO).launch {
             val passwordHash = HashingUtils.getStrongPasswordHash(password)
-            var result = -1L
-            if (MODE == NavigationMode.NORMAL_MODE) {
+            val result: Long = if (MODE == NavigationMode.NORMAL_MODE) {
                 val user = User(masterPassHash = passwordHash, isMasterPassSet = true)
-                result = repository.insertUser(user)
+                repository.insertUser(user)
             } else {
                 repository.resetUser(passwordHash)
-                result = 11234
             }
 
             if (result != -1L) {

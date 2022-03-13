@@ -6,14 +6,15 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.geekydroid.passcrypt.PasscryptApp
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.datasources.EncryptedDataSource
 import com.geekydroid.passcrypt.entities.User
-import com.geekydroid.passcrypt.enums.NavigationMode
 import com.geekydroid.passcrypt.viewmodels.EnterMasterPasswordViewModel
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
@@ -42,8 +43,21 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val prefs =
+            requireActivity().getSharedPreferences("myPrefs", AppCompatActivity.MODE_PRIVATE)
+        val isFirstLaunch =
+            prefs.getBoolean((requireActivity().application as PasscryptApp).FIRST_LAUNCH, true)
+        if (isFirstLaunch) {
+            navigationToSetMasterPassword()
+        }
+
+
         fragmentView = view
         setUI()
+
+
+
+
         viewmodel.user.observe(viewLifecycleOwner) {
             Log.d("DEBUG:", "onViewCreated: livedata called")
             if (it != null && it.selfDestructive) {
@@ -52,7 +66,7 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
                 if (it.selfDestructiveCount < 0) {
                     showLimitExceededCards()
                 } else {
-                    numberOfAttempts = it.selfDestructiveCount - 1
+                    numberOfAttempts = it.selfDestructiveCount
                     showSelfDestructiveCards()
                 }
             }
@@ -60,9 +74,10 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
 
 
         btnSetNewPassword.setOnClickListener {
-            val mode = NavigationMode.PASSWORD_RESET_MODE
-            val action = EnterMasterPasswordFragmentDirections.actionSetMasterFragment()
-            
+            val action =
+                EnterMasterPasswordFragmentDirections.actionEnterMasterPasswordFragmentToSetMasterPassFragment(
+                    (requireActivity().application as PasscryptApp).NAVIGATION_MODE_RESET
+                )
             findNavController().navigate(action)
         }
 
@@ -106,6 +121,14 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
                 }
 
             })
+    }
+
+    private fun navigationToSetMasterPassword() {
+        val action =
+            EnterMasterPasswordFragmentDirections.actionEnterMasterPasswordFragmentToSetMasterPassFragment(
+                (requireActivity().application as PasscryptApp).NAVIGATION_MODE_NORMAL
+            )
+        findNavController().navigate(action)
     }
 
     private fun showLimitExceededCards() {

@@ -14,7 +14,7 @@ class SetMasterPasswordRepository @Inject constructor(private val database: Loca
 
     }
 
-    suspend fun resetUser(passwordHash: String) {
-         database.getUserdao().resetUser(passwordHash)
+    suspend fun resetUser(passwordHash: String): Long {
+        return database.getUserdao().resetUser(passwordHash)
     }
 }

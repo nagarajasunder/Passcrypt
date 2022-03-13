@@ -23,15 +23,17 @@ interface UserDao {
     suspend fun updateSelfDestruction()
 
     @Update
-    suspend fun updateUser(user: User)
+    suspend fun updateUser(user: User): Int
 
     @Transaction
-    suspend fun resetUser(passwordHash: String) {
+    suspend fun resetUser(passwordHash: String): Long {
         val user = getUserForAuth()
         user?.let {
             user.selfDestructiveCount = 0
             user.selfDestructive = false
-            updateUser(user)
+            val result = updateUser(user)
+            return result.toLong()
         }
+        return -1
     }
 }

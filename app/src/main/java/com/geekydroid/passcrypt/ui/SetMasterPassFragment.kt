@@ -23,13 +23,15 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
     private lateinit var btnSetup: Button
     private lateinit var fragmentView: View
     private val viewmodel: SetMasterPasswordViewmodel by viewModels()
-    private lateinit var NAVIGATION_MODE: NavigationMode
+    private lateinit var NAVIGATION_MODE: String
+    private val args: SetMasterPassFragmentArgs by navArgs()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        NAVIGATION_MODE = NavigationMode.PASSWORD_RESET_MODE
-
+        NAVIGATION_MODE =
+            args.mode ?: (requireActivity().application as PasscryptApp).NAVIGATION_MODE_NORMAL
 
         fragmentView = view
         setUI()
@@ -72,7 +74,10 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
         } else if (!passwordText.contentEquals(confirmPasswordText)) {
             showSnackBar("Passwords doesn't match.")
         } else {
-            viewmodel.createUser(passwordText, NAVIGATION_MODE)
+            viewmodel.createUser(
+                passwordText,
+                if (NAVIGATION_MODE == (requireActivity().application as PasscryptApp).NAVIGATION_MODE_RESET) NavigationMode.PASSWORD_RESET_MODE else NavigationMode.NORMAL_MODE
+            )
             updatePrefs()
         }
     }
