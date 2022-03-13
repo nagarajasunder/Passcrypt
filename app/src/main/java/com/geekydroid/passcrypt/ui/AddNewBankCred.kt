@@ -35,6 +35,8 @@ class AddNewBankCred @Inject constructor() : Fragment(R.layout.fragment_add_new_
     private val viewmodel: AddNewBankCredViewModel by viewModels()
 
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

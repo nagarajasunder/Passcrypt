@@ -151,4 +151,5 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home) {
 
         return true
     }
+
 }

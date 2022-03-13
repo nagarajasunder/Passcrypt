@@ -70,7 +70,9 @@ class AccountCredAdapter :
         val currentCred = currentList[position]
         holder.tvSiteName.text = currentCred.credName
         holder.tvComments.text = currentCred.credComments
-        holder.tvCreatedOn.text = currentCred.createdOnFormatted
+        holder.tvCreatedOn.text =
+            holder.itemView.context.getString(R.string.created_on, currentCred.createdOnFormatted)
+
     }
 
     /**
@@ -144,7 +146,6 @@ class AccountCredAdapter :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvSiteName: TextView = itemView.findViewById(R.id.tv_site_name)
         val tvComments: TextView = itemView.findViewById(R.id.tv_comments)
-        val ivCopy: ImageView = itemView.findViewById(R.id.iv_copy)
         val tvCreatedOn: TextView = itemView.findViewById(R.id.tv_created_on)
     }
 

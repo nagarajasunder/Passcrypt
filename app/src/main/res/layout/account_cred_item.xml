@@ -8,8 +8,10 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp"
+        android:clickable="true"
+        android:focusable="true"
         app:cardBackgroundColor="#1976d2"
+        app:cardCornerRadius="8dp"
         app:cardElevation="8dp">
 
 
@@ -18,25 +20,11 @@
             android:layout_height="wrap_content"
             android:padding="8dp">
 
-
-
-            <ImageView
-                android:id="@+id/iv_copy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:clickable="true"
-                android:contentDescription="@string/content_desc_copy_password"
-                android:focusable="true"
-                android:src="@drawable/copy" />
-
             <TextView
                 android:id="@+id/tv_site_name"
                 style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/iv_copy"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textStyle="bold" />
@@ -48,7 +36,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_site_name"
                 android:layout_marginTop="8dp"
-                android:layout_toStartOf="@+id/iv_copy"
                 android:ellipsize="end"
                 android:maxLines="1" />
 

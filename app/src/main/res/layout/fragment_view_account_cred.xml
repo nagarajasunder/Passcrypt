@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    tools:context=".ui.ViewAccountCred">
+
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/iv_site"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_alignTop="@+id/tv_site_url"
+        android:layout_alignBottom="@+id/tv_site_url"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/site" />
+
+    <TextView
+        android:id="@+id/tv_site_url"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="8dp"
+        android:layout_toStartOf="@+id/iv_copy_site_url"
+        android:layout_toEndOf="@+id/iv_site"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/iv_copy_site_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_alignTop="@+id/tv_site_url"
+        android:layout_alignBottom="@+id/tv_site_url"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="5dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/copy" />
+
+    <ImageView
+        android:id="@+id/iv_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_alignTop="@+id/tv_user_name"
+        android:layout_alignBottom="@+id/tv_user_name"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/account" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_site_url"
+        android:layout_marginTop="8dp"
+        android:layout_toStartOf="@+id/iv_copy_user_name"
+        android:layout_toEndOf="@+id/iv_user"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/iv_copy_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_site_url"
+        android:layout_alignTop="@+id/tv_user_name"
+        android:layout_alignBottom="@+id/tv_user_name"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="5dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/copy" />
+
+    <ImageView
+        android:id="@+id/iv_lock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_alignTop="@+id/tv_password"
+        android:layout_alignBottom="@+id/tv_password"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/lock" />
+
+    <TextView
+        android:id="@+id/tv_password"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_user_name"
+        android:layout_marginTop="8dp"
+        android:layout_toStartOf="@+id/iv_copy_password"
+        android:layout_toEndOf="@+id/iv_lock"
+        android:textSize="16sp"
+        app:drawableRightCompat="@drawable/visibility_off" />
+
+    <ImageView
+        android:id="@+id/iv_copy_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_site_url"
+        android:layout_alignTop="@+id/tv_password"
+        android:layout_alignBottom="@+id/tv_password"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="5dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/copy" />
+
+
+    <ImageView
+        android:id="@+id/iv_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_alignTop="@+id/tv_comments"
+        android:layout_alignBottom="@+id/tv_comments"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/comments" />
+
+    <TextView
+        android:id="@+id/tv_comments"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_password"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/iv_comments"
+        android:textSize="16sp" />
+
+
+</RelativeLayout>
