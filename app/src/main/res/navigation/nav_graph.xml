@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_viewAccountCred"
+            app:destination="@id/viewAccountCred" />
     </fragment>
     <fragment
         android:id="@+id/setMasterPassFragment"
@@ -72,4 +75,13 @@
         android:name="com.geekydroid.passcrypt.ui.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/viewAccountCred"
+        android:name="com.geekydroid.passcrypt.ui.ViewAccountCred"
+        android:label="fragment_view_account_cred"
+        tools:layout="@layout/fragment_view_account_cred" >
+        <argument
+            android:name="credId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -37,7 +37,7 @@ interface AccountCredDao {
     fun getAllCredentials(): LiveData<List<AccountCred>>
 
     @Query("SELECT * FROM ACCOUNT_CRED WHERE credId = :credId")
-    fun getCredById(credId: Int): AccountCred
+    suspend fun getCredById(credId: Int): AccountCred
 
     @Query(
         "SELECT credId as credId  , " +

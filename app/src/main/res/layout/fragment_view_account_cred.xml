@@ -13,31 +13,32 @@
         style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="@string/app_name" />
 
-    <ImageView
-        android:id="@+id/iv_site"
+    <TextView
+        android:id="@+id/tv_site_label"
+        style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
-        android:layout_alignTop="@+id/tv_site_url"
-        android:layout_alignBottom="@+id/tv_site_url"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="5dp"
-        android:src="@drawable/site" />
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:text="@string/label_website"
+        android:textColor="@color/text_grey"
+        android:textSize="15sp" />
+
 
     <TextView
         android:id="@+id/tv_site_url"
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/tv_site_label"
         android:layout_marginTop="8dp"
         android:layout_toStartOf="@+id/iv_copy_site_url"
-        android:layout_toEndOf="@+id/iv_site"
-        android:textSize="18sp" />
+        android:padding="5dp"
+        android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/iv_copy_site_url"
@@ -49,33 +50,35 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/copy" />
 
-    <ImageView
-        android:id="@+id/iv_user"
+    <TextView
+        android:id="@+id/tv_user_name_label"
+        style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_alignTop="@+id/tv_user_name"
-        android:layout_alignBottom="@+id/tv_user_name"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="5dp"
-        android:src="@drawable/account" />
+        android:layout_below="@+id/tv_site_url"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:text="@string/label_user_name"
+        android:textColor="@color/text_grey"
+        android:textSize="15sp" />
+
 
     <TextView
         android:id="@+id/tv_user_name"
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_site_url"
+        android:layout_below="@+id/tv_user_name_label"
         android:layout_marginTop="8dp"
         android:layout_toStartOf="@+id/iv_copy_user_name"
-        android:layout_toEndOf="@+id/iv_user"
-        android:textSize="16sp" />
+        android:padding="5dp"
+        android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/iv_copy_user_name"
@@ -87,33 +90,35 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/copy" />
 
-    <ImageView
-        android:id="@+id/iv_lock"
+    <TextView
+        android:id="@+id/tv_password_label"
+        style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_alignTop="@+id/tv_password"
-        android:layout_alignBottom="@+id/tv_password"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="5dp"
-        android:src="@drawable/lock" />
+        android:layout_below="@+id/tv_user_name"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:text="@string/label_password"
+        android:textColor="@color/text_grey"
+        android:textSize="15sp" />
+
 
     <TextView
         android:id="@+id/tv_password"
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_user_name"
+        android:layout_below="@+id/tv_password_label"
         android:layout_marginTop="8dp"
         android:layout_toStartOf="@+id/iv_copy_password"
-        android:layout_toEndOf="@+id/iv_lock"
-        android:textSize="16sp"
+        android:padding="5dp"
+        android:textSize="20sp"
         app:drawableRightCompat="@drawable/visibility_off" />
 
     <ImageView
@@ -126,33 +131,34 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/copy" />
 
-
-    <ImageView
-        android:id="@+id/iv_comments"
+    <TextView
+        android:id="@+id/tv_comments_label"
+        style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_alignTop="@+id/tv_comments"
-        android:layout_alignBottom="@+id/tv_comments"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="5dp"
-        android:src="@drawable/comments" />
+        android:layout_below="@+id/tv_password"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:text="@string/label_comments"
+        android:textColor="@color/text_grey"
+        android:textSize="15sp" />
+
 
     <TextView
         android:id="@+id/tv_comments"
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_password"
+        android:layout_below="@+id/tv_comments_label"
         android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/iv_comments"
-        android:textSize="16sp" />
+        android:padding="5dp"
+        android:textSize="20sp" />
 
 
 </RelativeLayout>

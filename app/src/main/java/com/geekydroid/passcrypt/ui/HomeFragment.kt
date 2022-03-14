@@ -11,11 +11,14 @@ import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.adapters.AccountCredAdapter
+import com.geekydroid.passcrypt.entities.CredWrapper
+import com.geekydroid.passcrypt.listeners.CredOnClickListener
 import com.geekydroid.passcrypt.viewmodels.HomeFragmentViewmodel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +28,7 @@ import javax.inject.Inject
 private const val TAG = "HomeFragment"
 
 @AndroidEntryPoint
-class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home) {
+class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), CredOnClickListener {
     private lateinit var fragmentView: View
     private lateinit var fabAdd: FloatingActionButton
     private lateinit var fabAccount: FloatingActionButton
@@ -131,7 +134,7 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home) {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.itemAnimator = DefaultItemAnimator()
-        adapter = AccountCredAdapter()
+        adapter = AccountCredAdapter(this)
         recyclerView.adapter = adapter
 
     }
@@ -150,6 +153,17 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home) {
         }
 
         return true
+    }
+
+    override fun onCredClick(credWrapper: CredWrapper) {
+        if (credWrapper.credType == "ACCOUNT") {
+            navigateToViewAccountCred(credWrapper.credId)
+        }
+    }
+
+    private fun navigateToViewAccountCred(credId: Int) {
+        val action = HomeFragmentDirections.actionHomeFragmentToViewAccountCred(credId)
+        findNavController().navigate(action)
     }
 
 }

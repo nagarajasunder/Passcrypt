@@ -49,5 +49,11 @@ object RepositoryModule {
         return SettingsFragmentRepository(database)
     }
 
+    @Provides
+    @Singleton
+    fun providesViewAccountCredRepo(database: EncryptedDataSource): ViewAccountCredRepository {
+        return ViewAccountCredRepository(database)
+    }
+
 
 }

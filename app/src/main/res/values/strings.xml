@@ -41,4 +41,8 @@
     <string name="limit_crossed_text">You have crossed the number of limits. You cannot recover your data. Set a new Master password to proceed.</string>
     <string name="set_new_master_password">Set new master password</string>
     <string name="created_on">Created on %1s</string>
+    <string name="label_user_name">User Name</string>
+    <string name="label_password">Password</string>
+    <string name="label_comments">Comments</string>
+    <string name="label_website">Website</string>
 </resources>
