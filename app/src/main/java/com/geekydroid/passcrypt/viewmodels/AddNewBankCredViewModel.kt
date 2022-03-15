@@ -1,8 +1,11 @@
 package com.geekydroid.passcrypt.viewmodels
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.geekydroid.passcrypt.entities.BankCred
+import com.geekydroid.passcrypt.entities.Card
+import com.geekydroid.passcrypt.enums.Result
 import com.geekydroid.passcrypt.repository.AddNewBankCredRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -11,6 +14,9 @@ import javax.inject.Inject
 @HiltViewModel
 class AddNewBankCredViewModel @Inject constructor(private val repo: AddNewBankCredRepository) :
     ViewModel() {
+
+
+    val successFlag: MutableLiveData<Result> = MutableLiveData(null)
 
     fun insertBankCred(
         cardNumber: String,
@@ -25,18 +31,28 @@ class AddNewBankCredViewModel @Inject constructor(private val repo: AddNewBankCr
     ) {
         val bankCred = BankCred(
             bankName = bankName,
-            cardNumber = cardNumber,
             accountNumber = accountNumber,
             ifscCode = ifscCode,
             customerId = customerId,
-            cvv = cvvNumber,
-            cardExpiryDate = expiryDate,
             comments = comments,
             updatedOn = System.currentTimeMillis(),
-            cardPinNumber = cardPin
+        )
+
+        val cardCred = Card(
+            cardNumber = cardNumber,
+            cvv = cvvNumber,
+            cardPinNumber = cardPin,
+            cardExpiryDate = expiryDate,
+            updatedOn = System.currentTimeMillis(),
+            bankId = -1
         )
         viewModelScope.launch {
-            repo.insertBankCred(bankCred)
+            val result = repo.insertBankCred(bankCred, cardCred)
+            if (result == -1L) {
+                successFlag.postValue(Result.ERROR)
+            } else {
+                successFlag.postValue(Result.SUCCESS)
+            }
         }
     }
 

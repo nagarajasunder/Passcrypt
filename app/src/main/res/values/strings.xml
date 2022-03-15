@@ -45,4 +45,5 @@
     <string name="label_password">Password</string>
     <string name="label_comments">Comments</string>
     <string name="label_website">Website</string>
+    <string name="last_updated_on">Last Updated On %1s</string>
 </resources>

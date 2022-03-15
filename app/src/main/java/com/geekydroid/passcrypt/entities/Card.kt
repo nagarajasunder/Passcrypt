@@ -1,7 +1,9 @@
 package com.geekydroid.passcrypt.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import java.text.DateFormat
 
@@ -10,7 +12,8 @@ import java.text.DateFormat
     foreignKeys = [ForeignKey(
         entity = BankCred::class,
         parentColumns = ["credId"],
-        childColumns = ["bankId"]
+        childColumns = ["bankId"],
+        onUpdate = CASCADE
     )]
 )
 data class Card(
@@ -20,7 +23,8 @@ data class Card(
     var cvv: String = "",
     var cardPinNumber: String = "",
     var cardExpiryDate: String = "",
-    val bankId: Int,
+    @ColumnInfo(index = true)
+    var bankId: Int,
     val createdOn: Long = System.currentTimeMillis(),
     var updatedOn: Long
 ) {

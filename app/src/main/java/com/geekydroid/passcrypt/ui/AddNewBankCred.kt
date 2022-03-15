@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.geekydroid.passcrypt.R
+import com.geekydroid.passcrypt.enums.Result
 import com.geekydroid.passcrypt.viewmodels.AddNewBankCredViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -35,14 +36,18 @@ class AddNewBankCred @Inject constructor() : Fragment(R.layout.fragment_add_new_
     private val viewmodel: AddNewBankCredViewModel by viewModels()
 
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         fragmentView = view
 
         setUI()
+
+        viewmodel.successFlag.observe(viewLifecycleOwner) { result ->
+            if (result != null && result == Result.ERROR) {
+                showSnackBar("Unable to create bank account. Please try again")
+            }
+        }
 
         etCardNumber1.editText?.doOnTextChanged { text, _, _, _ ->
             etCardNumber1.editText?.hint = ""

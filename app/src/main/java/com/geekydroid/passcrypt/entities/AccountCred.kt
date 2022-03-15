@@ -18,4 +18,7 @@ data class AccountCred(
 
     val createdOnFormatted: String
         get() = DateFormat.getDateTimeInstance().format(createdOn)
+
+    val updatedOnFormatted: String
+        get() = DateFormat.getDateTimeInstance().format(updatedOn)
 }
