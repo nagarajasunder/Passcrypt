@@ -3,10 +3,13 @@ package com.geekydroid.passcrypt.ui
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -16,6 +19,8 @@ import com.geekydroid.passcrypt.viewmodels.ViewAccountCredViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
+
+private const val TAG = "ViewAccountCred"
 
 @AndroidEntryPoint
 class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
@@ -32,6 +37,8 @@ class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
     private lateinit var ivCopyUserName: ImageView
     private lateinit var ivCopyPassword: ImageView
     private lateinit var ivShowPassword: ImageView
+    private lateinit var ivFavorite: ImageView
+    private lateinit var ivEdit: ImageView
 
     private lateinit var accountCred: AccountCred
     private val ViewModel: ViewAccountCredViewModel by viewModels()
@@ -63,6 +70,15 @@ class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
         ivShowPassword.setOnClickListener {
             passwordShown = !passwordShown
             displayPassword(passwordShown)
+        }
+        ivFavorite.setOnClickListener {
+            if (accountCred.isFavourite) {
+                Log.d(TAG, "onViewCreated: Remove")
+                ViewModel.removeFromFavorites(accountCred)
+            } else {
+                Log.d(TAG, "onViewCreated: Add")
+                ViewModel.addToFavorites(accountCred)
+            }
         }
 
 
@@ -96,6 +112,14 @@ class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
         displayPassword(passwordShown)
         tvComments.text = accountCred.comments
         tvUpdatedOn.text = getString(R.string.last_updated_on, accountCred.updatedOnFormatted)
+        Log.d(TAG, "setData: accountCred.isFavorite ${accountCred.isFavourite}")
+        if (accountCred.isFavourite) {
+            ivFavorite.setImageResource(R.drawable.favorite)
+            ivFavorite.setColorFilter(ContextCompat.getColor(requireContext(), R.color.teal_200))
+        } else {
+            ivFavorite.setImageResource(R.drawable.favourite_off)
+            ivFavorite.setColorFilter(Color.argb(1, 255, 255,255))
+        }
     }
 
     private fun setUI() {
@@ -109,6 +133,7 @@ class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
         ivCopyUserName = fragmentView.findViewById(R.id.iv_copy_user_name)
         ivCopyPassword = fragmentView.findViewById(R.id.iv_copy_password)
         ivShowPassword = fragmentView.findViewById(R.id.iv_show_password)
+        ivFavorite = fragmentView.findViewById(R.id.iv_favorite)
     }
 
 

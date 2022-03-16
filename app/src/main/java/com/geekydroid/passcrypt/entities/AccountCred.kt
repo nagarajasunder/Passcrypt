@@ -12,6 +12,7 @@ data class AccountCred(
     var userName: String,
     var password: String,
     var comments: String,
+    var isFavourite: Boolean = false,
     val createdOn: Long = System.currentTimeMillis(),
     val updatedOn: Long
 ) {

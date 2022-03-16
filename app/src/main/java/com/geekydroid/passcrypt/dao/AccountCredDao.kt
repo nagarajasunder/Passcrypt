@@ -1,10 +1,7 @@
 package com.geekydroid.passcrypt.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import com.geekydroid.passcrypt.entities.AccountCred
 import com.geekydroid.passcrypt.entities.CredWrapper
 
@@ -16,6 +13,9 @@ interface AccountCredDao {
         truncateAccounts()
         truncateBanks()
     }
+
+    @Update
+    suspend fun updateCred(accountCred: AccountCred)
 
     @Query("DELETE FROM ACCOUNT_CRED")
     suspend fun truncateAccounts()
@@ -37,7 +37,7 @@ interface AccountCredDao {
     fun getAllCredentials(): LiveData<List<AccountCred>>
 
     @Query("SELECT * FROM ACCOUNT_CRED WHERE credId = :credId")
-    suspend fun getCredById(credId: Int): AccountCred
+    fun getCredById(credId: Int): LiveData<AccountCred>
 
     @Query(
         "SELECT credId as credId  , " +
