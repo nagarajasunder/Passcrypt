@@ -1,6 +1,7 @@
 package com.geekydroid.passcrypt.dao
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -29,5 +30,17 @@ interface BankCredDao {
         if (bankId == -1L) return -1L
         cardCred.bankId = bankId.toInt()
         return insertCard(cardCred);
+    }
+
+    @Query("SELECT * FROM CARD WHERE bankId = :bankId")
+    fun getCardCredByBank(bankId: Int): List<Card>
+
+    suspend fun getBankCredWithCards(credId: Int): LiveData<Pair<BankCred, List<Card>>> {
+        val bankCred: BankCred = getBankCredById(credId)
+        val cardCred = getCardCredByBank(bankCred.credId)
+        return liveData {
+            emit(Pair(bankCred, cardCred))
+        }
+
     }
 }

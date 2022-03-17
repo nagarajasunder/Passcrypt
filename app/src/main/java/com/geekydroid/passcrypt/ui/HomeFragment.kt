@@ -158,7 +158,14 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
     override fun onCredClick(credWrapper: CredWrapper) {
         if (credWrapper.credType == "ACCOUNT") {
             navigateToViewAccountCred(credWrapper.credId)
+        } else {
+            navigateToViewBankCred(credWrapper.credId)
         }
+    }
+
+    private fun navigateToViewBankCred(credId: Int) {
+        val action = HomeFragmentDirections.actionHomeFragmentToViewBankCred(credId)
+        findNavController().navigate(action)
     }
 
     private fun navigateToViewAccountCred(credId: Int) {

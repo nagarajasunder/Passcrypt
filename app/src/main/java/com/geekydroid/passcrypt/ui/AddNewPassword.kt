@@ -20,6 +20,7 @@ class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
     private lateinit var etUserName: TextInputLayout
     private lateinit var etPassword: TextInputLayout
     private lateinit var etComments: TextInputLayout
+    private lateinit var etTitle: TextInputLayout
     private lateinit var btnAdd: FloatingActionButton
     private val viewmodel: AddNewPasswordViewmodel by viewModels()
 
@@ -34,15 +35,16 @@ class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
     }
 
     private fun getUserInput() {
+        val title = etTitle.editText?.text.toString()
         val siteName = etSiteName.editText?.text.toString()
         val userName = etUserName.editText?.text.toString()
         val passwordText = etPassword.editText?.text.toString()
         val commentsText = etComments.editText?.text.toString()
 
-        if (siteName.isEmpty() || userName.isEmpty() || passwordText.isEmpty()) {
-            showSnackBar("Please enter the mandatory fields")
+        if (title.isEmpty()) {
+            etTitle.error = "Title cannot be empty"
         } else {
-            viewmodel.storePassword(siteName, userName, passwordText, commentsText)
+            viewmodel.storePassword(title, siteName, userName, passwordText, commentsText)
             showSnackBar("Account password saved securely!")
             fragmentView.findNavController().navigateUp()
         }
@@ -58,6 +60,7 @@ class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
         etUserName = fragmentView.findViewById(R.id.et_user_name)
         etPassword = fragmentView.findViewById(R.id.et_password)
         etComments = fragmentView.findViewById(R.id.et_comments)
+        etTitle = fragmentView.findViewById(R.id.et_title)
         btnAdd = fragmentView.findViewById(R.id.btn_add_password)
     }
 }

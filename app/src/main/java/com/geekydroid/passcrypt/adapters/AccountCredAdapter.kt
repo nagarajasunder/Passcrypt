@@ -27,8 +27,12 @@ class AccountCredAdapter(private val credOnClickListener: CredOnClickListener) :
 
     override fun onBindViewHolder(holder: AccountCredAdapter.ViewHolder, position: Int) {
         val currentCred = currentList[position]
-        holder.tvSiteName.text = currentCred.credName
-        holder.tvComments.text = currentCred.credComments
+        holder.tvSiteName.text = currentCred.credTitle
+        if (currentCred.credComments.isEmpty()) {
+            holder.tvComments.visibility = View.GONE
+        } else {
+            holder.tvComments.text = currentCred.credComments
+        }
         holder.tvCreatedOn.text =
             holder.itemView.context.getString(R.string.created_on, currentCred.createdOnFormatted)
 

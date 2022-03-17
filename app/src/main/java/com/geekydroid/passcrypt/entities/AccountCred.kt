@@ -8,6 +8,7 @@ import java.text.DateFormat
 data class AccountCred(
     @PrimaryKey(autoGenerate = true)
     val credId: Int = 0,
+    var title: String,
     var siteName: String,
     var userName: String,
     var password: String,

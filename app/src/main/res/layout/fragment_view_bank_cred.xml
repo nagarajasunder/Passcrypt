@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ViewBankCred">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tv_cred_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:layout_toStartOf="@+id/iv_favorite"
+                android:padding="5dp"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tv_last_updated"
+                style="@style/MytextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_cred_title"
+                android:layout_marginStart="8dp"
+                android:padding="5dp"
+                android:textSize="14sp"
+                android:textStyle="italic" />
+
+            <ImageView
+                android:id="@+id/iv_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tv_cred_title"
+                android:layout_alignBottom="@+id/tv_cred_title"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/iv_edit"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/favourite_off" />
+
+            <ImageView
+                android:id="@+id/iv_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tv_cred_title"
+                android:layout_alignBottom="@+id/tv_cred_title"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/edit" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_bank_name_label"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:text="@string/bank_name"
+            android:textColor="@color/text_grey"
+            android:textSize="15sp"
+            android:visibility="visible" />
+
+
+        <TextView
+            android:id="@+id/tv_bank_name"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_bank_name_label"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:layout_toStartOf="@+id/iv_copy_bank_name"
+            android:padding="8dp"
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_copy_bank_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_alignTop="@+id/tv_bank_name"
+            android:layout_alignBottom="@+id/tv_bank_name"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="8dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/copy"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_account_number_label"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_bank_name"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:text="@string/account_number"
+            android:textColor="@color/text_grey"
+            android:textSize="15sp"
+            android:visibility="visible" />
+
+
+        <TextView
+            android:id="@+id/tv_account_number"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_account_number_label"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:layout_toStartOf="@+id/iv_copy_account_number"
+            android:padding="8dp"
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_copy_account_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_bank_name"
+            android:layout_alignTop="@+id/tv_account_number"
+            android:layout_alignBottom="@+id/tv_account_number"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="8dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/copy"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_ifsc_code_label"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_account_number"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:text="@string/ifsc_code"
+            android:textColor="@color/text_grey"
+            android:textSize="15sp"
+            android:visibility="visible" />
+
+
+        <TextView
+            android:id="@+id/tv_ifsc_code"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_ifsc_code_label"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:layout_toStartOf="@+id/iv_show_ifsc_code"
+            android:padding="8dp"
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_copy_ifsc_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_bank_name"
+            android:layout_alignTop="@+id/tv_ifsc_code"
+            android:layout_alignBottom="@+id/tv_ifsc_code"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="8dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/copy"
+            android:visibility="visible" />
+
+
+        <ImageView
+            android:id="@+id/iv_show_ifsc_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_bank_name"
+            android:layout_alignTop="@+id/tv_ifsc_code"
+            android:layout_alignBottom="@+id/tv_ifsc_code"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/iv_copy_ifsc_code"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/visibility"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_customer_id_label"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_ifsc_code"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:text="@string/customer_id"
+            android:textColor="@color/text_grey"
+            android:textSize="15sp"
+            android:visibility="visible" />
+
+
+        <TextView
+            android:id="@+id/tv_customer_id"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_customer_id_label"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:layout_toStartOf="@+id/iv_show_customer_id"
+            android:padding="8dp"
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_show_customer_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_customer_id_label"
+            android:layout_alignTop="@+id/tv_customer_id"
+            android:layout_alignBottom="@+id/tv_customer_id"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/iv_copy_ifsc_code"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/visibility"
+            android:visibility="visible" />
+
+
+        <ImageView
+            android:id="@+id/iv_copy_customer_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_bank_name"
+            android:layout_alignTop="@+id/tv_customer_id"
+            android:layout_alignBottom="@+id/tv_customer_id"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="8dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/copy"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_comments_label"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_customer_id"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:text="@string/comments"
+            android:textColor="@color/text_grey"
+            android:textSize="15sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_comments"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_comments_label"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:padding="8dp"
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_card_details"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_comments"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:text="@string/card_details"
+            android:textStyle="bold" />
+
+        <include
+            android:id="@+id/card_cred"
+            layout="@layout/card_cred_read_only"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_card_details"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp" />
+
+    </RelativeLayout>
+
+</ScrollView>

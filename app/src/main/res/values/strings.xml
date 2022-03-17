@@ -46,4 +46,5 @@
     <string name="label_comments">Comments</string>
     <string name="label_website">Website</string>
     <string name="last_updated_on">Last Updated On %1s</string>
+    <string name="title">Title</string>
 </resources>

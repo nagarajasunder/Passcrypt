@@ -4,7 +4,7 @@ import java.text.DateFormat
 
 data class CredWrapper(
     val credId: Int,
-    val credName: String,
+    val credTitle: String,
     val credComments: String,
     val credType: String,
     val createdOn: Long

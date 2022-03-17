@@ -55,5 +55,11 @@ object RepositoryModule {
         return ViewAccountCredRepository(database)
     }
 
+    @Provides
+    @Singleton
+    fun providesViewBankCredRepo(database: EncryptedDataSource): ViewBankCredRepository {
+        return ViewBankCredRepository(database)
+    }
+
 
 }

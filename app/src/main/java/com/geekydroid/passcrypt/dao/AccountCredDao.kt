@@ -41,13 +41,13 @@ interface AccountCredDao {
 
     @Query(
         "SELECT credId as credId  , " +
-                "siteName as credName , " +
+                "title as credTitle , " +
                 "comments as credComments , " +
                 "'ACCOUNT' as credType , " +
                 "createdOn as createdOn  " +
                 "FROM ACCOUNT_CRED " +
                 "UNION ALL SELECT credId as credId  , " +
-                "bankName as credName , " +
+                "bankName as credTitle , " +
                 "comments as credComments , " +
                 "'BANK' as credType , " +
                 "createdOn as createdOn FROM BANK_CRED ORDER BY createdOn"

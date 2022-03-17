@@ -12,9 +12,10 @@ import javax.inject.Inject
 class AddNewPasswordViewmodel @Inject constructor(private val repo: AddNewPasswordRepository) :
     ViewModel() {
 
-    fun storePassword(siteName: String, userName: String, password: String, comments: String) {
+    fun storePassword(title:String,siteName: String, userName: String, password: String, comments: String) {
         viewModelScope.launch {
             val cred = AccountCred(
+                title = title,
                 siteName = siteName,
                 userName = userName,
                 password = password,

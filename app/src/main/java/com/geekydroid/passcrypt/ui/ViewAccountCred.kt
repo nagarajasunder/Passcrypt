@@ -26,11 +26,18 @@ private const val TAG = "ViewAccountCred"
 class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
 
     private lateinit var fragmentView: View
+    private lateinit var tvTitle: TextView
     private lateinit var tvSiteUrl: TextView
     private lateinit var tvUserName: TextView
     private lateinit var tvPassword: TextView
     private lateinit var tvComments: TextView
     private lateinit var tvUpdatedOn: TextView
+    private lateinit var tvSiteLabel: TextView
+    private lateinit var tvUserNameLabel: TextView
+    private lateinit var tvPasswordLabel: TextView
+    private lateinit var tvCommentsLabel: TextView
+
+
     private var passwordShown = false
 
     private lateinit var ivCopySiteUrl: ImageView
@@ -38,6 +45,8 @@ class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
     private lateinit var ivCopyPassword: ImageView
     private lateinit var ivShowPassword: ImageView
     private lateinit var ivFavorite: ImageView
+
+    //    Todo Add the edit functionality
     private lateinit var ivEdit: ImageView
 
     private lateinit var accountCred: AccountCred
@@ -73,16 +82,17 @@ class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
         }
         ivFavorite.setOnClickListener {
             if (accountCred.isFavourite) {
-                Log.d(TAG, "onViewCreated: Remove")
                 ViewModel.removeFromFavorites(accountCred)
+                showSnackBar("Removed from favorites")
             } else {
-                Log.d(TAG, "onViewCreated: Add")
                 ViewModel.addToFavorites(accountCred)
+                showSnackBar("Added to favorites")
             }
         }
 
 
     }
+
 
     private fun setPrimaryClip(text: String) {
         val clipManager = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
@@ -107,10 +117,32 @@ class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
 
 
     private fun setData(accountCred: AccountCred) {
-        tvSiteUrl.text = accountCred.siteName
-        tvUserName.text = accountCred.userName
-        displayPassword(passwordShown)
-        tvComments.text = accountCred.comments
+        tvTitle.text = accountCred.title
+        if (accountCred.siteName.isNotEmpty()) {
+            tvSiteUrl.visibility = View.VISIBLE
+            ivCopySiteUrl.visibility = View.VISIBLE
+            tvSiteLabel.visibility = View.VISIBLE
+            tvSiteUrl.text = accountCred.siteName
+        }
+        if (accountCred.userName.isNotEmpty()) {
+            tvUserNameLabel.visibility = View.VISIBLE
+            tvUserName.visibility = View.VISIBLE
+            ivCopyUserName.visibility = View.VISIBLE
+            tvUserName.text = accountCred.userName
+
+        }
+        if (accountCred.password.isNotEmpty()) {
+            tvPasswordLabel.visibility = View.VISIBLE
+            tvPassword.visibility = View.VISIBLE
+            ivCopyPassword.visibility = View.VISIBLE
+            ivShowPassword.visibility = View.VISIBLE
+            displayPassword(passwordShown)
+        }
+        if (accountCred.comments.isNotEmpty()) {
+            tvCommentsLabel.visibility = View.VISIBLE
+            tvComments.visibility = View.VISIBLE
+            tvComments.text = accountCred.comments
+        }
         tvUpdatedOn.text = getString(R.string.last_updated_on, accountCred.updatedOnFormatted)
         Log.d(TAG, "setData: accountCred.isFavorite ${accountCred.isFavourite}")
         if (accountCred.isFavourite) {
@@ -118,16 +150,22 @@ class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
             ivFavorite.setColorFilter(ContextCompat.getColor(requireContext(), R.color.teal_200))
         } else {
             ivFavorite.setImageResource(R.drawable.favourite_off)
-            ivFavorite.setColorFilter(Color.argb(1, 255, 255,255))
+            ivFavorite.setColorFilter(Color.argb(1, 255, 255, 255))
         }
     }
 
     private fun setUI() {
+        tvTitle = fragmentView.findViewById(R.id.tv_cred_title)
         tvSiteUrl = fragmentView.findViewById(R.id.tv_site_url)
         tvUserName = fragmentView.findViewById(R.id.tv_user_name)
         tvPassword = fragmentView.findViewById(R.id.tv_password)
         tvComments = fragmentView.findViewById(R.id.tv_comments)
         tvUpdatedOn = fragmentView.findViewById(R.id.tv_last_updated)
+
+        tvSiteLabel = fragmentView.findViewById(R.id.tv_site_label)
+        tvUserNameLabel = fragmentView.findViewById(R.id.tv_user_name_label)
+        tvPasswordLabel = fragmentView.findViewById(R.id.tv_password_label)
+        tvCommentsLabel = fragmentView.findViewById(R.id.tv_comments_label)
 
         ivCopySiteUrl = fragmentView.findViewById(R.id.iv_copy_site_url)
         ivCopyUserName = fragmentView.findViewById(R.id.iv_copy_user_name)
