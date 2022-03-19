@@ -93,7 +93,7 @@ class AddNewBankCred @Inject constructor() : Fragment(R.layout.fragment_add_new_
         val expiryDate = etExpiryDate.editText?.text.toString()
         val cvvNumber = etCvv.editText?.text.toString()
         val cardPin = etCardPin.editText?.text.toString()
-        val comments = etCvv.editText?.text.toString()
+        val comments = etComments.editText?.text.toString()
 
         if (bankName.isEmpty() &&
             accountNumber.isEmpty() &&

@@ -14,7 +14,7 @@ import com.geekydroid.passcrypt.viewmodels.ViewBankCredViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-private const val TAG = "ViewBankCred"
+//private const val TAG = "ViewBankCred"
 
 @AndroidEntryPoint
 class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
@@ -51,10 +51,11 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
 
     private lateinit var ivCopyBankName: ImageView
     private lateinit var ivCopyAccountNumber: ImageView
-    private lateinit var ivCopyIFSCCode: ImageView
     private lateinit var ivCopyCustomerId: ImageView
+    private lateinit var ivCopyIFSCCode: ImageView
     private lateinit var ivShowPin: ImageView
     private lateinit var ivShowCVV: ImageView
+    private lateinit var ivShowCustomerId: ImageView
 
     private var pinShown = false
     private var cvvShown = false
@@ -84,22 +85,45 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
             displayPIN(pinShown)
         }
 
+        ivShowCVV.setOnClickListener {
+            cvvShown = !cvvShown
+            displayCVV(cvvShown)
+        }
+
 
     }
 
     private fun displayPIN(pinShown: Boolean) {
-        if (pinShown) {
-            tvPinNumber.text = "*".repeat(4)
+        if (cardCred[0].cvv.isEmpty()) {
+            tvCvvNumber.text = ""
+            ivShowCVV.isEnabled = false
         } else {
-            tvPinNumber.text = cardCred[0].cardPinNumber
+            ivShowCVV.isEnabled = true
+            if (pinShown) {
+                tvPinNumber.text = cardCred[0].cardPinNumber
+                ivShowPin.setImageResource(R.drawable.visibility_off)
+            } else {
+                tvPinNumber.text = "*".repeat(4)
+                ivShowPin.setImageResource(R.drawable.visibility)
+            }
         }
+
+
     }
 
     private fun displayCVV(cvvShown: Boolean) {
-        if (cvvShown) {
-            tvCvvNumber.text = "*".repeat(3)
+        if (cardCred[0].cardPinNumber.isEmpty()) {
+            tvPinNumber.text = ""
+            ivShowPin.isEnabled = false
         } else {
-            tvCvvNumber.text = cardCred[0].cvv
+            ivShowPin.isEnabled = true
+            if (cvvShown) {
+                tvCvvNumber.text = cardCred[0].cvv
+                ivShowCVV.setImageResource(R.drawable.visibility_off)
+            } else {
+                tvCvvNumber.text = "*".repeat(3)
+                ivShowCVV.setImageResource(R.drawable.visibility)
+            }
         }
     }
 
@@ -110,20 +134,61 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
         tvCardNumber2.text = cardNumberSplit[1]
         tvCardNumber3.text = cardNumberSplit[2]
         tvCardNumber4.text = cardNumberSplit[3]
-
-        tvPinNumber.text = currentCard.cardPinNumber
-        tvCvvNumber.text = currentCard.cvv
         tvExpiryDate.text = currentCard.cardExpiryDate
 
+        displayPIN(pinShown)
+        displayCVV(cvvShown)
 
     }
 
+
     private fun setBankData(bankData: BankCred) {
+
         tvBankName.text = bankData.bankName
-        tvAccountNumber.text = bankData.accountNumber
-        tvIFSCCode.text = bankData.ifscCode
-        tvCustomerId.text = bankData.customerId
-        tvComments.text = bankData.comments
+        if (bankCred.accountNumber.isEmpty()) {
+            tvAccountNumber.visibility = View.GONE
+            tvAccountNumberLabel.visibility = View.GONE
+            ivCopyAccountNumber.visibility = View.GONE
+        } else {
+            tvAccountNumber.text = bankData.accountNumber
+            tvAccountNumber.visibility = View.VISIBLE
+            tvAccountNumberLabel.visibility = View.VISIBLE
+            ivCopyAccountNumber.visibility = View.VISIBLE
+        }
+
+        if (bankCred.ifscCode.isEmpty()) {
+            tvIFSCCode.visibility = View.GONE
+            tvIFSCCodeLabel.visibility = View.GONE
+            ivCopyIFSCCode.visibility = View.GONE
+        } else {
+            tvIFSCCode.text = bankData.ifscCode
+            tvIFSCCode.visibility = View.VISIBLE
+            tvIFSCCodeLabel.visibility = View.VISIBLE
+            ivCopyIFSCCode.visibility = View.VISIBLE
+
+        }
+        if (bankCred.customerId.isEmpty()) {
+            tvCustomerId.visibility = View.GONE
+            tvCustomerIdLabel.visibility = View.GONE
+            ivCopyCustomerId.visibility = View.GONE
+            ivShowCustomerId.visibility = View.GONE
+        } else {
+            tvCustomerId.text = bankData.customerId
+            tvCustomerId.visibility = View.VISIBLE
+            tvCustomerIdLabel.visibility = View.VISIBLE
+            ivCopyCustomerId.visibility = View.VISIBLE
+            ivShowCustomerId.visibility = View.VISIBLE
+        }
+
+        if (bankCred.comments.isEmpty()) {
+            tvComments.visibility = View.GONE
+            tvCommentsLabel.visibility = View.GONE
+        } else {
+            tvComments.text = bankData.comments
+            tvComments.visibility = View.VISIBLE
+            tvCommentsLabel.visibility = View.VISIBLE
+        }
+
         tvUpdatedOn.text = bankData.updatedOnFormatted
         tvCardBankName.text = bankData.bankName.uppercase(Locale.getDefault())
     }
@@ -145,8 +210,9 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
 
         ivCopyBankName = fragmentView.findViewById(R.id.iv_copy_bank_name)
         ivCopyAccountNumber = fragmentView.findViewById(R.id.iv_copy_account_number)
-        ivCopyIFSCCode = fragmentView.findViewById(R.id.iv_copy_ifsc_code)
         ivCopyCustomerId = fragmentView.findViewById(R.id.iv_copy_customer_id)
+        ivCopyIFSCCode = fragmentView.findViewById(R.id.iv_copy_ifsc_code)
+
 
         tvCardNumber1 = fragmentView.findViewById(R.id.tv_card_num_1)
         tvCardNumber2 = fragmentView.findViewById(R.id.tv_card_num_2)
@@ -159,6 +225,7 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
 
         ivShowPin = fragmentView.findViewById(R.id.iv_show_pin)
         ivShowCVV = fragmentView.findViewById(R.id.iv_show_cvv)
+        ivShowCustomerId = fragmentView.findViewById(R.id.iv_show_customer_id)
     }
 
 

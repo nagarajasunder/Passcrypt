@@ -47,6 +47,7 @@
                 android:layout_alignBottom="@+id/tv_cred_title"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/iv_edit"
+                android:contentDescription="@string/content_desc_make_favorite"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
@@ -61,6 +62,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="5dp"
+                android:contentDescription="@string/edit"
                 android:layout_marginEnd="8dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
@@ -81,7 +83,7 @@
             android:text="@string/bank_name"
             android:textColor="@color/text_grey"
             android:textSize="15sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
         <TextView
@@ -95,7 +97,7 @@
             android:layout_toStartOf="@+id/iv_copy_bank_name"
             android:padding="8dp"
             android:textSize="20sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_copy_bank_name"
@@ -110,9 +112,10 @@
             android:layout_marginEnd="8dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:clickable="true"
+            android:contentDescription="@string/content_desc_copy_bank_name"
             android:focusable="true"
             android:src="@drawable/copy"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_account_number_label"
@@ -126,7 +129,7 @@
             android:text="@string/account_number"
             android:textColor="@color/text_grey"
             android:textSize="15sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
         <TextView
@@ -140,7 +143,7 @@
             android:layout_toStartOf="@+id/iv_copy_account_number"
             android:padding="8dp"
             android:textSize="20sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_copy_account_number"
@@ -155,9 +158,10 @@
             android:layout_marginEnd="8dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:clickable="true"
+            android:contentDescription="@string/content_desc_copy_account_number"
             android:focusable="true"
             android:src="@drawable/copy"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_ifsc_code_label"
@@ -171,7 +175,7 @@
             android:text="@string/ifsc_code"
             android:textColor="@color/text_grey"
             android:textSize="15sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
         <TextView
@@ -182,10 +186,10 @@
             android:layout_below="@+id/tv_ifsc_code_label"
             android:layout_marginStart="12dp"
             android:layout_marginTop="5dp"
-            android:layout_toStartOf="@+id/iv_show_ifsc_code"
+            android:layout_toStartOf="@+id/iv_copy_ifsc_code"
             android:padding="8dp"
             android:textSize="20sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_copy_ifsc_code"
@@ -202,25 +206,9 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/copy"
-            android:visibility="visible" />
+            android:visibility="gone"
+            android:contentDescription="@string/content_desc_copy_ifsc_code" />
 
-
-        <ImageView
-            android:id="@+id/iv_show_ifsc_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_bank_name"
-            android:layout_alignTop="@+id/tv_ifsc_code"
-            android:layout_alignBottom="@+id/tv_ifsc_code"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_toStartOf="@+id/iv_copy_ifsc_code"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/visibility"
-            android:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_customer_id_label"
@@ -234,7 +222,7 @@
             android:text="@string/customer_id"
             android:textColor="@color/text_grey"
             android:textSize="15sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
         <TextView
@@ -248,7 +236,7 @@
             android:layout_toStartOf="@+id/iv_show_customer_id"
             android:padding="8dp"
             android:textSize="20sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_show_customer_id"
@@ -263,9 +251,10 @@
             android:layout_toStartOf="@+id/iv_copy_ifsc_code"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:clickable="true"
+            android:contentDescription="@string/content_desc_view_cred"
             android:focusable="true"
             android:src="@drawable/visibility"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
         <ImageView
@@ -282,8 +271,9 @@
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
+            android:contentDescription="@string/content_desc_copy_customer_id"
             android:src="@drawable/copy"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_comments_label"
@@ -297,7 +287,7 @@
             android:text="@string/comments"
             android:textColor="@color/text_grey"
             android:textSize="15sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_comments"
@@ -309,7 +299,7 @@
             android:layout_marginTop="5dp"
             android:padding="8dp"
             android:textSize="20sp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_card_details"
@@ -331,7 +321,7 @@
             android:layout_below="@+id/tv_card_details"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp" />
 
     </RelativeLayout>
 

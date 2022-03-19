@@ -48,4 +48,11 @@
     <string name="last_updated_on">Last Updated On %1s</string>
     <string name="title">Title</string>
     <string name="valid_thru">VALID THRU</string>
+    <string name="content_desc_copy_ifsc_code">copy IFSC Code</string>
+    <string name="content_desc_copy_customer_id">Copy Customer ID</string>
+    <string name="content_desc_copy_account_number">Copy Account Number</string>
+    <string name="content_desc_copy_bank_name">Copy Bank Name</string>
+    <string name="edit">Edit</string>
+    <string name="content_desc_make_favorite">Make Favorite</string>
+    <string name="content_desc_view_cred">View Cred</string>
 </resources>

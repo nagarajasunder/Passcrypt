@@ -91,6 +91,7 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
         }
     }
 
+    //Todo Add animation to add button
     private fun onAddButtonClicked() {
         setVisibility(addButtonClicked)
         setAnimation(addButtonClicked)
