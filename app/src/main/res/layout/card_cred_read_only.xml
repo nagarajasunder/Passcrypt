@@ -11,7 +11,8 @@
         android:layout_marginTop="8dp"
         android:elevation="8dp"
         app:cardBackgroundColor="#DFB176"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="16dp"
+        app:cardUseCompatPadding="true">
 
 
         <RelativeLayout
@@ -25,15 +26,15 @@
                 android:background="@color/purple_500" />
 
             <TextView
-                android:id="@+id/tv_card_number"
+                android:id="@+id/tv_card_bank_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/line_0"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="5dp"
-                android:text="@string/card_number"
-                android:textStyle="bold|italic" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
 
             <ImageView
@@ -52,7 +53,7 @@
                 android:id="@+id/card_number_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_card_number"
+                android:layout_below="@+id/tv_card_bank_name"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="5dp"
@@ -69,7 +70,11 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:padding="8dp" />
+                    android:fontFamily="@font/montserrat_bold_italic"
+                    android:letterSpacing="0.3"
+                    android:padding="8dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp" />
 
 
                 <TextView
@@ -77,21 +82,31 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="5dp"
-                    android:padding="5dp" />
+                    android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_bold_italic"
+                    android:letterSpacing="0.3"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold|italic" />
 
 
                 <TextView
                     android:id="@+id/tv_card_num_3"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="5dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="5dp" />
+                    android:fontFamily="@font/montserrat_bold_italic"
+                    android:letterSpacing="0.3"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold|italic" />
 
 
                 <TextView
@@ -102,62 +117,138 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:padding="5dp" />
+                    android:fontFamily="@font/montserrat_bold_italic"
+                    android:letterSpacing="0.3"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold|italic" />
 
             </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_expiry_date_label"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/card_number_layout"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="5dp"
+                android:padding="5dp"
+                android:text="@string/valid_thru"
+                android:textAlignment="textStart" />
+
+
+            <TextView
+                android:id="@+id/tv_pin_number_label"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_number_layout"
+                android:layout_alignStart="@+id/tv_pin_number"
+                android:layout_alignEnd="@+id/tv_pin_number"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:padding="5dp"
+                android:text="@string/hint_pin"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/tv_cvv_label"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_number_layout"
+                android:layout_alignStart="@+id/tv_cvv_number"
+                android:layout_alignEnd="@+id/tv_cvv_number"
+                android:layout_marginTop="8dp"
+                android:padding="5dp"
+                android:text="@string/cvv_hint"
+                android:textAlignment="center" />
+
+
+            <TextView
+                android:id="@+id/tv_expiry_date"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_expiry_date_label"
+                android:layout_alignStart="@+id/tv_expiry_date_label"
+                android:layout_alignEnd="@+id/tv_expiry_date_label"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
-                android:baselineAligned="true"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <TextView
-                    android:id="@+id/tv_expiry_date"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="5dp"
-                    android:padding="5dp" />
+                android:layout_toStartOf="@+id/tv_pin_number"
+                android:fontFamily="@font/montserrat_bold_italic"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
 
-                <TextView
-                    android:id="@+id/tv_pin_number"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    app:passwordToggleEnabled="true" />
+            <TextView
+                android:id="@+id/tv_pin_number"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_pin_number_label"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/montserrat_bold_italic"
+                android:letterSpacing="0.3"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:passwordToggleEnabled="true" />
+
+            <ImageView
+                android:id="@+id/iv_show_pin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_pin_number_label"
+                android:layout_alignTop="@+id/tv_pin_number"
+                android:layout_alignBottom="@+id/tv_pin_number"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/tv_pin_number"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/visibility" />
 
 
-                <TextView
-                    android:id="@+id/tv_cvv_number"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    app:passwordToggleEnabled="true" />
+            <TextView
+                android:id="@+id/tv_cvv_number"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_cvv_label"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toStartOf="@+id/iv_show_cvv"
+                android:fontFamily="@font/montserrat_bold_italic"
+                android:letterSpacing="0.3"
+                android:padding="5dp"
+                android:textAlignment="textEnd"
+                android:textSize="20sp"
+                app:passwordToggleEnabled="true" />
 
-
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_show_cvv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_pin_number_label"
+                android:layout_alignTop="@+id/tv_cvv_number"
+                android:layout_alignBottom="@+id/tv_cvv_number"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/visibility" />
 
 
         </RelativeLayout>
