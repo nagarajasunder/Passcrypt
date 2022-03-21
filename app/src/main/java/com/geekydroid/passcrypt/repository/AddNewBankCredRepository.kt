@@ -10,4 +10,8 @@ class AddNewBankCredRepository @Inject constructor(private val database: Encrypt
     suspend fun insertBankCred(bankCred: BankCred, cardCred: Card): Long {
         return database.getBankCredDao().createBankWithCard(bankCred, cardCred)
     }
+
+    suspend fun insertBank(bankCred: BankCred) {
+        database.getBankCredDao().insertBankCred(bankCred)
+    }
 }

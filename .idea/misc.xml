@@ -21,8 +21,9 @@
         <entry key="app/src/main/res/layout/account_cred_item.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/bank_card_layout.xml" value="0.8009367681498829" />
         <entry key="app/src/main/res/layout/card_cred_read_only.xml" value="0.7630208333333334" />
-        <entry key="app/src/main/res/layout/fragment_add_new_bank_cred.xml" value="0.35625" />
-        <entry key="app/src/main/res/layout/fragment_add_new_password.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/fragment_add_new_bank_cred.xml" value="0.8009367681498829" />
+        <entry key="app/src/main/res/layout/fragment_add_new_password.xml" value="0.8009367681498829" />
+        <entry key="app/src/main/res/layout/fragment_edit_account_cred.xml" value="0.8009367681498829" />
         <entry key="app/src/main/res/layout/fragment_view_account_cred.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_view_bank_cred.xml" value="0.8009367681498829" />
       </map>

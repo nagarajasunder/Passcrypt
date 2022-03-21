@@ -27,6 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_bank_details"
             android:layout_marginTop="8dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="100"
             android:hint="@string/bank_name">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -117,10 +119,11 @@
             android:textStyle="bold" />
 
 
-        <include layout="@layout/bank_card_layout"
-            android:layout_below="@+id/tv_card_details"
+        <include
+            layout="@layout/bank_card_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
+            android:layout_below="@+id/tv_card_details" />
 
 
     </RelativeLayout>

@@ -86,6 +86,9 @@
         <argument
             android:name="credId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_viewAccountCred_to_editAccountCred"
+            app:destination="@id/editAccountCred" />
     </fragment>
     <fragment
         android:id="@+id/viewBankCred"
@@ -94,6 +97,15 @@
         tools:layout="@layout/fragment_view_bank_cred" >
         <argument
             android:name="cred_id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/editAccountCred"
+        android:name="com.geekydroid.passcrypt.ui.EditAccountCred"
+        android:label="fragment_edit_account_cred"
+        tools:layout="@layout/fragment_edit_account_cred" >
+        <argument
+            android:name="credId"
             app:argType="integer" />
     </fragment>
 </navigation>

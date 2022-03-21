@@ -78,49 +78,47 @@ class AddNewBankCred @Inject constructor() : Fragment(R.layout.fragment_add_new_
 
     private fun validateUserData() {
         val cardNumber = StringBuilder().append(
-            etCardNumber1.editText?.text.toString(),
+            etCardNumber1.editText?.text.toString().trim(),
             ":",
-            etCardNumber2.editText?.text.toString(),
+            etCardNumber2.editText?.text.toString().trim(),
             ":",
-            etCardNumber3.editText?.text.toString(),
+            etCardNumber3.editText?.text.toString().trim(),
             ":",
-            etCardNumber4.editText?.text.toString()
+            etCardNumber4.editText?.text.toString().trim()
         ).toString()
-        val bankName = etBankName.editText?.text.toString()
-        val accountNumber = etAccountNumber.editText?.text.toString()
-        val ifscCode = etIfscCode.editText?.text.toString()
-        val customerId = etCustomerId.editText?.text.toString()
-        val expiryDate = etExpiryDate.editText?.text.toString()
-        val cvvNumber = etCvv.editText?.text.toString()
-        val cardPin = etCardPin.editText?.text.toString()
-        val comments = etComments.editText?.text.toString()
+        val bankName = etBankName.editText?.text.toString().trim()
+        val accountNumber = etAccountNumber.editText?.text.toString().trim()
+        val ifscCode = etIfscCode.editText?.text.toString().trim()
+        val customerId = etCustomerId.editText?.text.toString().trim()
+        val expiryDate = etExpiryDate.editText?.text.toString().trim()
+        val cvvNumber = etCvv.editText?.text.toString().trim()
+        val cardPin = etCardPin.editText?.text.toString().trim()
+        val comments = etComments.editText?.text.toString().trim()
 
-        if (bankName.isEmpty() &&
-            accountNumber.isEmpty() &&
-            ifscCode.isEmpty() &&
-            customerId.isEmpty() &&
-            expiryDate.isEmpty() &&
-            cvvNumber.isEmpty() &&
-            cardNumber.contentEquals(
-                ":::"
-            )
-        ) {
-            showSnackBar("Please fill some details to store the credentials")
-        } else {
-            viewmodel.insertBankCred(
-                cardNumber,
-                bankName,
-                accountNumber,
-                ifscCode,
-                customerId,
-                expiryDate,
-                cvvNumber,
-                comments,
-                cardPin
-            )
+        when {
+            bankName.isEmpty() -> {
+                showSnackBar("Bank Name cannot be empty")
+                etBankName.editText?.text?.clear()
+            }
+            bankName.length > 100 -> {
+                etBankName.error = "Bank name should have up to 100 characters"
+            }
+            else -> {
+                viewmodel.insertBankCred(
+                    cardNumber,
+                    bankName,
+                    accountNumber,
+                    ifscCode,
+                    customerId,
+                    expiryDate,
+                    cvvNumber,
+                    comments,
+                    cardPin
+                )
 
-            showSnackBar("Bank credentials saved successfully!")
-            fragmentView.findNavController().navigateUp()
+                showSnackBar("Bank credentials saved successfully!")
+                fragmentView.findNavController().navigateUp()
+            }
         }
 
     }

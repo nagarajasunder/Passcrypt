@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.entities.AccountCred
@@ -67,6 +68,10 @@ class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
             }
         }
 
+        ivEdit.setOnClickListener {
+            navigateToEditCred()
+        }
+
         ivCopySiteUrl.setOnClickListener {
             setPrimaryClip(accountCred.siteName)
         }
@@ -91,6 +96,11 @@ class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
         }
 
 
+    }
+
+    private fun navigateToEditCred() {
+        val action = ViewAccountCredDirections.actionViewAccountCredToEditAccountCred(credId)
+        findNavController().navigate(action)
     }
 
 
@@ -172,6 +182,7 @@ class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
         ivCopyPassword = fragmentView.findViewById(R.id.iv_copy_password)
         ivShowPassword = fragmentView.findViewById(R.id.iv_show_password)
         ivFavorite = fragmentView.findViewById(R.id.iv_favorite)
+        ivEdit = fragmentView.findViewById(R.id.iv_edit)
     }
 
 

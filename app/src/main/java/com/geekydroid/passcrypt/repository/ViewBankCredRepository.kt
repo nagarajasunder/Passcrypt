@@ -10,5 +10,9 @@ class ViewBankCredRepository(private val database: EncryptedDataSource) {
         return database.getBankCredDao().getBankCredWithCards(credId)
     }
 
+    suspend fun updateBank(bankCred: BankCred) {
+        database.getBankCredDao().updateBankCred(bankCred)
+    }
+
 
 }

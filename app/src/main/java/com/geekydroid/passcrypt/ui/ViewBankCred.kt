@@ -1,8 +1,10 @@
 package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,7 +16,7 @@ import com.geekydroid.passcrypt.viewmodels.ViewBankCredViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-//private const val TAG = "ViewBankCred"
+private const val TAG = "ViewBankCred"
 
 @AndroidEntryPoint
 class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
@@ -26,18 +28,17 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
     private lateinit var bankCred: BankCred
     private var cardCred = listOf<Card>()
 
-    private lateinit var tvTitle: TextView
     private lateinit var tvBankName: TextView
     private lateinit var tvAccountNumber: TextView
     private lateinit var tvIFSCCode: TextView
     private lateinit var tvCustomerId: TextView
     private lateinit var tvUpdatedOn: TextView
     private lateinit var tvComments: TextView
-    private lateinit var tvBankNameLabel: TextView
     private lateinit var tvAccountNumberLabel: TextView
     private lateinit var tvIFSCCodeLabel: TextView
     private lateinit var tvCustomerIdLabel: TextView
     private lateinit var tvCommentsLabel: TextView
+    private lateinit var tvCardDetailsLabel: TextView
 
     private lateinit var tvCardNumber1: TextView
     private lateinit var tvCardNumber2: TextView
@@ -49,16 +50,19 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
     private lateinit var tvCvvNumber: TextView
     private lateinit var tvCardBankName: TextView
 
-    private lateinit var ivCopyBankName: ImageView
     private lateinit var ivCopyAccountNumber: ImageView
     private lateinit var ivCopyCustomerId: ImageView
     private lateinit var ivCopyIFSCCode: ImageView
     private lateinit var ivShowPin: ImageView
     private lateinit var ivShowCVV: ImageView
     private lateinit var ivShowCustomerId: ImageView
+    private lateinit var ivFavorite: ImageView
+
+    private lateinit var cardReadOnly: RelativeLayout
 
     private var pinShown = false
     private var cvvShown = false
+    private var customerIdShown = false
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,13 +74,16 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
 
         ViewModel.getBankCredWithCard(credId).observe(viewLifecycleOwner) { response ->
 
+            Log.d(TAG, "onViewCreated: $response")
+
             if (response?.first != null) {
                 bankCred = response.first
                 setBankData(bankCred)
             }
-            if (response?.second != null) {
+            if (response?.second?.isNotEmpty() == true) {
                 cardCred = response.second
                 setCardData(cardCred)
+                showCardUI()
             }
         }
 
@@ -90,7 +97,27 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
             displayCVV(cvvShown)
         }
 
+        ivShowCustomerId.setOnClickListener {
+            customerIdShown = !customerIdShown
+            displayCustomerId(customerIdShown)
+        }
 
+        ivFavorite.setOnClickListener {
+            if (bankCred.isFavorite) {
+                ViewModel.removeFromFavorites(bankCred)
+                ivFavorite.setImageResource(R.drawable.favourite_off)
+            } else {
+                ViewModel.addToFavorites(bankCred)
+                ivFavorite.setImageResource(R.drawable.favorite)
+            }
+        }
+
+
+    }
+
+    private fun showCardUI() {
+        cardReadOnly.visibility = View.VISIBLE
+        tvCardDetailsLabel.visibility = View.VISIBLE
     }
 
     private fun displayPIN(pinShown: Boolean) {
@@ -109,6 +136,16 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
         }
 
 
+    }
+
+    private fun displayCustomerId(customerIdShown: Boolean) {
+        if (customerIdShown) {
+            tvCustomerId.text = bankCred.customerId
+            ivShowCustomerId.setImageResource(R.drawable.visibility_off)
+        } else {
+            tvCustomerId.text = "*".repeat(bankCred.customerId.length)
+            ivShowCustomerId.setImageResource(R.drawable.visibility)
+        }
     }
 
     private fun displayCVV(cvvShown: Boolean) {
@@ -173,11 +210,11 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
             ivCopyCustomerId.visibility = View.GONE
             ivShowCustomerId.visibility = View.GONE
         } else {
-            tvCustomerId.text = bankData.customerId
             tvCustomerId.visibility = View.VISIBLE
             tvCustomerIdLabel.visibility = View.VISIBLE
             ivCopyCustomerId.visibility = View.VISIBLE
             ivShowCustomerId.visibility = View.VISIBLE
+            displayCustomerId(customerIdShown)
         }
 
         if (bankCred.comments.isEmpty()) {
@@ -196,7 +233,6 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
     private fun setUI() {
 
 
-        tvBankNameLabel = fragmentView.findViewById(R.id.tv_bank_name_label)
         tvBankName = fragmentView.findViewById(R.id.tv_bank_name)
         tvAccountNumberLabel = fragmentView.findViewById(R.id.tv_account_number_label)
         tvAccountNumber = fragmentView.findViewById(R.id.tv_account_number)
@@ -205,13 +241,14 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
         tvCustomerIdLabel = fragmentView.findViewById(R.id.tv_customer_id_label)
         tvCustomerId = fragmentView.findViewById(R.id.tv_customer_id)
         tvCommentsLabel = fragmentView.findViewById(R.id.tv_comments_label)
+        tvCardDetailsLabel = fragmentView.findViewById(R.id.tv_card_details)
         tvComments = fragmentView.findViewById(R.id.tv_comments)
         tvUpdatedOn = fragmentView.findViewById(R.id.tv_last_updated)
 
-        ivCopyBankName = fragmentView.findViewById(R.id.iv_copy_bank_name)
         ivCopyAccountNumber = fragmentView.findViewById(R.id.iv_copy_account_number)
         ivCopyCustomerId = fragmentView.findViewById(R.id.iv_copy_customer_id)
         ivCopyIFSCCode = fragmentView.findViewById(R.id.iv_copy_ifsc_code)
+        ivFavorite = fragmentView.findViewById(R.id.iv_favorite)
 
 
         tvCardNumber1 = fragmentView.findViewById(R.id.tv_card_num_1)
@@ -226,6 +263,8 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
         ivShowPin = fragmentView.findViewById(R.id.iv_show_pin)
         ivShowCVV = fragmentView.findViewById(R.id.iv_show_cvv)
         ivShowCustomerId = fragmentView.findViewById(R.id.iv_show_customer_id)
+
+        cardReadOnly = fragmentView.findViewById(R.id.card_cred)
     }
 
 

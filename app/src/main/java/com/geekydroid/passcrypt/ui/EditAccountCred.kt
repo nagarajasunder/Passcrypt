@@ -5,15 +5,17 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.geekydroid.passcrypt.R
-import com.geekydroid.passcrypt.viewmodels.AddNewPasswordViewmodel
+import com.geekydroid.passcrypt.entities.AccountCred
+import com.geekydroid.passcrypt.viewmodels.EditAccountCredViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
+class EditAccountCred : Fragment(R.layout.fragment_edit_account_cred) {
 
     private lateinit var fragmentView: View
     private lateinit var etSiteName: TextInputLayout
@@ -21,34 +23,53 @@ class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
     private lateinit var etPassword: TextInputLayout
     private lateinit var etComments: TextInputLayout
     private lateinit var etTitle: TextInputLayout
-    private lateinit var btnAdd: FloatingActionButton
-    private val viewmodel: AddNewPasswordViewmodel by viewModels()
+    private lateinit var btnEdit: FloatingActionButton
+    private val viewModel: EditAccountCredViewModel by viewModels()
+    private val args: EditAccountCredArgs by navArgs()
+    private var credId: Int = 0
+    private lateinit var cred: AccountCred
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         fragmentView = view
+        credId = args.credId
+
         setUI()
-        btnAdd.setOnClickListener {
+
+        viewModel.getCredByCredId(credId).observe(viewLifecycleOwner) { data ->
+            if (data != null) {
+                cred = data
+                setData()
+            }
+        }
+
+        btnEdit.setOnClickListener {
             getUserInput()
         }
+
+    }
+
+    private fun setData() {
+        etTitle.editText?.setText(cred.title)
+        etSiteName.editText?.setText(cred.siteName)
+        etUserName.editText?.setText(cred.userName)
+        etPassword.editText?.setText(cred.password)
+        etComments.editText?.setText(cred.comments)
     }
 
     private fun getUserInput() {
-        val title = etTitle.editText?.text.toString().trim()
-        val siteName = etSiteName.editText?.text.toString().trim()
-        val userName = etUserName.editText?.text.toString().trim()
-        val passwordText = etPassword.editText?.text.toString().trim()
-        val commentsText = etComments.editText?.text.toString().trim()
+        cred.title = etTitle.editText?.text.toString()
+        cred.siteName = etSiteName.editText?.text.toString()
+        cred.userName = etUserName.editText?.text.toString()
+        cred.password = etPassword.editText?.text.toString()
+        cred.comments = etComments.editText?.text.toString()
 
-        if (title.isEmpty()) {
+        if (cred.title.isEmpty()) {
             etTitle.error = "Title cannot be empty"
-            etTitle.editText?.text?.clear()
-        } else if (title.length > 100) {
-            etTitle.error = "Title should have only up to 100 characters"
         } else {
-            viewmodel.storePassword(title, siteName, userName, passwordText, commentsText)
-            showSnackBar("Account password saved securely!")
+            viewModel.updateAccountCred(cred)
+            showSnackBar("Credential updated successfully!")
             fragmentView.findNavController().navigateUp()
         }
     }
@@ -58,12 +79,12 @@ class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
     }
 
     private fun setUI() {
-
         etSiteName = fragmentView.findViewById(R.id.et_site_name)
         etUserName = fragmentView.findViewById(R.id.et_user_name)
         etPassword = fragmentView.findViewById(R.id.et_password)
         etComments = fragmentView.findViewById(R.id.et_comments)
         etTitle = fragmentView.findViewById(R.id.et_title)
-        btnAdd = fragmentView.findViewById(R.id.btn_add_password)
+        btnEdit = fragmentView.findViewById(R.id.btn_edit_password)
     }
+
 }

@@ -86,6 +86,7 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
 
         viewmodel.accountCred.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
+                Log.d(TAG, "onViewCreated: $it")
                 adapter.submitList(it)
             }
         }
@@ -158,8 +159,10 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
 
     override fun onCredClick(credWrapper: CredWrapper) {
         if (credWrapper.credType == "ACCOUNT") {
+            Log.d(TAG, "onCredClick: Account")
             navigateToViewAccountCred(credWrapper.credId)
         } else {
+            Log.d(TAG, "onCredClick: Bank")
             navigateToViewBankCred(credWrapper.credId)
         }
     }

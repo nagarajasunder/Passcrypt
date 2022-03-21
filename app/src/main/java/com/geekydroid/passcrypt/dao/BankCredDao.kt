@@ -1,10 +1,7 @@
 package com.geekydroid.passcrypt.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import com.geekydroid.passcrypt.entities.BankCred
 import com.geekydroid.passcrypt.entities.Card
 
@@ -40,4 +37,7 @@ interface BankCredDao {
         return Pair(bankCred, cardCred)
 
     }
+
+    @Update
+    suspend fun updateBankCred(bankCred: BankCred)
 }

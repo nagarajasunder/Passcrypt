@@ -17,7 +17,7 @@
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/tv_cred_title"
+                android:id="@+id/tv_bank_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -30,10 +30,9 @@
 
             <TextView
                 android:id="@+id/tv_last_updated"
-                style="@style/MytextColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_cred_title"
+                android:layout_below="@+id/tv_bank_name"
                 android:layout_marginStart="8dp"
                 android:padding="5dp"
                 android:textSize="14sp"
@@ -43,13 +42,13 @@
                 android:id="@+id/iv_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/tv_cred_title"
-                android:layout_alignBottom="@+id/tv_cred_title"
+                android:layout_alignTop="@+id/tv_bank_name"
+                android:layout_alignBottom="@+id/tv_bank_name"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/iv_edit"
-                android:contentDescription="@string/content_desc_make_favorite"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:contentDescription="@string/content_desc_make_favorite"
                 android:focusable="true"
                 android:src="@drawable/favourite_off" />
 
@@ -57,72 +56,26 @@
                 android:id="@+id/iv_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/tv_cred_title"
-                android:layout_alignBottom="@+id/tv_cred_title"
+                android:layout_alignTop="@+id/tv_bank_name"
+                android:layout_alignBottom="@+id/tv_bank_name"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="5dp"
-                android:contentDescription="@string/edit"
                 android:layout_marginEnd="8dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
+                android:contentDescription="@string/edit"
                 android:focusable="true"
                 android:src="@drawable/edit" />
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/tv_bank_name_label"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="5dp"
-            android:padding="8dp"
-            android:text="@string/bank_name"
-            android:textColor="@color/text_grey"
-            android:textSize="15sp"
-            android:visibility="gone" />
-
-
-        <TextView
-            android:id="@+id/tv_bank_name"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_bank_name_label"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="5dp"
-            android:layout_toStartOf="@+id/iv_copy_bank_name"
-            android:padding="8dp"
-            android:textSize="20sp"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/iv_copy_bank_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
-            android:layout_alignTop="@+id/tv_bank_name"
-            android:layout_alignBottom="@+id/tv_bank_name"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="8dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:contentDescription="@string/content_desc_copy_bank_name"
-            android:focusable="true"
-            android:src="@drawable/copy"
-            android:visibility="gone" />
-
-        <TextView
             android:id="@+id/tv_account_number_label"
             style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_bank_name"
+            android:layout_below="@+id/title"
             android:layout_marginStart="8dp"
             android:layout_marginTop="5dp"
             android:padding="8dp"
@@ -149,7 +102,7 @@
             android:id="@+id/iv_copy_account_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_bank_name"
+            android:layout_below="@+id/tv_account_number_label"
             android:layout_alignTop="@+id/tv_account_number"
             android:layout_alignBottom="@+id/tv_account_number"
             android:layout_alignParentEnd="true"
@@ -195,7 +148,7 @@
             android:id="@+id/iv_copy_ifsc_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_bank_name"
+            android:layout_below="@+id/tv_account_number"
             android:layout_alignTop="@+id/tv_ifsc_code"
             android:layout_alignBottom="@+id/tv_ifsc_code"
             android:layout_alignParentEnd="true"
@@ -204,10 +157,10 @@
             android:layout_marginEnd="8dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:clickable="true"
+            android:contentDescription="@string/content_desc_copy_ifsc_code"
             android:focusable="true"
             android:src="@drawable/copy"
-            android:visibility="gone"
-            android:contentDescription="@string/content_desc_copy_ifsc_code" />
+            android:visibility="gone" />
 
 
         <TextView
@@ -261,7 +214,7 @@
             android:id="@+id/iv_copy_customer_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_bank_name"
+            android:layout_below="@+id/tv_customer_id_label"
             android:layout_alignTop="@+id/tv_customer_id"
             android:layout_alignBottom="@+id/tv_customer_id"
             android:layout_alignParentEnd="true"
@@ -270,8 +223,8 @@
             android:layout_marginEnd="8dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:clickable="true"
-            android:focusable="true"
             android:contentDescription="@string/content_desc_copy_customer_id"
+            android:focusable="true"
             android:src="@drawable/copy"
             android:visibility="gone" />
 
@@ -311,6 +264,7 @@
             android:layout_marginTop="8dp"
             android:padding="8dp"
             android:text="@string/card_details"
+            android:visibility="gone"
             android:textStyle="bold" />
 
         <include
@@ -319,6 +273,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_card_details"
+            android:visibility="gone"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="10dp" />

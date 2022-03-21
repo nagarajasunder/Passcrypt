@@ -13,6 +13,7 @@ data class BankCred(
     var ifscCode: String = "",
     var customerId: String = "",
     var comments: String = "",
+    var isFavorite: Boolean = false,
     var createdOn: Long = System.currentTimeMillis(),
     var updatedOn: Long
 ) {
