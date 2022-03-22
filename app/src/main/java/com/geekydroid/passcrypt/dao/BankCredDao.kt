@@ -40,4 +40,7 @@ interface BankCredDao {
 
     @Update
     suspend fun updateBankCred(bankCred: BankCred)
+
+    @Update
+    suspend fun updateCard(cardCred: Card)
 }

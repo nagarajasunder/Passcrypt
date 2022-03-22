@@ -50,7 +50,7 @@ interface AccountCredDao {
                 "bankName as credTitle , " +
                 "comments as credComments , " +
                 "'BANK' as credType , " +
-                "createdOn as createdOn FROM BANK_CRED ORDER BY createdOn"
+                "createdOn as createdOn FROM BANK_CRED WHERE credTitle LIKE '%' || :searchText || '%' OR credComments LIKE '%' || :searchText || '%' ORDER BY createdOn"
     )
-    fun getCombinedCreds(): LiveData<List<CredWrapper>>
+    fun getCombinedCreds(searchText: String): LiveData<List<CredWrapper>>
 }

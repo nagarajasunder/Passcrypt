@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class HomeFragmentRepository @Inject constructor(private val database: EncryptedDataSource) {
 
-    fun getAccountCreds(searchText: String = "") = database.getAccountCredDao().getCombinedCreds()
+    fun getAccountCreds(searchText: String = "") = database.getAccountCredDao().getCombinedCreds(searchText)
 
 }

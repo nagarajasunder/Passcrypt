@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -37,6 +38,7 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: AccountCredAdapter
     private val viewmodel: HomeFragmentViewmodel by viewModels()
+    private lateinit var searchView: SearchView
 
     private val rotateOpen: Animation by lazy {
         AnimationUtils.loadAnimation(
@@ -143,6 +145,25 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home_options_menu, menu)
+        val searchItem = menu.findItem(R.id.search)
+        searchView = searchItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    viewmodel.accountSearchText.value = ""
+                } else {
+                    viewmodel.accountSearchText.value = newText
+                }
+
+                return true
+            }
+
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -154,8 +175,11 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
             }
         }
 
+
+
         return true
     }
+
 
     override fun onCredClick(credWrapper: CredWrapper) {
         if (credWrapper.credType == "ACCOUNT") {

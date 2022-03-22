@@ -8,6 +8,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.entities.BankCred
@@ -57,6 +58,7 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
     private lateinit var ivShowCVV: ImageView
     private lateinit var ivShowCustomerId: ImageView
     private lateinit var ivFavorite: ImageView
+    private lateinit var ivEdit: ImageView
 
     private lateinit var cardReadOnly: RelativeLayout
 
@@ -112,7 +114,16 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
             }
         }
 
+        ivEdit.setOnClickListener {
+            navigateToEditBankAccount()
+        }
 
+
+    }
+
+    private fun navigateToEditBankAccount() {
+        val action = ViewBankCredDirections.actionViewBankCredToEditBankAccountCred(credId)
+        findNavController().navigate(action)
     }
 
     private fun showCardUI() {
@@ -249,6 +260,7 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
         ivCopyCustomerId = fragmentView.findViewById(R.id.iv_copy_customer_id)
         ivCopyIFSCCode = fragmentView.findViewById(R.id.iv_copy_ifsc_code)
         ivFavorite = fragmentView.findViewById(R.id.iv_favorite)
+        ivEdit = fragmentView.findViewById(R.id.iv_edit)
 
 
         tvCardNumber1 = fragmentView.findViewById(R.id.tv_card_num_1)

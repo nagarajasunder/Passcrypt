@@ -43,6 +43,8 @@ class AddNewBankCred @Inject constructor() : Fragment(R.layout.fragment_add_new_
 
         setUI()
 
+
+
         viewmodel.successFlag.observe(viewLifecycleOwner) { result ->
             if (result != null && result == Result.ERROR) {
                 showSnackBar("Unable to create bank account. Please try again")
