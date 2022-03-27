@@ -53,4 +53,7 @@ interface AccountCredDao {
                 "createdOn as createdOn FROM BANK_CRED WHERE credTitle LIKE '%' || :searchText || '%' OR credComments LIKE '%' || :searchText || '%' ORDER BY createdOn"
     )
     fun getCombinedCreds(searchText: String): LiveData<List<CredWrapper>>
+
+    @Delete
+    suspend fun deleteCredentail(accountCred: AccountCred)
 }

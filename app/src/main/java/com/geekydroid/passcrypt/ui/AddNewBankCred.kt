@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class AddNewBankCred @Inject constructor() : Fragment(R.layout.fragment_add_new_bank_cred) {
+class AddNewBankCred: Fragment(R.layout.fragment_add_new_bank_cred) {
 
     private lateinit var fragmentView: View
     private lateinit var etCardNumber1: TextInputLayout

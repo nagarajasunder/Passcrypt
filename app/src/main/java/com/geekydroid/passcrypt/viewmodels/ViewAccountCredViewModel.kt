@@ -33,4 +33,10 @@ class ViewAccountCredViewModel @Inject constructor(private val repo: ViewAccount
             repo.addToFavorites(accountCred)
         }
     }
+
+    fun deleteCredential(accountCred: AccountCred) {
+        viewModelScope.launch {
+            repo.deleteAccountCredential(accountCred)
+        }
+    }
 }

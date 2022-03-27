@@ -1,11 +1,15 @@
 package com.geekydroid.passcrypt.ui
 
+import android.app.AlertDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -61,6 +65,8 @@ class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
         credId = args.credId
 
         setUI()
+        setHasOptionsMenu(true)
+
         ViewModel.getAccountCred(credId).observe(viewLifecycleOwner) { AccountCred ->
             if (AccountCred != null) {
                 accountCred = AccountCred
@@ -183,6 +189,45 @@ class ViewAccountCred : Fragment(R.layout.fragment_view_account_cred) {
         ivShowPassword = fragmentView.findViewById(R.id.iv_show_password)
         ivFavorite = fragmentView.findViewById(R.id.iv_favorite)
         ivEdit = fragmentView.findViewById(R.id.iv_edit)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        inflater.inflate(R.menu.view_cred_menu, menu)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.delete -> showDeletionWarningDialog()
+        }
+
+        return true
+
+
+    }
+
+    private fun showDeletionWarningDialog() {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Delete Credential")
+            .setMessage("All data associated with this credential will be deleted")
+            .setPositiveButton(
+                "Yes"
+            ) { _, _ ->
+                deleteCredential()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+        dialog.show()
+    }
+
+    private fun deleteCredential() {
+        ViewModel.deleteCredential(accountCred)
+        showSnackBar("Credential Deleted Successfully")
+        findNavController().navigateUp()
     }
 
 

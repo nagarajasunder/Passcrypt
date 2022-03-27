@@ -18,4 +18,8 @@ abstract class EncryptedDataSource : RoomDatabase() {
     abstract fun getAccountCredDao(): AccountCredDao
 
     abstract fun getBankCredDao(): BankCredDao
+
+
+
+
 }

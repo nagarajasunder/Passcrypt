@@ -28,6 +28,7 @@
         <entry key="app/src/main/res/layout/fragment_view_account_cred.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_view_bank_cred.xml" value="0.8009367681498829" />
         <entry key="app/src/main/res/menu/home_options_menu.xml" value="0.8009367681498829" />
+        <entry key="app/src/main/res/menu/view_cred_menu.xml" value="0.8009367681498829" />
       </map>
     </option>
   </component>

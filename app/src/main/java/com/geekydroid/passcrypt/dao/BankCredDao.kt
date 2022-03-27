@@ -43,4 +43,7 @@ interface BankCredDao {
 
     @Update
     suspend fun updateCard(cardCred: Card)
+
+    @Delete
+    suspend fun deleteBank(bankCred: BankCred)
 }

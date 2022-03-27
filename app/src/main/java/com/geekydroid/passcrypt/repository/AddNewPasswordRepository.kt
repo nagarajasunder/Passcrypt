@@ -1,13 +1,19 @@
 package com.geekydroid.passcrypt.repository
 
-import com.geekydroid.passcrypt.datasources.EncryptedDataSource
+import com.geekydroid.passcrypt.dao.AccountCredDao
 import com.geekydroid.passcrypt.entities.AccountCred
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class AddNewPasswordRepository @Inject constructor(private val database: EncryptedDataSource) {
+@Singleton
+class AddNewPasswordRepository @Inject constructor(private val accountDao: AccountCredDao) {
+
+    init {
+        println("debug: dao add $accountDao")
+    }
 
 
     suspend fun insertCred(accountCred: AccountCred) {
-        database.getAccountCredDao().insertCred(accountCred)
+        accountDao.insertCred(accountCred)
     }
 }

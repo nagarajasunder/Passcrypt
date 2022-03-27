@@ -2,10 +2,14 @@ package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,6 +18,7 @@ import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.entities.BankCred
 import com.geekydroid.passcrypt.entities.Card
 import com.geekydroid.passcrypt.viewmodels.ViewBankCredViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -73,6 +78,7 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
         fragmentView = view
         credId = args.credId
         setUI()
+        setHasOptionsMenu(true)
 
         ViewModel.getBankCredWithCard(credId).observe(viewLifecycleOwner) { response ->
 
@@ -277,6 +283,45 @@ class ViewBankCred : Fragment(R.layout.fragment_view_bank_cred) {
         ivShowCustomerId = fragmentView.findViewById(R.id.iv_show_customer_id)
 
         cardReadOnly = fragmentView.findViewById(R.id.card_cred)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.view_cred_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.delete -> showDeletionWarningDialog()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showDeletionWarningDialog() {
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Delete Credential")
+            .setMessage("All data associated with this credential will be removed")
+            .setPositiveButton("Yes") { dialog, _ ->
+                deleteCredential()
+                dialog.dismiss()
+
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+        dialog.show()
+    }
+
+    private fun deleteCredential() {
+        ViewModel.deleteCredential(bankCred)
+        showSnackBar("Bank Details deleted successfully")
+        findNavController().navigateUp()
+    }
+
+    private fun showSnackBar(message: String) {
+        Snackbar.make(fragmentView, message, Snackbar.LENGTH_SHORT).show()
     }
 
 

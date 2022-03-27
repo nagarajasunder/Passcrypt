@@ -1,7 +1,6 @@
 package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -23,13 +22,12 @@ import com.geekydroid.passcrypt.listeners.CredOnClickListener
 import com.geekydroid.passcrypt.viewmodels.HomeFragmentViewmodel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 private const val TAG = "HomeFragment"
 
 @AndroidEntryPoint
-class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), CredOnClickListener {
+class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
     private lateinit var fragmentView: View
     private lateinit var fabAdd: FloatingActionButton
     private lateinit var fabAccount: FloatingActionButton
@@ -69,6 +67,7 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         fragmentView = view
         setHasOptionsMenu(true)
         setUI()
@@ -87,10 +86,8 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
         }
 
         viewmodel.accountCred.observe(viewLifecycleOwner) {
-            if (!it.isNullOrEmpty()) {
-                Log.d(TAG, "onViewCreated: $it")
-                adapter.submitList(it)
-            }
+            adapter.submitList(it)
+
         }
     }
 
@@ -103,12 +100,10 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
 
     private fun setAnimation(clicked: Boolean) {
         if (!clicked) {
-            Log.d(TAG, "setAnimation: if called")
             fabAccount.startAnimation(fromBottom)
             fabBank.startAnimation(fromBottom)
             fabAdd.startAnimation(rotateOpen)
         } else {
-            Log.d(TAG, "setAnimation: else called")
             fabAdd.startAnimation(rotateClose)
             fabAccount.startAnimation(toBottom)
             fabBank.startAnimation(toBottom)
@@ -117,11 +112,9 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
 
     private fun setVisibility(clicked: Boolean) {
         if (!clicked) {
-            Log.d(TAG, "setVisibility: if called")
             fabAccount.visibility = View.VISIBLE
             fabBank.visibility = View.VISIBLE
         } else {
-            Log.d(TAG, "setVisibility: else called")
             fabAccount.visibility = View.INVISIBLE
             fabBank.visibility = View.INVISIBLE
         }
@@ -154,7 +147,7 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText.isNullOrEmpty()) {
+                if (newText.isNullOrBlank()) {
                     viewmodel.accountSearchText.value = ""
                 } else {
                     viewmodel.accountSearchText.value = newText
@@ -182,13 +175,13 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
 
 
     override fun onCredClick(credWrapper: CredWrapper) {
+
         if (credWrapper.credType == "ACCOUNT") {
-            Log.d(TAG, "onCredClick: Account")
             navigateToViewAccountCred(credWrapper.credId)
         } else {
-            Log.d(TAG, "onCredClick: Bank")
             navigateToViewBankCred(credWrapper.credId)
         }
+
     }
 
     private fun navigateToViewBankCred(credId: Int) {
@@ -200,5 +193,6 @@ class HomeFragment @Inject constructor() : Fragment(R.layout.fragment_home), Cre
         val action = HomeFragmentDirections.actionHomeFragmentToViewAccountCred(credId)
         findNavController().navigate(action)
     }
+
 
 }

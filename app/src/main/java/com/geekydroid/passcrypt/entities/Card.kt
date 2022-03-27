@@ -13,7 +13,8 @@ import java.text.DateFormat
         entity = BankCred::class,
         parentColumns = ["credId"],
         childColumns = ["bankId"],
-        onUpdate = CASCADE
+        onUpdate = CASCADE,
+        onDelete = CASCADE
     )]
 )
 data class Card(

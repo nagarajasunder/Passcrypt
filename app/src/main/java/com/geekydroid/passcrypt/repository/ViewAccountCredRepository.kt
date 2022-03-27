@@ -1,13 +1,26 @@
 package com.geekydroid.passcrypt.repository
 
-import com.geekydroid.passcrypt.datasources.EncryptedDataSource
+import com.geekydroid.passcrypt.dao.AccountCredDao
 import com.geekydroid.passcrypt.entities.AccountCred
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ViewAccountCredRepository(private val database: EncryptedDataSource) {
 
-    fun getAccountCredById(credId: Int) = database.getAccountCredDao().getCredById(credId)
+@Singleton
+class ViewAccountCredRepository @Inject constructor(private val accountDao: AccountCredDao) {
+
+
+    init {
+        println("debug: dao view $accountDao")
+    }
+
+    fun getAccountCredById(credId: Int) = accountDao.getCredById(credId)
     suspend fun addToFavorites(accountCred: AccountCred) {
-        database.getAccountCredDao().updateCred(accountCred)
+        accountDao.updateCred(accountCred)
+    }
+
+    suspend fun deleteAccountCredential(accountCred: AccountCred) {
+        accountDao.deleteCredentail(accountCred)
     }
 
 }

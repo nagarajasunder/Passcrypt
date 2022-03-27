@@ -1,17 +1,26 @@
 package com.geekydroid.passcrypt.repository
 
-import com.geekydroid.passcrypt.datasources.EncryptedDataSource
+import com.geekydroid.passcrypt.dao.BankCredDao
 import com.geekydroid.passcrypt.entities.BankCred
 import com.geekydroid.passcrypt.entities.Card
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ViewBankCredRepository(private val database: EncryptedDataSource) {
+@Singleton
+class ViewBankCredRepository @Inject constructor(private val bankDao: BankCredDao) {
 
     suspend fun getBankCredWithCards(credId: Int): Pair<BankCred, List<Card>>? {
-        return database.getBankCredDao().getBankCredWithCards(credId)
+        return bankDao.getBankCredWithCards(credId)
     }
 
     suspend fun updateBank(bankCred: BankCred) {
-        database.getBankCredDao().updateBankCred(bankCred)
+        bankDao.updateBankCred(bankCred)
+    }
+
+    suspend fun deleteBankCredential(bankCred: BankCred) {
+
+        bankDao.deleteBank(bankCred)
+
     }
 
 

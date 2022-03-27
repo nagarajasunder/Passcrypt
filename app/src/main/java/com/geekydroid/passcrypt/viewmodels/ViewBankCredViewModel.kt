@@ -1,5 +1,6 @@
 package com.geekydroid.passcrypt.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -35,6 +36,12 @@ class ViewBankCredViewModel @Inject constructor(private val repo: ViewBankCredRe
         viewModelScope.launch {
             bankCred.isFavorite = true
             repo.updateBank(bankCred)
+        }
+    }
+
+    fun deleteCredential(bankCred: BankCred) {
+        viewModelScope.launch {
+            repo.deleteBankCredential(bankCred)
         }
     }
 }
