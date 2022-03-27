@@ -166,6 +166,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
                 val action = HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
                 fragmentView.findNavController().navigate(action)
             }
+            R.id.password_generator -> {
+                val action = HomeFragmentDirections.actionHomeFragmentToPasswordGenerator()
+                fragmentView.findNavController().navigate(action)
+            }
         }
 
 

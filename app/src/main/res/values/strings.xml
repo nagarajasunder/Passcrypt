@@ -57,4 +57,14 @@
     <string name="content_desc_view_cred">View Cred</string>
     <string name="search">Search</string>
     <string name="delete">Delete</string>
+    <string name="content_desc_refresh">refresh</string>
+    <string name="password_length">Password Length: %1s</string>
+    <string name="character_set">Character Set</string>
+    <string name="capital_a_z">A - Z</string>
+    <string name="small_a_z">a - z</string>
+    <string name="_0_9">0 - 9</string>
+    <string name="special_characters">#!@…</string>
+    <string name="menu_option_password_generator">Password Generator</string>
+    <string name="password_generator_warning">No Character set found!</string>
+
 </resources>

@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_homeFragment_to_viewBankCred"
             app:destination="@id/viewBankCred" />
+        <action
+            android:id="@+id/action_homeFragment_to_passwordGenerator"
+            app:destination="@id/passwordGenerator" />
     </fragment>
     <fragment
         android:id="@+id/setMasterPassFragment"
@@ -120,4 +123,9 @@
             android:name="credId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/passwordGenerator"
+        android:name="com.geekydroid.passcrypt.ui.PasswordGenerator"
+        android:label="fragment_password_generator"
+        tools:layout="@layout/fragment_password_generator" />
 </navigation>
