@@ -10,4 +10,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="warning_color">#D0342C</color>
     <color name="text_grey">#808080</color>
+    <color name="settings_label_color">#1976D2</color>
 </resources>

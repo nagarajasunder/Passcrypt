@@ -30,6 +30,7 @@ class PasswordGenerator : Fragment(R.layout.fragment_password_generator) {
     private lateinit var switchSmallLetters: SwitchMaterial
     private lateinit var switchSpecialCharacters: SwitchMaterial
     private lateinit var switchNumbers: SwitchMaterial
+    private lateinit var switchNoDuplicates: SwitchMaterial
     private var generatedPassword = ""
 
     private lateinit var ivRefresh: ImageView
@@ -64,24 +65,31 @@ class PasswordGenerator : Fragment(R.layout.fragment_password_generator) {
             ViewModel.passwordConfig.value = currentPasswordConfig
         }
 
-        switchSmallLetters.setOnCheckedChangeListener { compoundButton, b ->
+        switchSmallLetters.setOnCheckedChangeListener { _, b ->
             currentPasswordConfig.smallLetters = b
             ViewModel.passwordConfig.value = currentPasswordConfig
         }
 
-        switchCaptialLetters.setOnCheckedChangeListener { compoundButton, b ->
+        switchCaptialLetters.setOnCheckedChangeListener { _, b ->
             currentPasswordConfig.capitalLetters = b
             ViewModel.passwordConfig.value = currentPasswordConfig
         }
 
-        switchSpecialCharacters.setOnCheckedChangeListener { compoundButton, b ->
+        switchSpecialCharacters.setOnCheckedChangeListener { _, b ->
             currentPasswordConfig.specialCharacters = b
             ViewModel.passwordConfig.value = currentPasswordConfig
         }
 
-        switchNumbers.setOnCheckedChangeListener { compoundButton, b ->
+        switchNumbers.setOnCheckedChangeListener { _, b ->
             currentPasswordConfig.numbers = b
             ViewModel.passwordConfig.value = currentPasswordConfig
+        }
+
+        switchNoDuplicates.setOnCheckedChangeListener { _, b ->
+
+            currentPasswordConfig.removeDuplicates = b
+            ViewModel.passwordConfig.value = currentPasswordConfig
+
         }
 
         ivRefresh.setOnClickListener {
@@ -126,6 +134,7 @@ class PasswordGenerator : Fragment(R.layout.fragment_password_generator) {
         switchSmallLetters = fragmentView.findViewById(R.id.switch_small_letters)
         switchSpecialCharacters = fragmentView.findViewById(R.id.switch_special_characters)
         switchNumbers = fragmentView.findViewById(R.id.switch_numbers)
+        switchNoDuplicates = fragmentView.findViewById(R.id.switch_no_duplicates)
 
         ivRefresh = fragmentView.findViewById(R.id.iv_refresh)
         ivCopy = fragmentView.findViewById(R.id.iv_copy)

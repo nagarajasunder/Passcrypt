@@ -6,19 +6,202 @@
     tools:context=".ui.SettingsFragment">
 
     <TextView
-        android:id="@+id/tv_self_desctruction"
+        android:id="@+id/tv_header_1"
+        style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Self Destruction" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/general"
+        android:textColor="@color/settings_label_color" />
+
+
+    <TextView
+        android:id="@+id/tv_self_destruction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_header_1"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toStartOf="@+id/switch_self_destruction"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        android:padding="5dp"
+        android:text="@string/self_destruction"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_self_destruction_instruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_self_destruction"
+        android:layout_marginStart="12dp"
+        android:layout_toStartOf="@+id/switch_self_destruction"
+        android:padding="5dp"
+        android:text="@string/self_destruction_description"
+        android:textColor="@color/text_grey"
+        android:textSize="16sp" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch_self_destruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tv_self_desctruction"
-        android:layout_alignBottom="@+id/tv_self_desctruction"
+        android:layout_alignTop="@+id/tv_self_destruction"
+        android:layout_alignBottom="@+id/tv_self_destruction"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="5dp" />
+
+    <TextView
+        android:id="@+id/tv_number_of_attempts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_self_destruction_instruction"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        android:padding="5dp"
+        android:text="@string/number_of_attempts"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_change_master_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_number_of_attempts"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        android:padding="5dp"
+        android:text="@string/change_master_password"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/line_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_change_master_password"
+        android:layout_marginTop="8dp"
+        android:background="@color/settings_label_color" />
+
+    <TextView
+        android:id="@+id/tv_header_2"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line_1"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/links"
+        android:textColor="@color/settings_label_color" />
+
+    <TextView
+        android:id="@+id/tv_rate_passcrypt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_header_2"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        android:padding="5dp"
+        android:text="@string/rate_passcrypt"
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:id="@+id/tv_share_passcrypt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_rate_passcrypt"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        android:padding="5dp"
+        android:text="@string/share_text_label"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_contact_support"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_share_passcrypt"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        android:padding="5dp"
+        android:text="@string/contact_support"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_contact_support_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_contact_support"
+        android:layout_marginStart="12dp"
+        android:padding="5dp"
+        android:text="@string/report_a_bug_or_ask_a_feature"
+        android:textColor="@color/text_grey"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_other_products"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_contact_support_desc"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        android:padding="5dp"
+        android:text="@string/our_other_products"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/line_2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_other_products"
+        android:layout_marginTop="8dp"
+        android:background="@color/settings_label_color" />
+
+    <ImageView
+        android:id="@+id/iv_info_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line_2"
+        android:layout_alignTop="@+id/tv_current_version"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/content_desc_info_circle"
+        android:src="@drawable/info_circle" />
+
+    <TextView
+        android:id="@+id/tv_current_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line_2"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/iv_info_circle"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:text="@string/passcrypt_version"
+        android:textSize="18sp" />
+
 
 </RelativeLayout>

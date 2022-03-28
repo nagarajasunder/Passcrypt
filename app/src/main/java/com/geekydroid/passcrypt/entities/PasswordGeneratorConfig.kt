@@ -5,5 +5,6 @@ data class PasswordGeneratorConfig(
     var smallLetters: Boolean = false,
     var numbers: Boolean = false,
     var specialCharacters: Boolean = false,
+    var removeDuplicates:Boolean = false,
     var passwordSize: Int = 25
 )

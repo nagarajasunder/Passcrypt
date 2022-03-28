@@ -1,6 +1,9 @@
 package com.geekydroid.passcrypt.ui
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -29,7 +32,21 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.navController
 
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
 
+        val filter = IntentFilter("android.hardware.usb.action.USB_STATE")
+//        registerReceiver(USBAttachedReceiver(), filter)
+
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if (intent?.getBooleanExtra("QUIT", false) == true) {
+            finishAndRemoveTask()
+        }
     }
 
 }

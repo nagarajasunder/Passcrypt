@@ -80,7 +80,11 @@
         android:id="@+id/settingsFragment"
         android:name="com.geekydroid.passcrypt.ui.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_updateMasterPassword"
+            app:destination="@id/updateMasterPassword" />
+    </fragment>
     <fragment
         android:id="@+id/viewAccountCred"
         android:name="com.geekydroid.passcrypt.ui.ViewAccountCred"
@@ -128,4 +132,9 @@
         android:name="com.geekydroid.passcrypt.ui.PasswordGenerator"
         android:label="fragment_password_generator"
         tools:layout="@layout/fragment_password_generator" />
+    <fragment
+        android:id="@+id/updateMasterPassword"
+        android:name="com.geekydroid.passcrypt.ui.UpdateMasterPassword"
+        android:label="fragment_update_master_password"
+        tools:layout="@layout/fragment_update_master_password" />
 </navigation>

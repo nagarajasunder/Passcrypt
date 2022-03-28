@@ -146,14 +146,14 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
 
 
     private fun showWarning() {
-        tvAttempts.text = getString(R.string.number_of_attempts, numberOfAttempts.toString())
+        tvAttempts.text = getString(R.string.remaining_number_of_attempts, numberOfAttempts.toString())
 
     }
 
     private fun showSelfDestructiveCards() {
         attemptsCard.visibility = View.VISIBLE
         warningCard.visibility = View.VISIBLE
-        tvAttempts.text = getString(R.string.number_of_attempts, numberOfAttempts.toString())
+        tvAttempts.text = getString(R.string.remaining_number_of_attempts, numberOfAttempts.toString())
     }
 
     private fun navigateToHome() {
