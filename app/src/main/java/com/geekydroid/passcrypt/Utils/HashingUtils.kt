@@ -52,6 +52,7 @@ object HashingUtils {
         return bytes
     }
 
+
     fun verifyPassword(userEnteredPassword: String, storedPassword: String): Boolean {
         val parts = storedPassword.split(":")
 
@@ -68,9 +69,6 @@ object HashingUtils {
             diff = diff.or(hash[i].xor(testHash[i]).toInt())
             i++
         }
-
-
         return diff == 0
-
     }
 }

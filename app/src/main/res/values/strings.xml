@@ -85,7 +85,7 @@
         https://play.google.com/store/apps/details?id=com.geekydroid.passcrypt</string>
 
     <string name="passcrypt_version">Current Version v1.0.0</string>
-    <string name="enter_you_old_master_password">Enter you Old Master Password</string>
+    <string name="enter_you_old_master_password">Enter you current Master Password</string>
     <string name="content_desc_proceed">Proceed</string>
 
 </resources>

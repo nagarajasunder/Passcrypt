@@ -7,9 +7,10 @@ import androidx.room.PrimaryKey
 data class User(
     @PrimaryKey(autoGenerate = true)
     val userId: Int = 0,
-    val masterPassHash: String,
+    var masterPassHash: String,
     val isMasterPassSet: Boolean,
     var selfDestructive: Boolean = false,
     var selfDestructiveCount: Int = 0,
-    val createdOn: Long = System.currentTimeMillis()
+    val createdOn: Long = System.currentTimeMillis(),
+    var updatedOn: Long
 )

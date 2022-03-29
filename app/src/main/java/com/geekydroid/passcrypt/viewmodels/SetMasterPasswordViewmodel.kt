@@ -23,7 +23,11 @@ class SetMasterPasswordViewmodel @Inject constructor(private val repository: Set
         CoroutineScope(IO).launch {
             val passwordHash = HashingUtils.getStrongPasswordHash(password)
             val result: Long = if (MODE == NavigationMode.NORMAL_MODE) {
-                val user = User(masterPassHash = passwordHash, isMasterPassSet = true)
+                val user = User(
+                    masterPassHash = passwordHash,
+                    isMasterPassSet = true,
+                    updatedOn = System.currentTimeMillis()
+                )
                 repository.insertUser(user)
             } else {
                 repository.resetUser(passwordHash)
