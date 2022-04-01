@@ -23,7 +23,8 @@ class UpdateMasterPassword : Fragment(R.layout.fragment_update_master_password) 
     private lateinit var fabVerifyPassword: FloatingActionButton
     private var userAuthenticated = false
     private lateinit var user: User
-
+    private var oldPassword: String = ""
+    private var newPassword = ""
     private val viewModel: UpdateMasterPasswordViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,20 +64,23 @@ class UpdateMasterPassword : Fragment(R.layout.fragment_update_master_password) 
     }
 
     private fun getUserInputForNewPassword() {
-        val userEnteredPassword = etMasterPassword.editText?.text.toString()
-        if (userEnteredPassword.isEmpty()) {
+        newPassword = etMasterPassword.editText?.text.toString()
+        if (newPassword.isEmpty()) {
             showSnackBar("Please enter your new Master password")
         } else {
-            viewModel.updateMasterPassword(userEnteredPassword, user)
+            viewModel.updateMasterPassword(
+                userEnteredPassword = newPassword,
+                user
+            )
         }
     }
 
     private fun getUserInputForOldPassword() {
-        val userEnteredPassword = etMasterPassword.editText?.text.toString()
-        if (userEnteredPassword.isEmpty()) {
+        oldPassword = etMasterPassword.editText?.text.toString()
+        if (oldPassword.isEmpty()) {
             showSnackBar("Please enter your current Master password")
         } else {
-            viewModel.authenticateUser(userEnteredPassword, user)
+            viewModel.authenticateUser(oldPassword, user)
         }
     }
 

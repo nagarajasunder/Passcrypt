@@ -10,11 +10,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.geekydroid.passcrypt.PasscryptApp
 import com.geekydroid.passcrypt.R
+import com.geekydroid.passcrypt.datasources.EncryptedDataSource
 import com.geekydroid.passcrypt.enums.NavigationMode
 import com.geekydroid.passcrypt.viewmodels.SetMasterPasswordViewmodel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import dagger.Lazy
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
@@ -25,24 +28,32 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
     private val viewmodel: SetMasterPasswordViewmodel by viewModels()
     private lateinit var NAVIGATION_MODE: String
     private val args: SetMasterPassFragmentArgs by navArgs()
+    private var userEnteredPass = ""
+
+    @Inject
+    lateinit var database: Lazy<EncryptedDataSource>
+
+    @Inject
+    lateinit var app: PasscryptApp
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         NAVIGATION_MODE =
-            args.mode ?: (requireActivity().application as PasscryptApp).NAVIGATION_MODE_NORMAL
+            args.mode ?: app.NAVIGATION_MODE_NORMAL
 
         fragmentView = view
         setUI()
         viewmodel.createUserProcessFlag.observe(viewLifecycleOwner)
         { result ->
             if (result == true) {
+                clearMasterPass()
                 showSnackBar("Master password set successfully!!")
                 navigateToHome()
 
             } else {
-                showSnackBar("Cannot set Master password please try again :(")
+                showSnackBar("Cannot set Master password please try again.")
                 clearData()
             }
         }
@@ -51,6 +62,13 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
 
             setUpMasterPassword()
         }
+    }
+
+    private fun clearMasterPass() {
+        app.setMasterPass(userEnteredPass)
+        database.get()
+        app.clearMasterPass()
+        userEnteredPass = ""
     }
 
 
@@ -62,21 +80,22 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
     }
 
     private fun clearData() {
+        userEnteredPass = ""
         etPassword.editText?.text?.clear()
         etConfirmPassword.editText?.text?.clear()
     }
 
     private fun setUpMasterPassword() {
-        val passwordText = etPassword.editText!!.text.toString()
+        userEnteredPass = etPassword.editText!!.text.toString()
         val confirmPasswordText = etConfirmPassword.editText!!.text.toString()
-        if (passwordText.isEmpty() || confirmPasswordText.isEmpty()) {
+        if (userEnteredPass.isEmpty() || confirmPasswordText.isEmpty()) {
             showSnackBar("Please fill all the fields.")
-        } else if (!passwordText.contentEquals(confirmPasswordText)) {
+        } else if (!userEnteredPass.contentEquals(confirmPasswordText)) {
             showSnackBar("Passwords doesn't match.")
         } else {
             viewmodel.createUser(
-                passwordText,
-                if (NAVIGATION_MODE == (requireActivity().application as PasscryptApp).NAVIGATION_MODE_RESET) NavigationMode.PASSWORD_RESET_MODE else NavigationMode.NORMAL_MODE
+                userEnteredPass,
+                if (NAVIGATION_MODE == app.NAVIGATION_MODE_RESET) NavigationMode.PASSWORD_RESET_MODE else NavigationMode.NORMAL_MODE
             )
             updatePrefs()
         }
@@ -85,7 +104,7 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
     private fun updatePrefs() {
         val prefs = requireContext().getSharedPreferences("myPrefs", AppCompatActivity.MODE_PRIVATE)
         val editor = prefs.edit()
-        editor.putBoolean((requireActivity().application as PasscryptApp).FIRST_LAUNCH, false)
+        editor.putBoolean(app.FIRST_LAUNCH, false)
         editor.apply()
     }
 

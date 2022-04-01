@@ -36,6 +36,7 @@ class UpdateMasterPasswordViewModel @Inject constructor(private val repo: Update
             user.masterPassHash = passwordHash
             user.updatedOn = System.currentTimeMillis()
             repo.updateUserProfile(user)
+            repo.updateDBKey(newKey = userEnteredPassword)
             passwordChangeResult.value = MasterPasswordChangeEvent.MASTER_PASSWORD_UPDATED
         }
     }

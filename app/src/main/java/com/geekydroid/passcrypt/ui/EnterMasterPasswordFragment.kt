@@ -1,7 +1,6 @@
 package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -19,6 +18,7 @@ import com.geekydroid.passcrypt.viewmodels.EnterMasterPasswordViewModel
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import dagger.Lazy
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -36,17 +36,21 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
     private var selfDestructive = false
     private var numberOfAttempts = 0
     private lateinit var currentUser: User
+    private var userEnteredPass = ""
 
     @Inject
-    lateinit var database: EncryptedDataSource
+    lateinit var app: PasscryptApp
+
+    @Inject
+    lateinit var database: Lazy<EncryptedDataSource>
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val prefs =
             requireActivity().getSharedPreferences("myPrefs", AppCompatActivity.MODE_PRIVATE)
         val isFirstLaunch =
-            prefs.getBoolean((requireActivity().application as PasscryptApp).FIRST_LAUNCH, true)
+            prefs.getBoolean(app.FIRST_LAUNCH, true)
         if (isFirstLaunch) {
             navigationToSetMasterPassword()
         }
@@ -59,7 +63,6 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
 
 
         viewmodel.user.observe(viewLifecycleOwner) {
-            Log.d("DEBUG:", "onViewCreated: livedata called")
             if (it != null && it.selfDestructive) {
                 currentUser = it
                 selfDestructive = true
@@ -76,7 +79,7 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
         btnSetNewPassword.setOnClickListener {
             val action =
                 EnterMasterPasswordFragmentDirections.actionEnterMasterPasswordFragmentToSetMasterPassFragment(
-                    (requireActivity().application as PasscryptApp).NAVIGATION_MODE_RESET
+                    app.NAVIGATION_MODE_RESET
                 )
             findNavController().navigate(action)
         }
@@ -85,8 +88,10 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
 
         viewmodel.userAuthFlag.observe(viewLifecycleOwner) { result ->
             if (result) {
+                clearMasterPass()
                 navigateToHome()
             } else {
+                userEnteredPass = ""
                 showSnackBar("Master password doesn't match Please try again")
                 etPassword.editText?.text?.clear()
                 --numberOfAttempts
@@ -112,7 +117,6 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    Log.d("DEBUG:", "handleOnBackPressed: called")
                     if (selfDestructive) {
                         currentUser.selfDestructiveCount = numberOfAttempts
                         viewmodel.updateUser(currentUser)
@@ -123,10 +127,19 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
             })
     }
 
+    private fun clearMasterPass() {
+        app.setMasterPass(userEnteredPass)
+            database.get()
+            app.clearMasterPass()
+            userEnteredPass = ""
+
+
+    }
+
     private fun navigationToSetMasterPassword() {
         val action =
             EnterMasterPasswordFragmentDirections.actionEnterMasterPasswordFragmentToSetMasterPassFragment(
-                (requireActivity().application as PasscryptApp).NAVIGATION_MODE_NORMAL
+                app.NAVIGATION_MODE_NORMAL
             )
         findNavController().navigate(action)
     }
@@ -146,14 +159,16 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
 
 
     private fun showWarning() {
-        tvAttempts.text = getString(R.string.remaining_number_of_attempts, numberOfAttempts.toString())
+        tvAttempts.text =
+            getString(R.string.remaining_number_of_attempts, numberOfAttempts.toString())
 
     }
 
     private fun showSelfDestructiveCards() {
         attemptsCard.visibility = View.VISIBLE
         warningCard.visibility = View.VISIBLE
-        tvAttempts.text = getString(R.string.remaining_number_of_attempts, numberOfAttempts.toString())
+        tvAttempts.text =
+            getString(R.string.remaining_number_of_attempts, numberOfAttempts.toString())
     }
 
     private fun navigateToHome() {
@@ -164,11 +179,11 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
 
 
     private fun verifyUser() {
-        val passwordText = etPassword.editText?.text?.toString()
-        if (passwordText.isNullOrEmpty()) {
+        userEnteredPass = etPassword.editText?.text?.toString() ?: ""
+        if (userEnteredPass.isEmpty()) {
             showSnackBar("Please enter your master password")
         } else {
-            viewmodel.authenticateUser(passwordText)
+            viewmodel.authenticateUser(userEnteredPass)
         }
     }
 

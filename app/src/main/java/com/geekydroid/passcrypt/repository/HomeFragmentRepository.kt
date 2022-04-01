@@ -13,7 +13,6 @@ class HomeFragmentRepository @Inject constructor(private val accountDao: Account
         println("debug: dao home $accountDao")
     }
 
-
     fun getAccountCreds(searchText: String = "") = accountDao.getCombinedCreds(searchText)
 
 

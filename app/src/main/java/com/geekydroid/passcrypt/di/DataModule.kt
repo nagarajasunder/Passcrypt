@@ -2,6 +2,7 @@ package com.geekydroid.passcrypt.di
 
 import android.app.Application
 import androidx.room.Room
+import com.geekydroid.passcrypt.PasscryptApp
 import com.geekydroid.passcrypt.dao.AccountCredDao
 import com.geekydroid.passcrypt.dao.BankCredDao
 import com.geekydroid.passcrypt.dao.UserDao
@@ -11,11 +12,24 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
+
+
+    @Provides
+    @Singleton
+    fun providesApplication(app: Application) = (app as PasscryptApp)
+
+    @Provides
+    @Singleton
+    @Named("MASTER_PASS")
+    fun providePass(app: PasscryptApp) = app.getMasterPass()
 
     @Provides
     @Singleton
@@ -24,18 +38,25 @@ object DataModule {
             app,
             LocalDataSource::class.java,
             "Passcrypt.db"
-        ).build()
+        )
+            .build()
     }
 
 
     @Provides
     @Singleton
-    fun providesEncryptedDataSource(app: Application): EncryptedDataSource {
+    fun providesEncryptedDataSource(
+        app: Application,
+        @Named("MASTER_PASS") pass: String
+    ): EncryptedDataSource {
+
+        val factory = SupportFactory(SQLiteDatabase.getBytes(pass.toCharArray()))
         return Room.databaseBuilder(
             app,
             EncryptedDataSource::class.java,
-            "Passcrypt-encrypt.db"
-        ).build()
+            "Passcrypt_encrypt.db"
+        ).openHelperFactory(factory)
+            .build()
     }
 
     @Provides

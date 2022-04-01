@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.geekydroid.passcrypt.PasscryptApp
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.adapters.AccountCredAdapter
 import com.geekydroid.passcrypt.entities.CredWrapper
@@ -37,6 +38,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
     private lateinit var adapter: AccountCredAdapter
     private val viewmodel: HomeFragmentViewmodel by viewModels()
     private lateinit var searchView: SearchView
+
 
     private val rotateOpen: Animation by lazy {
         AnimationUtils.loadAnimation(
