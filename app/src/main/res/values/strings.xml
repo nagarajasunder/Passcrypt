@@ -87,5 +87,8 @@
     <string name="passcrypt_version">Current Version v1.0.0</string>
     <string name="enter_you_old_master_password">Enter you current Master Password</string>
     <string name="content_desc_proceed">Proceed</string>
+    <string name="save">Save</string>
+    <string name="master_password_description">Master Password is used to access all other details within the application.</string>
+    <string name="verify">Verify</string>
 
 </resources>

@@ -1,6 +1,9 @@
 package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -10,7 +13,6 @@ import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.entities.BankCred
 import com.geekydroid.passcrypt.entities.Card
 import com.geekydroid.passcrypt.viewmodels.EditBankAccountViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +29,6 @@ class EditBankAccountCred : Fragment(R.layout.fragment_edit_bank_account_cred) {
     private lateinit var etAccountNumber: TextInputLayout
     private lateinit var etIfscCode: TextInputLayout
     private lateinit var etCustomerId: TextInputLayout
-    private lateinit var fabEdit: FloatingActionButton
     private lateinit var etExpiryDate: TextInputLayout
     private lateinit var etCvv: TextInputLayout
     private lateinit var etCardPin: TextInputLayout
@@ -46,6 +47,7 @@ class EditBankAccountCred : Fragment(R.layout.fragment_edit_bank_account_cred) {
         fragmentView = view
         bankCredId = args.credId
         setUI()
+        setHasOptionsMenu(true)
 
         viewmodel.getBankAndCardCreds(bankCredId).observe(viewLifecycleOwner) { response ->
 
@@ -58,10 +60,6 @@ class EditBankAccountCred : Fragment(R.layout.fragment_edit_bank_account_cred) {
                 setCardData(cardCred)
             }
 
-        }
-
-        fabEdit.setOnClickListener {
-            validateUserData()
         }
 
 
@@ -104,7 +102,6 @@ class EditBankAccountCred : Fragment(R.layout.fragment_edit_bank_account_cred) {
         etAccountNumber = fragmentView.findViewById(R.id.et_account_number)
         etIfscCode = fragmentView.findViewById(R.id.et_ifsc_code)
         etCustomerId = fragmentView.findViewById(R.id.et_customer_id)
-        fabEdit = fragmentView.findViewById(R.id.fab_edit)
         etExpiryDate = fragmentView.findViewById(R.id.et_expiry_date)
         etCvv = fragmentView.findViewById(R.id.et_cvv_number)
         etCardPin = fragmentView.findViewById(R.id.et_pin_number)
@@ -162,5 +159,17 @@ class EditBankAccountCred : Fragment(R.layout.fragment_edit_bank_account_cred) {
 
     private fun showSnackBar(message: String) {
         Snackbar.make(fragmentView, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.add_cred_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.save) {
+            validateUserData()
+        }
+        return true
     }
 }

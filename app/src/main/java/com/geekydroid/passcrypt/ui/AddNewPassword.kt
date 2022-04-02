@@ -1,13 +1,15 @@
 package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.viewmodels.AddNewPasswordViewmodel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +23,6 @@ class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
     private lateinit var etPassword: TextInputLayout
     private lateinit var etComments: TextInputLayout
     private lateinit var etTitle: TextInputLayout
-    private lateinit var btnAdd: FloatingActionButton
     private val viewmodel: AddNewPasswordViewmodel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,9 +30,8 @@ class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
 
         fragmentView = view
         setUI()
-        btnAdd.setOnClickListener {
-            getUserInput()
-        }
+
+        setHasOptionsMenu(true)
     }
 
     private fun getUserInput() {
@@ -41,15 +41,19 @@ class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
         val passwordText = etPassword.editText?.text.toString().trim()
         val commentsText = etComments.editText?.text.toString().trim()
 
-        if (title.isEmpty()) {
-            etTitle.error = "Title cannot be empty"
-            etTitle.editText?.text?.clear()
-        } else if (title.length > 100) {
-            etTitle.error = "Title should have only up to 100 characters"
-        } else {
-            viewmodel.storePassword(title, siteName, userName, passwordText, commentsText)
-            showSnackBar("Account password saved securely!")
-            fragmentView.findNavController().navigateUp()
+        when {
+            title.isEmpty() -> {
+                etTitle.error = "Title cannot be empty"
+                etTitle.editText?.text?.clear()
+            }
+            title.length > 100 -> {
+                etTitle.error = "Title should have only up to 100 characters"
+            }
+            else -> {
+                viewmodel.storePassword(title, siteName, userName, passwordText, commentsText)
+                showSnackBar("Account password saved securely!")
+                fragmentView.findNavController().navigateUp()
+            }
         }
     }
 
@@ -64,6 +68,18 @@ class AddNewPassword : Fragment(R.layout.fragment_add_new_password) {
         etPassword = fragmentView.findViewById(R.id.et_password)
         etComments = fragmentView.findViewById(R.id.et_comments)
         etTitle = fragmentView.findViewById(R.id.et_title)
-        btnAdd = fragmentView.findViewById(R.id.btn_add_password)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.add_cred_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.save) {
+            getUserInput()
+        }
+        return true
+
     }
 }

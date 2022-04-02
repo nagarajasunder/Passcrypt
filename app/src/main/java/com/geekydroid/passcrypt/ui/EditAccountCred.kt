@@ -1,6 +1,9 @@
 package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -23,7 +26,6 @@ class EditAccountCred : Fragment(R.layout.fragment_edit_account_cred) {
     private lateinit var etPassword: TextInputLayout
     private lateinit var etComments: TextInputLayout
     private lateinit var etTitle: TextInputLayout
-    private lateinit var btnEdit: FloatingActionButton
     private val viewModel: EditAccountCredViewModel by viewModels()
     private val args: EditAccountCredArgs by navArgs()
     private var credId: Int = 0
@@ -37,6 +39,8 @@ class EditAccountCred : Fragment(R.layout.fragment_edit_account_cred) {
 
         setUI()
 
+        setHasOptionsMenu(true)
+
         viewModel.getCredByCredId(credId).observe(viewLifecycleOwner) { data ->
             if (data != null) {
                 cred = data
@@ -44,9 +48,7 @@ class EditAccountCred : Fragment(R.layout.fragment_edit_account_cred) {
             }
         }
 
-        btnEdit.setOnClickListener {
-            getUserInput()
-        }
+
 
     }
 
@@ -84,7 +86,18 @@ class EditAccountCred : Fragment(R.layout.fragment_edit_account_cred) {
         etPassword = fragmentView.findViewById(R.id.et_password)
         etComments = fragmentView.findViewById(R.id.et_comments)
         etTitle = fragmentView.findViewById(R.id.et_title)
-        btnEdit = fragmentView.findViewById(R.id.btn_edit_password)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.add_cred_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.save) {
+            getUserInput()
+        }
+        return true
     }
 
 }

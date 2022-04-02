@@ -27,9 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_bank_details"
             android:layout_marginTop="8dp"
+            android:hint="@string/bank_name"
             app:counterEnabled="true"
-            app:counterMaxLength="100"
-            android:hint="@string/bank_name">
+            app:counterMaxLength="100">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -127,15 +127,6 @@
 
 
     </RelativeLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="8dp"
-        android:contentDescription="@string/content_desc_add"
-        android:src="@drawable/check" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

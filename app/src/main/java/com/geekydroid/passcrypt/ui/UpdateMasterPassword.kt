@@ -2,6 +2,8 @@ package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -9,7 +11,7 @@ import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.entities.User
 import com.geekydroid.passcrypt.enums.MasterPasswordChangeEvent
 import com.geekydroid.passcrypt.viewmodels.UpdateMasterPasswordViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,24 +22,29 @@ class UpdateMasterPassword : Fragment(R.layout.fragment_update_master_password) 
 
     private lateinit var fragmentView: View
     private lateinit var etMasterPassword: TextInputLayout
-    private lateinit var fabVerifyPassword: FloatingActionButton
-    private var userAuthenticated = false
+    private lateinit var etNewMasterPassword: TextInputLayout
+    private lateinit var etConfirmMasterPassword: TextInputLayout
+    private lateinit var btnUpdateMasterPassword: Button
+    private lateinit var btnVerifyMasterPassword: Button
     private lateinit var user: User
     private var oldPassword: String = ""
     private var newPassword = ""
     private val viewModel: UpdateMasterPasswordViewModel by viewModels()
+
+    private lateinit var oldPasswordCard: MaterialCardView
+    private lateinit var newPasswordCard: MaterialCardView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragmentView = view
         setUI()
 
-        fabVerifyPassword.setOnClickListener {
-            if (userAuthenticated) {
-                getUserInputForNewPassword()
-            } else {
-                getUserInputForOldPassword()
-            }
+        btnVerifyMasterPassword.setOnClickListener {
+            getUserInputForOldPassword()
+        }
+
+        btnUpdateMasterPassword.setOnClickListener {
+            getUserInputForNewPassword()
         }
 
         viewModel.userProfile.observe(viewLifecycleOwner) { response ->
@@ -47,11 +54,10 @@ class UpdateMasterPassword : Fragment(R.layout.fragment_update_master_password) 
         viewModel.passwordChangeResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 MasterPasswordChangeEvent.USER_AUTHENTICATED -> {
-                    userAuthenticated = true
-                    etMasterPassword.editText?.hint = getString(R.string.set_new_master_password)
+                    animateCard()
                 }
                 MasterPasswordChangeEvent.USER_AUTH_ERROR -> {
-                    showSnackBar("The master password doesn't match. Please try again")
+                    etMasterPassword.error = "The master password doesn't match. Please try again"
                 }
                 else -> {
                     showSnackBar("Master Password changed successfully!")
@@ -61,24 +67,50 @@ class UpdateMasterPassword : Fragment(R.layout.fragment_update_master_password) 
             etMasterPassword.editText?.text?.clear()
         }
 
+
+    }
+
+    private fun animateCard() {
+
+        val slideRightOut = AnimationUtils.loadAnimation(requireContext(), R.anim.anim_right)
+        oldPasswordCard.startAnimation(slideRightOut)
+
+        newPasswordCard.visibility = View.VISIBLE
+        val slideLeftIn = AnimationUtils.loadAnimation(requireContext(), R.anim.anim_left)
+        newPasswordCard.startAnimation(slideLeftIn)
+        oldPasswordCard.visibility = View.GONE
+
     }
 
     private fun getUserInputForNewPassword() {
-        newPassword = etMasterPassword.editText?.text.toString()
-        if (newPassword.isEmpty()) {
-            showSnackBar("Please enter your new Master password")
-        } else {
-            viewModel.updateMasterPassword(
-                userEnteredPassword = newPassword,
-                user
-            )
+        newPassword = etNewMasterPassword.editText?.text.toString()
+        val confirmPassword = etConfirmMasterPassword.editText?.text.toString()
+
+        when {
+            newPassword.isEmpty() -> {
+                etNewMasterPassword.error = "Please enter your new Master Password"
+            }
+            confirmPassword.isEmpty() -> {
+                etConfirmMasterPassword.error = "Please confirm your new Master Password"
+            }
+            newPassword != confirmPassword -> {
+                etConfirmMasterPassword.error = "Passwords doesn't match"
+            }
+            else -> {
+                viewModel.updateMasterPassword(
+                    userEnteredPassword = newPassword,
+                    user
+                )
+            }
         }
+
     }
+
 
     private fun getUserInputForOldPassword() {
         oldPassword = etMasterPassword.editText?.text.toString()
         if (oldPassword.isEmpty()) {
-            showSnackBar("Please enter your current Master password")
+            etMasterPassword.error = "Please enter your current Master password"
         } else {
             viewModel.authenticateUser(oldPassword, user)
         }
@@ -89,9 +121,15 @@ class UpdateMasterPassword : Fragment(R.layout.fragment_update_master_password) 
     }
 
     private fun setUI() {
-        etMasterPassword = fragmentView.findViewById(R.id.ed_old_master_password)
-        fabVerifyPassword = fragmentView.findViewById(R.id.fab_proceed)
-        etMasterPassword.editText?.hint = getString(R.string.enter_you_old_master_password)
+        etMasterPassword = fragmentView.findViewById(R.id.old_master_password)
+        etNewMasterPassword = fragmentView.findViewById(R.id.new_master_password)
+        etConfirmMasterPassword = fragmentView.findViewById(R.id.confirm_master_password)
+
+        btnVerifyMasterPassword = fragmentView.findViewById(R.id.btn_verify)
+        btnUpdateMasterPassword = fragmentView.findViewById(R.id.btn_update)
+        oldPasswordCard = fragmentView.findViewById(R.id.old_password_card)
+        newPasswordCard = fragmentView.findViewById(R.id.new_password_card)
+
     }
 
 }

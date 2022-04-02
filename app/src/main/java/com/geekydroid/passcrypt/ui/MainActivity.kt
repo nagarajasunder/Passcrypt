@@ -40,6 +40,8 @@ class MainActivity : AppCompatActivity() {
         val filter = IntentFilter("android.hardware.usb.action.USB_STATE")
 //        registerReceiver(USBAttachedReceiver(), filter)
 
+
+
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -48,5 +50,7 @@ class MainActivity : AppCompatActivity() {
             finishAndRemoveTask()
         }
     }
+
+
 
 }

@@ -1,6 +1,9 @@
 package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -9,15 +12,13 @@ import androidx.navigation.findNavController
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.enums.Result
 import com.geekydroid.passcrypt.viewmodels.AddNewBankCredViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class AddNewBankCred: Fragment(R.layout.fragment_add_new_bank_cred) {
+class AddNewBankCred : Fragment(R.layout.fragment_add_new_bank_cred) {
 
     private lateinit var fragmentView: View
     private lateinit var etCardNumber1: TextInputLayout
@@ -28,7 +29,6 @@ class AddNewBankCred: Fragment(R.layout.fragment_add_new_bank_cred) {
     private lateinit var etAccountNumber: TextInputLayout
     private lateinit var etIfscCode: TextInputLayout
     private lateinit var etCustomerId: TextInputLayout
-    private lateinit var fabAdd: FloatingActionButton
     private lateinit var etExpiryDate: TextInputLayout
     private lateinit var etCvv: TextInputLayout
     private lateinit var etCardPin: TextInputLayout
@@ -42,6 +42,8 @@ class AddNewBankCred: Fragment(R.layout.fragment_add_new_bank_cred) {
         fragmentView = view
 
         setUI()
+
+        setHasOptionsMenu(true)
 
 
 
@@ -71,10 +73,6 @@ class AddNewBankCred: Fragment(R.layout.fragment_add_new_bank_cred) {
             }
         }
 
-        fabAdd.setOnClickListener {
-            validateUserData()
-        }
-
 
     }
 
@@ -99,7 +97,7 @@ class AddNewBankCred: Fragment(R.layout.fragment_add_new_bank_cred) {
 
         when {
             bankName.isEmpty() -> {
-                showSnackBar("Bank Name cannot be empty")
+                etBankName.error = "Bank name cannot be empty"
                 etBankName.editText?.text?.clear()
             }
             bankName.length > 100 -> {
@@ -139,12 +137,24 @@ class AddNewBankCred: Fragment(R.layout.fragment_add_new_bank_cred) {
         etAccountNumber = fragmentView.findViewById(R.id.et_account_number)
         etIfscCode = fragmentView.findViewById(R.id.et_ifsc_code)
         etCustomerId = fragmentView.findViewById(R.id.et_customer_id)
-        fabAdd = fragmentView.findViewById(R.id.fab_add)
         etExpiryDate = fragmentView.findViewById(R.id.et_expiry_date)
         etCvv = fragmentView.findViewById(R.id.et_cvv_number)
         etCardPin = fragmentView.findViewById(R.id.et_pin_number)
         etComments = fragmentView.findViewById(R.id.et_comments)
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.add_cred_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.save) {
+            validateUserData()
+        }
+        return true
+    }
+
 
 }

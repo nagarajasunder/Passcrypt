@@ -2,7 +2,9 @@ package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -10,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.geekydroid.passcrypt.PasscryptApp
 import com.geekydroid.passcrypt.R
+import com.geekydroid.passcrypt.Utils.DialogBuilder
 import com.geekydroid.passcrypt.datasources.EncryptedDataSource
 import com.geekydroid.passcrypt.enums.NavigationMode
 import com.geekydroid.passcrypt.viewmodels.SetMasterPasswordViewmodel
@@ -30,6 +33,8 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
     private val args: SetMasterPassFragmentArgs by navArgs()
     private var userEnteredPass = ""
 
+    private lateinit var waitingDialog: AlertDialog
+
     @Inject
     lateinit var database: Lazy<EncryptedDataSource>
 
@@ -49,10 +54,12 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
         { result ->
             if (result == true) {
                 clearMasterPass()
+                waitingDialog.dismiss()
                 showSnackBar("Master password set successfully!!")
                 navigateToHome()
 
             } else {
+                waitingDialog.dismiss()
                 showSnackBar("Cannot set Master password please try again.")
                 clearData()
             }
@@ -88,17 +95,36 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
     private fun setUpMasterPassword() {
         userEnteredPass = etPassword.editText!!.text.toString()
         val confirmPasswordText = etConfirmPassword.editText!!.text.toString()
-        if (userEnteredPass.isEmpty() || confirmPasswordText.isEmpty()) {
-            showSnackBar("Please fill all the fields.")
+
+        if (userEnteredPass.isEmpty()) {
+            etPassword.error = "Please fill all the fields"
+        } else if (confirmPasswordText.isEmpty()) {
+            etConfirmPassword.error = "Please fill all the fields"
         } else if (!userEnteredPass.contentEquals(confirmPasswordText)) {
-            showSnackBar("Passwords doesn't match.")
+            etConfirmPassword.error = "Passwords doesn't match"
+//            showSnackBar("Passwords doesn't match.")
         } else {
+
+            showWaitingDialog()
+
             viewmodel.createUser(
                 userEnteredPass,
                 if (NAVIGATION_MODE == app.NAVIGATION_MODE_RESET) NavigationMode.PASSWORD_RESET_MODE else NavigationMode.NORMAL_MODE
             )
             updatePrefs()
         }
+    }
+
+    private fun showWaitingDialog() {
+        waitingDialog = DialogBuilder(
+            requireContext(),
+            R.layout.waiting_dialog_view,
+            "Please Wait.Setting up Master Password...",
+            fragmentView.parent as ViewGroup
+        ).getDialog()
+        waitingDialog.show()
+
+
     }
 
     private fun updatePrefs() {

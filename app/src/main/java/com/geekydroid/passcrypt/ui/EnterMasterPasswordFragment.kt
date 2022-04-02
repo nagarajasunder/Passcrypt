@@ -2,9 +2,12 @@ package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,11 +15,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.geekydroid.passcrypt.PasscryptApp
 import com.geekydroid.passcrypt.R
+import com.geekydroid.passcrypt.Utils.DialogBuilder
 import com.geekydroid.passcrypt.datasources.EncryptedDataSource
 import com.geekydroid.passcrypt.entities.User
 import com.geekydroid.passcrypt.viewmodels.EnterMasterPasswordViewModel
 import com.google.android.material.card.MaterialCardView
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.Lazy
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,6 +40,7 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
     private var numberOfAttempts = 0
     private lateinit var currentUser: User
     private var userEnteredPass = ""
+    private lateinit var waitingDialog: AlertDialog
 
     @Inject
     lateinit var app: PasscryptApp
@@ -89,10 +93,11 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
         viewmodel.userAuthFlag.observe(viewLifecycleOwner) { result ->
             if (result) {
                 clearMasterPass()
+                waitingDialog.dismiss()
                 navigateToHome()
             } else {
                 userEnteredPass = ""
-                showSnackBar("Master password doesn't match Please try again")
+                etPassword.error = "Master password doesn't match Please try again"
                 etPassword.editText?.text?.clear()
                 --numberOfAttempts
                 if (selfDestructive) {
@@ -129,9 +134,9 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
 
     private fun clearMasterPass() {
         app.setMasterPass(userEnteredPass)
-            database.get()
-            app.clearMasterPass()
-            userEnteredPass = ""
+        database.get()
+        app.clearMasterPass()
+        userEnteredPass = ""
 
 
     }
@@ -181,15 +186,25 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
     private fun verifyUser() {
         userEnteredPass = etPassword.editText?.text?.toString() ?: ""
         if (userEnteredPass.isEmpty()) {
-            showSnackBar("Please enter your master password")
+            etPassword.error = "Please enter you Master Password"
         } else {
+            showWaitingDialog()
             viewmodel.authenticateUser(userEnteredPass)
         }
     }
 
-    private fun showSnackBar(message: String) {
-        Snackbar.make(fragmentView, message, Snackbar.LENGTH_SHORT).show()
+    private fun showWaitingDialog() {
+
+
+        waitingDialog = DialogBuilder(
+            requireContext(),
+            R.layout.waiting_dialog_view,
+            "Please wait.Authenticating user..",
+            fragmentView.parent as ViewGroup
+        ).getDialog()
     }
+
+
 
     private fun setUI() {
         etPassword = fragmentView.findViewById(R.id.ed_password)
