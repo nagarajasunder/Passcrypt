@@ -45,8 +45,7 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        NAVIGATION_MODE =
-            args.mode ?: app.NAVIGATION_MODE_NORMAL
+        NAVIGATION_MODE = args.mode ?: app.NAVIGATION_MODE_NORMAL
 
         fragmentView = view
         setUI()

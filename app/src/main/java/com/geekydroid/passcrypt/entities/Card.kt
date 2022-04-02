@@ -11,7 +11,7 @@ import java.text.DateFormat
     tableName = "CARD",
     foreignKeys = [ForeignKey(
         entity = BankCred::class,
-        parentColumns = ["credId"],
+        parentColumns = ["BANK_CRED_ID"],
         childColumns = ["bankId"],
         onUpdate = CASCADE,
         onDelete = CASCADE

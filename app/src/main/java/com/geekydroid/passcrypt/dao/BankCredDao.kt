@@ -14,7 +14,7 @@ interface BankCredDao {
     @Insert
     suspend fun insertBankCred(cred: BankCred): Long
 
-    @Query("SELECT * FROM BANK_CRED WHERE credId = :credId")
+    @Query("SELECT * FROM BANK_CRED WHERE BANK_CRED_ID = :credId")
     suspend fun getBankCredById(credId: Int): BankCred
 
     @Query("SELECT * FROM BANK_CRED")

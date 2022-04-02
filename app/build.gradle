@@ -96,8 +96,7 @@ dependencies {
     implementation "androidx.navigation:navigation-runtime-ktx:2.4.1"
 
 
-
-    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
 
 
     implementation "com.airbnb.android:lottie:$lottieVersion"
@@ -120,6 +119,9 @@ dependencies {
 
     //Circular ImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    implementation "androidx.datastore:datastore:1.0.0"
+
 
 }
 

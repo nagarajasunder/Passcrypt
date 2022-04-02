@@ -31,6 +31,7 @@ interface UserDao {
         user?.let {
             user.selfDestructiveCount = 0
             user.selfDestructive = false
+            user.masterPassHash = passwordHash
             val result = updateUser(user)
             return result.toLong()
         }

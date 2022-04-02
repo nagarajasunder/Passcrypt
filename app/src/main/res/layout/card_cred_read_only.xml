@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:elevation="8dp"
-        app:cardBackgroundColor="#DFB176"
+        app:cardBackgroundColor="@color/card_background_color"
         app:cardCornerRadius="16dp"
         app:cardUseCompatPadding="true">
 
@@ -23,7 +23,7 @@
                 android:id="@+id/line_0"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="@color/purple_500" />
+                android:background="@color/card_background_color" />
 
             <TextView
                 android:id="@+id/tv_card_bank_name"

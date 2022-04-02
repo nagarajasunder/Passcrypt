@@ -11,7 +11,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/account_cred_item"/>
+        tools:listitem="@layout/account_cred_item" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -20,9 +20,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/purple_500"
-        android:contentDescription="@string/content_desc_add"
         android:layout_margin="8dp"
+        android:backgroundTint="@color/purple_500"
+        android:clickable="true"
+        android:contentDescription="@string/content_desc_add"
+        android:focusable="true"
         android:src="@drawable/add"
         app:tint="@color/white" />
 
@@ -34,9 +36,11 @@
         android:layout_above="@+id/fab_add"
         android:layout_alignParentEnd="true"
         android:layout_margin="8dp"
+        android:clickable="true"
         android:contentDescription="@string/content_desc_add_account"
+        android:focusable="true"
         android:src="@drawable/account"
-        android:visibility="visible"
+        android:visibility="gone"
         app:tint="@color/white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -45,11 +49,15 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/fab_add_account"
         android:layout_alignParentEnd="true"
-        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
         android:contentDescription="@string/content_desc_add_bank"
+        android:focusable="true"
         android:src="@drawable/bank"
-        android:visibility="visible"
-
+        android:visibility="gone"
         app:tint="@color/white" />
 
 

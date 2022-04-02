@@ -7,6 +7,7 @@ data class CredWrapper(
     val credTitle: String,
     val credComments: String,
     val credType: String,
+    val isFavorite: Boolean,
     val createdOn: Long
 ) {
     val createdOnFormatted

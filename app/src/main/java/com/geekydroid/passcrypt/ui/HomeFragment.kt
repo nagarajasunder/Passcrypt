@@ -1,6 +1,7 @@
 package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -15,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.geekydroid.passcrypt.PasscryptApp
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.adapters.AccountCredAdapter
 import com.geekydroid.passcrypt.entities.CredWrapper
@@ -75,19 +75,22 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
         setUI()
 
         fabAdd.setOnClickListener {
-//            onAddButtonClicked()
+            onAddButtonClicked()
         }
 
         fabAccount.setOnClickListener {
+            addButtonClicked = !addButtonClicked
             val action = HomeFragmentDirections.actionHomeFragmentToAddNewPassword()
             fragmentView.findNavController().navigate(action)
         }
         fabBank.setOnClickListener {
+            addButtonClicked = !addButtonClicked
             val action = HomeFragmentDirections.actionHomeFragmentToAddNewBankCred()
             fragmentView.findNavController().navigate(action)
         }
 
         viewmodel.accountCred.observe(viewLifecycleOwner) {
+            Log.d(TAG, "onViewCreated: Output $it")
             adapter.submitList(it)
 
         }
@@ -106,9 +109,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
             fabBank.startAnimation(fromBottom)
             fabAdd.startAnimation(rotateOpen)
         } else {
-            fabAdd.startAnimation(rotateClose)
             fabAccount.startAnimation(toBottom)
             fabBank.startAnimation(toBottom)
+            fabAdd.startAnimation(rotateClose)
         }
     }
 
@@ -117,8 +120,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
             fabAccount.visibility = View.VISIBLE
             fabBank.visibility = View.VISIBLE
         } else {
-            fabAccount.visibility = View.INVISIBLE
-            fabBank.visibility = View.INVISIBLE
+            fabAccount.visibility = View.GONE
+            fabBank.visibility = View.GONE
         }
 //        addButtonClicked = !addButtonClicked
     }
@@ -140,6 +143,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home_options_menu, menu)
+
+
+
+
         val searchItem = menu.findItem(R.id.search)
         searchView = searchItem.actionView as SearchView
 

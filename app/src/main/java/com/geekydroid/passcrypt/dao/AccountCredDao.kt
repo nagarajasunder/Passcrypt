@@ -27,8 +27,8 @@ interface AccountCredDao {
     suspend fun insertCred(cred: AccountCred)
 
     @Query(
-        "SELECT * FROM ACCOUNT_CRED WHERE siteName LIKE '%' || :searchText || '%' " +
-                "OR userName LIKE '%' || :searchText || '%' " +
+        "SELECT * FROM ACCOUNT_CRED WHERE SITE_NAME LIKE '%' || :searchText || '%' " +
+                "OR USER_NAME LIKE '%' || :searchText || '%' " +
                 "OR comments LIKE '%' || :searchText || '%'"
     )
     fun getAllCredentialsBySearch(searchText: String): LiveData<List<AccountCred>>
@@ -36,21 +36,25 @@ interface AccountCredDao {
     @Query("SELECT * FROM ACCOUNT_CRED")
     fun getAllCredentials(): LiveData<List<AccountCred>>
 
-    @Query("SELECT * FROM ACCOUNT_CRED WHERE credId = :credId")
+    @Query("SELECT * FROM ACCOUNT_CRED WHERE CRED_ID = :credId")
     fun getCredById(credId: Int): LiveData<AccountCred>
 
     @Query(
-        "SELECT credId as credId  , " +
-                "title as credTitle , " +
-                "comments as credComments , " +
-                "'ACCOUNT' as credType , " +
-                "createdOn as createdOn  " +
-                "FROM ACCOUNT_CRED " +
-                "UNION ALL SELECT credId as credId  , " +
-                "bankName as credTitle , " +
-                "comments as credComments , " +
+        "SELECT * FROM (SELECT BANK_CRED_ID as credId  , " +
+                "BANK_NAME as credTitle , " +
+                "COMMENTS as credComments , " +
                 "'BANK' as credType , " +
-                "createdOn as createdOn FROM BANK_CRED WHERE credTitle LIKE '%' || :searchText || '%' OR credComments LIKE '%' || :searchText || '%' ORDER BY createdOn"
+                "CREATED_ON as createdOn,  " +
+                "IS_FAVORITE as isFavorite " +
+                "FROM BANK_CRED " +
+                "UNION ALL SELECT CRED_ID as credId  , " +
+                "TITLE as credTitle , " +
+                "COMMENTS as credComments , " +
+                "'ACCOUNT' as credType , " +
+                "CREATED_ON as createdOn, " +
+                "IS_FAVORITE as isFavorite " +
+                "FROM ACCOUNT_CRED) as data " +
+                "WHERE credTitle LIKE '%' || :searchText || '%' ORDER BY isFavorite,createdOn DESC"
     )
     fun getCombinedCreds(searchText: String): LiveData<List<CredWrapper>>
 

@@ -28,16 +28,29 @@ object DataModule {
 
     @Provides
     @Singleton
+    @Named("ENCRYPTED_DATA_SOURCE_NAME")
+    fun providesEncryptedDSName(app: PasscryptApp) = app.getEncryptedDSName()
+
+    @Provides
+    @Singleton
+    @Named("LOCAL_DATA_SOURCE")
+    fun providesLocalDSName(app: PasscryptApp) = app.getLocalDSName()
+
+    @Provides
+    @Singleton
     @Named("MASTER_PASS")
     fun providePass(app: PasscryptApp) = app.getMasterPass()
 
     @Provides
     @Singleton
-    fun providesDatabase(app: Application): LocalDataSource {
+    fun providesDatabase(
+        app: Application,
+        @Named("LOCAL_DATA_SOURCE") databaseName: String
+    ): LocalDataSource {
         return Room.databaseBuilder(
             app,
             LocalDataSource::class.java,
-            "Passcrypt.db"
+            databaseName
         )
             .build()
     }
@@ -47,14 +60,15 @@ object DataModule {
     @Singleton
     fun providesEncryptedDataSource(
         app: Application,
-        @Named("MASTER_PASS") pass: String
+        @Named("MASTER_PASS") pass: String,
+        @Named("ENCRYPTED_DATA_SOURCE_NAME") databaseName: String
     ): EncryptedDataSource {
 
         val factory = SupportFactory(SQLiteDatabase.getBytes(pass.toCharArray()))
         return Room.databaseBuilder(
             app,
             EncryptedDataSource::class.java,
-            "Passcrypt_encrypt.db"
+            databaseName
         ).openHelperFactory(factory)
             .build()
     }

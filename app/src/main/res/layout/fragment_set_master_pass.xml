@@ -93,10 +93,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ed_confirm_password"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="8dp"
-            android:text="@string/set_master_password"
-            app:icon="@drawable/lock" />
+            android:text="@string/content_desc_proceed" />
 
     </RelativeLayout>
 

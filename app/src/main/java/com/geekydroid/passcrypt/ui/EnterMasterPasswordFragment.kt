@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +23,7 @@ import com.google.android.material.textfield.TextInputLayout
 import dagger.Lazy
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import javax.inject.Named
 
 @AndroidEntryPoint
 class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_password) {
@@ -32,8 +32,8 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
     private lateinit var fragmentView: View
     private lateinit var btnSetNewPassword: Button
     private lateinit var warningCard: MaterialCardView
-    private lateinit var attemptsCard: MaterialCardView
     private lateinit var limitExceededCard: MaterialCardView
+    private lateinit var enterPasswordCard: MaterialCardView
     private lateinit var tvAttempts: TextView
     private val viewmodel: EnterMasterPasswordViewModel by viewModels()
     private var selfDestructive = false
@@ -41,6 +41,10 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
     private lateinit var currentUser: User
     private var userEnteredPass = ""
     private lateinit var waitingDialog: AlertDialog
+
+    @Inject
+    @Named("ENCRYPTED_DATA_SOURCE_NAME")
+    lateinit var encryptedDatasourceName: String
 
     @Inject
     lateinit var app: PasscryptApp
@@ -150,16 +154,23 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
     }
 
     private fun showLimitExceededCards() {
-        etPassword.editText?.isEnabled = false
         btnVerify.isEnabled = false
-        attemptsCard.visibility = View.GONE
-        limitExceededCard.visibility = View.VISIBLE
+        enterPasswordCard.visibility = View.GONE
+        warningCard.visibility = View.GONE
+        limitExceededCard.apply {
+            visibility = View.VISIBLE
+            alpha = 0F
+            animate()
+                .alpha(1F)
+                .setDuration(500)
+                .start()
+        }
         btnSetNewPassword.visibility = View.VISIBLE
     }
 
 
     private fun deleteDatabase() {
-        requireContext().deleteDatabase("Passcrypt-encrypt.db")
+        requireContext().deleteDatabase(encryptedDatasourceName)
     }
 
 
@@ -170,10 +181,17 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
     }
 
     private fun showSelfDestructiveCards() {
-        attemptsCard.visibility = View.VISIBLE
-        warningCard.visibility = View.VISIBLE
+        tvAttempts.visibility = View.VISIBLE
         tvAttempts.text =
             getString(R.string.remaining_number_of_attempts, numberOfAttempts.toString())
+        warningCard.apply {
+            alpha = 0F
+            visibility = View.VISIBLE
+            animate()
+                .alpha(1F)
+                .setDuration(500)
+                .start()
+        }
     }
 
     private fun navigateToHome() {
@@ -205,12 +223,11 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
     }
 
 
-
     private fun setUI() {
         etPassword = fragmentView.findViewById(R.id.ed_password)
         btnVerify = fragmentView.findViewById(R.id.btn_verify_password)
         warningCard = fragmentView.findViewById(R.id.warning_card)
-        attemptsCard = fragmentView.findViewById(R.id.attempts_card)
+        enterPasswordCard = fragmentView.findViewById(R.id.enter_password_card)
         tvAttempts = fragmentView.findViewById(R.id.tv_attempts)
         btnSetNewPassword = fragmentView.findViewById(R.id.btn_set_new_master_password)
         limitExceededCard = fragmentView.findViewById(R.id.limit_crossed_card)

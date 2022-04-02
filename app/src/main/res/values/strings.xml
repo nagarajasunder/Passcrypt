@@ -64,7 +64,7 @@
     <string name="small_a_z">a - z</string>
     <string name="_0_9">0 - 9</string>
     <string name="special_characters">#!@…</string>
-    <string name="menu_option_password_generator">Password Generator</string>
+    <string name="menu_option_password_generator">Generate Passwords</string>
     <string name="password_generator_warning">No Character set found!</string>
     <string name="no_duplicates">No duplicates</string>
     <string name="self_destruction">Self Destruction</string>
@@ -90,5 +90,10 @@
     <string name="save">Save</string>
     <string name="master_password_description">Master Password is used to access all other details within the application.</string>
     <string name="verify">Verify</string>
+    <string name="sort">Sort</string>
+    <string name="sort_from_a_z">Sort from A-Z</string>
+    <string name="sort_from_z_a">Sort from Z-A</string>
+    <string name="newest_to_oldest">Newest to Oldest</string>
+    <string name="oldest_to_newest">Oldest to Newest</string>
 
 </resources>
