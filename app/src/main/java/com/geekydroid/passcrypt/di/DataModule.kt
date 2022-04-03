@@ -55,7 +55,6 @@ object DataModule {
             .build()
     }
 
-
     @Provides
     @Singleton
     fun providesEncryptedDataSource(
@@ -87,4 +86,24 @@ object DataModule {
     fun providesBankCredDao(database: EncryptedDataSource): BankCredDao {
         return database.getBankCredDao()
     }
+
+    @Singleton
+    @Provides
+    @Named("SORT_BY_NAME_ASC")
+    fun providesSortByNameAsc(app: PasscryptApp) = app.sortByNameAsc()
+
+    @Singleton
+    @Provides
+    @Named("SORT_BY_NAME_DESC")
+    fun providesSortByNameDesc(app: PasscryptApp) = app.sortByNameDesc()
+
+    @Singleton
+    @Provides
+    @Named("OLDEST_TO_NEWEST")
+    fun providesOldestToNewest(app: PasscryptApp) = app.oldestToNewest()
+
+    @Singleton
+    @Provides
+    @Named("NEWEST_TO_OLDEST")
+    fun providesNewestToOldest(app: PasscryptApp) = app.newestToOldest()
 }

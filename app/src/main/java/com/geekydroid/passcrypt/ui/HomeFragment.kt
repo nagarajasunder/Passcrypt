@@ -17,10 +17,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.geekydroid.passcrypt.R
+import com.geekydroid.passcrypt.Utils.SortPreference
 import com.geekydroid.passcrypt.adapters.AccountCredAdapter
 import com.geekydroid.passcrypt.entities.CredWrapper
 import com.geekydroid.passcrypt.listeners.CredOnClickListener
 import com.geekydroid.passcrypt.viewmodels.HomeFragmentViewmodel
+import com.geekydroid.passcrypt.viewmodels.UserFilters
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,6 +40,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
     private lateinit var adapter: AccountCredAdapter
     private val viewmodel: HomeFragmentViewmodel by viewModels()
     private lateinit var searchView: SearchView
+    private var currentSortPreference: String = SortPreference.SORT_BY_DATE_DESC.name
+    private var userFilters: UserFilters = UserFilters()
 
 
     private val rotateOpen: Animation by lazy {
@@ -89,10 +93,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
             fragmentView.findNavController().navigate(action)
         }
 
-        viewmodel.accountCred.observe(viewLifecycleOwner) {
-            Log.d(TAG, "onViewCreated: Output $it")
-            adapter.submitList(it)
-
+        viewmodel.accountCreds.observe(viewLifecycleOwner) { credList ->
+            adapter.submitList(credList)
+        }
+        viewmodel.sortPreferences.observe(viewLifecycleOwner) {
+            currentSortPreference = it
+            Log.d(TAG, "onCreateOptionsMenu: current preference $currentSortPreference")
         }
     }
 
@@ -101,6 +107,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
         setVisibility(addButtonClicked)
         setAnimation(addButtonClicked)
         addButtonClicked = !addButtonClicked
+
+
     }
 
     private fun setAnimation(clicked: Boolean) {
@@ -143,10 +151,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home_options_menu, menu)
-
-
-
-
         val searchItem = menu.findItem(R.id.search)
         searchView = searchItem.actionView as SearchView
 
@@ -157,9 +161,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrBlank()) {
-                    viewmodel.accountSearchText.value = ""
+                    userFilters.searchText = ""
+                    viewmodel.userFilters.value = userFilters
                 } else {
-                    viewmodel.accountSearchText.value = newText
+                    userFilters.searchText = newText
+                    viewmodel.userFilters.value = userFilters
                 }
 
                 return true
@@ -167,6 +173,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
 
         })
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
@@ -179,6 +186,28 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
                 val action = HomeFragmentDirections.actionHomeFragmentToPasswordGenerator()
                 fragmentView.findNavController().navigate(action)
             }
+            R.id.sort_by_name_asc -> {
+                userFilters.sortPreference = SortPreference.SORT_BY_NAME_ASC.name
+                viewmodel.userFilters.value = userFilters
+                viewmodel.updateSortPreferences(SortPreference.SORT_BY_NAME_ASC)
+            }
+            R.id.sort_by_name_desc -> {
+                userFilters.sortPreference = SortPreference.SORT_BY_NAME_DESC.name
+                viewmodel.userFilters.value = userFilters
+                viewmodel.updateSortPreferences(SortPreference.SORT_BY_NAME_DESC)
+            }
+            R.id.sort_by_date_desc -> {
+                userFilters.sortPreference = SortPreference.SORT_BY_DATE_DESC.name
+                viewmodel.userFilters.value = userFilters
+                viewmodel.updateSortPreferences(SortPreference.SORT_BY_DATE_DESC)
+            }
+            R.id.sort_by_date_asc -> {
+                userFilters.sortPreference = SortPreference.SORT_BY_DATE_ASC.name
+                viewmodel.userFilters.value = userFilters
+                viewmodel.updateSortPreferences(SortPreference.SORT_BY_DATE_ASC)
+            }
+
+
         }
 
 

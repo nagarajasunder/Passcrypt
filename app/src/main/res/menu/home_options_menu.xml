@@ -17,26 +17,21 @@
         <menu>
             <group
                 android:id="@+id/sort_group"
-                android:checkableBehavior="single"
                 android:menuCategory="container">
                 <item
                     android:id="@+id/sort_by_name_asc"
-                    android:checkable="true"
                     android:title="@string/sort_from_a_z"
                     app:showAsAction="ifRoom" />
                 <item
                     android:id="@+id/sort_by_name_desc"
-                    android:checkable="true"
                     android:title="@string/sort_from_z_a"
                     app:showAsAction="ifRoom" />
                 <item
                     android:id="@+id/sort_by_date_asc"
-                    android:checkable="true"
                     android:title="@string/oldest_to_newest"
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/sort_by_date_desc"
-                    android:checkable="true"
                     android:title="@string/newest_to_oldest"
                     app:showAsAction="always" />
             </group>

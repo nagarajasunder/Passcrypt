@@ -2,6 +2,7 @@ package com.geekydroid.passcrypt.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.geekydroid.passcrypt.Utils.SortPreference
 import com.geekydroid.passcrypt.entities.AccountCred
 import com.geekydroid.passcrypt.entities.CredWrapper
 
@@ -54,10 +55,79 @@ interface AccountCredDao {
                 "CREATED_ON as createdOn, " +
                 "IS_FAVORITE as isFavorite " +
                 "FROM ACCOUNT_CRED) as data " +
-                "WHERE credTitle LIKE '%' || :searchText || '%' ORDER BY isFavorite,createdOn DESC"
+                "WHERE credTitle LIKE '%' || :searchText || '%' ORDER BY isFavorite DESC ,credTitle ASC"
     )
-    fun getCombinedCreds(searchText: String): LiveData<List<CredWrapper>>
+    fun getCredSortedByNameAsc(searchText: String): LiveData<List<CredWrapper>>
+
+    @Query(
+        "SELECT * FROM (SELECT BANK_CRED_ID as credId  , " +
+                "BANK_NAME as credTitle , " +
+                "COMMENTS as credComments , " +
+                "'BANK' as credType , " +
+                "CREATED_ON as createdOn,  " +
+                "IS_FAVORITE as isFavorite " +
+                "FROM BANK_CRED " +
+                "UNION ALL SELECT CRED_ID as credId  , " +
+                "TITLE as credTitle , " +
+                "COMMENTS as credComments , " +
+                "'ACCOUNT' as credType , " +
+                "CREATED_ON as createdOn, " +
+                "IS_FAVORITE as isFavorite " +
+                "FROM ACCOUNT_CRED) as data " +
+                "WHERE credTitle LIKE '%' || :searchText || '%' ORDER BY isFavorite DESC ,credTitle DESC"
+    )
+    fun getCredSortedByNameDesc(searchText: String): LiveData<List<CredWrapper>>
+
+    @Query(
+        "SELECT * FROM (SELECT BANK_CRED_ID as credId  , " +
+                "BANK_NAME as credTitle , " +
+                "COMMENTS as credComments , " +
+                "'BANK' as credType , " +
+                "CREATED_ON as createdOn,  " +
+                "IS_FAVORITE as isFavorite " +
+                "FROM BANK_CRED " +
+                "UNION ALL SELECT CRED_ID as credId  , " +
+                "TITLE as credTitle , " +
+                "COMMENTS as credComments , " +
+                "'ACCOUNT' as credType , " +
+                "CREATED_ON as createdOn, " +
+                "IS_FAVORITE as isFavorite " +
+                "FROM ACCOUNT_CRED) as data " +
+                "WHERE credTitle LIKE '%' || :searchText || '%' ORDER BY isFavorite DESC ,createdOn ASC"
+    )
+    fun getCredSortedByDateAsc(searchText: String): LiveData<List<CredWrapper>>
+
+    @Query(
+        "SELECT * FROM (SELECT BANK_CRED_ID as credId  , " +
+                "BANK_NAME as credTitle , " +
+                "COMMENTS as credComments , " +
+                "'BANK' as credType , " +
+                "CREATED_ON as createdOn,  " +
+                "IS_FAVORITE as isFavorite " +
+                "FROM BANK_CRED " +
+                "UNION ALL SELECT CRED_ID as credId  , " +
+                "TITLE as credTitle , " +
+                "COMMENTS as credComments , " +
+                "'ACCOUNT' as credType , " +
+                "CREATED_ON as createdOn, " +
+                "IS_FAVORITE as isFavorite " +
+                "FROM ACCOUNT_CRED) as data " +
+                "WHERE credTitle LIKE '%' || :searchText || '%' ORDER BY isFavorite DESC ,createdOn DESC"
+    )
+    fun getCredSortedByDateDesc(searchText: String): LiveData<List<CredWrapper>>
+
+    fun getCredentialsBasedOnFilters(
+        searchText: String,
+        sortPreference: String
+    ): LiveData<List<CredWrapper>> {
+        return when (sortPreference) {
+            SortPreference.SORT_BY_DATE_ASC.name -> getCredSortedByDateAsc(searchText)
+            SortPreference.SORT_BY_DATE_DESC.name -> getCredSortedByDateDesc(searchText)
+            SortPreference.SORT_BY_NAME_ASC.name -> getCredSortedByNameAsc(searchText)
+            else -> getCredSortedByNameDesc(searchText)
+        }
+    }
 
     @Delete
-    suspend fun deleteCredentail(accountCred: AccountCred)
+    suspend fun deleteCredential(accountCred: AccountCred)
 }

@@ -20,7 +20,7 @@ class ViewAccountCredRepository @Inject constructor(private val accountDao: Acco
     }
 
     suspend fun deleteAccountCredential(accountCred: AccountCred) {
-        accountDao.deleteCredentail(accountCred)
+        accountDao.deleteCredential(accountCred)
     }
 
 }
