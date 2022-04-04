@@ -5,7 +5,10 @@ import javax.inject.Inject
 
 
 class SettingsFragmentRepository @Inject constructor(private val database: LocalDataSource) {
-    suspend fun updateSelfDestruction() {
-        database.getUserdao().updateSelfDestruction()
+    suspend fun updateSelfDestruction(switch: Boolean) {
+        database.getUserdao().updateSelfDestruction(switch)
     }
+
+    fun getUserSettings() = database.getUserdao().getUser()
+
 }

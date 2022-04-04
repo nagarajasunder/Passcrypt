@@ -3,6 +3,7 @@ package com.geekydroid.passcrypt.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -39,6 +40,10 @@ class AccountCredAdapter(private val credOnClickListener: CredOnClickListener) :
         holder.credCard.setOnClickListener {
             credOnClickListener.onCredClick(currentCred)
         }
+
+        if (currentCred.isFavorite) {
+            holder.favoriteCred.visibility = View.VISIBLE
+        }
     }
 
 
@@ -67,6 +72,7 @@ class AccountCredAdapter(private val credOnClickListener: CredOnClickListener) :
         val tvComments: TextView = itemView.findViewById(R.id.tv_comments)
         val tvCreatedOn: TextView = itemView.findViewById(R.id.tv_created_on)
         val credCard: MaterialCardView = itemView.findViewById(R.id.cred_card)
+        val favoriteCred: ImageView = itemView.findViewById(R.id.iv_favorite)
     }
 
 }

@@ -19,8 +19,8 @@ interface UserDao {
     @Query("SELECT isMasterPassSet FROM USER")
     fun isMasterPasswordSet(): Boolean
 
-    @Query("UPDATE USER set selfDestructive = 1 , selfDestructiveCount = 3 WHERE userId = 1")
-    suspend fun updateSelfDestruction()
+    @Query("UPDATE USER set selfDestructive = :flag , selfDestructiveCount = 3 WHERE userId = 1")
+    suspend fun updateSelfDestruction(flag: Boolean)
 
     @Update
     suspend fun updateUser(user: User): Int

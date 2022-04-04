@@ -13,7 +13,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class UserPreferences @Inject constructor(
     private val context: PasscryptApp
 ) {

@@ -3,13 +3,13 @@ package com.geekydroid.passcrypt.viewmodels
 import androidx.lifecycle.*
 import com.geekydroid.passcrypt.Utils.SortPreference
 import com.geekydroid.passcrypt.Utils.UserPreferences
+import com.geekydroid.passcrypt.entities.CredWrapper
 import com.geekydroid.passcrypt.repository.HomeFragmentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val TAG = "HomeFragment"
 
 @HiltViewModel
 class HomeFragmentViewmodel @Inject constructor(
@@ -20,9 +20,13 @@ class HomeFragmentViewmodel @Inject constructor(
 
     val sortPreferences = preferences.sortPreferences.asLiveData()
     val userFilters: MutableLiveData<UserFilters> = MutableLiveData()
+    private val accountCreds: LiveData<List<CredWrapper>>
 
     init {
         getSortPreferences()
+        accountCreds = Transformations.switchMap(userFilters) { userFilters ->
+            repository.getAccountCreds(userFilters.searchText, userFilters.sortPreference)
+        }
     }
 
     private fun getSortPreferences() {
@@ -32,9 +36,9 @@ class HomeFragmentViewmodel @Inject constructor(
         }
     }
 
-    var accountCreds = Transformations.switchMap(userFilters) { userFilters ->
-        repository.getAccountCreds(userFilters.searchText, userFilters.sortPreference)
-    }
+
+    fun getAccountCreds() = accountCreds
+
 
     fun updateSortPreferences(preference: SortPreference) {
         viewModelScope.launch {

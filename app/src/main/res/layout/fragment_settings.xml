@@ -68,6 +68,33 @@
         android:text="@string/number_of_attempts"
         android:textSize="18sp" />
 
+    <NumberPicker
+        android:id="@+id/np_number_of_attempts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_self_destruction_instruction"
+        android:layout_alignTop="@+id/tv_number_of_attempts"
+        android:layout_alignBottom="@+id/tv_number_of_attempts"
+        android:layout_toStartOf="@+id/iv_edit_self_destruction_count" />
+
+    <ImageView
+        android:id="@+id/iv_edit_self_destruction_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_self_destruction_instruction"
+        android:layout_alignTop="@+id/tv_number_of_attempts"
+        android:layout_alignBottom="@+id/tv_number_of_attempts"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="@string/content_desc_edit"
+        android:focusable="true"
+        android:src="@drawable/check" />
+
+
     <TextView
         android:id="@+id/tv_change_master_password"
         android:layout_width="match_parent"

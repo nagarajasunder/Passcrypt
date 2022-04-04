@@ -1,7 +1,6 @@
 package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -26,8 +25,6 @@ import com.geekydroid.passcrypt.viewmodels.UserFilters
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
-
-private const val TAG = "HomeFragment"
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
@@ -78,6 +75,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
         setHasOptionsMenu(true)
         setUI()
 
+        viewmodel.getAccountCreds().observe(viewLifecycleOwner) { credList ->
+            adapter.submitList(credList)
+        }
+        viewmodel.sortPreferences.observe(viewLifecycleOwner) {
+            userFilters.sortPreference = it
+            currentSortPreference = it
+        }
+
         fabAdd.setOnClickListener {
             onAddButtonClicked()
         }
@@ -91,14 +96,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
             addButtonClicked = !addButtonClicked
             val action = HomeFragmentDirections.actionHomeFragmentToAddNewBankCred()
             fragmentView.findNavController().navigate(action)
-        }
-
-        viewmodel.accountCreds.observe(viewLifecycleOwner) { credList ->
-            adapter.submitList(credList)
-        }
-        viewmodel.sortPreferences.observe(viewLifecycleOwner) {
-            currentSortPreference = it
-            Log.d(TAG, "onCreateOptionsMenu: current preference $currentSortPreference")
         }
     }
 
@@ -131,7 +128,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
             fabAccount.visibility = View.GONE
             fabBank.visibility = View.GONE
         }
-//        addButtonClicked = !addButtonClicked
     }
 
     private fun setUI() {
@@ -162,6 +158,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrBlank()) {
                     userFilters.searchText = ""
+//                    userFilters.sortPreference = currentSortPreference
                     viewmodel.userFilters.value = userFilters
                 } else {
                     userFilters.searchText = newText
@@ -234,6 +231,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
     private fun navigateToViewAccountCred(credId: Int) {
         val action = HomeFragmentDirections.actionHomeFragmentToViewAccountCred(credId)
         findNavController().navigate(action)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        if (userFilters.searchText.isNotEmpty()) {
+            userFilters.searchText = ""
+            viewmodel.userFilters.value = userFilters
+        }
     }
 
 

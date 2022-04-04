@@ -1,248 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ViewAccountCred">
 
     <RelativeLayout
-        android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tv_cred_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:layout_toStartOf="@+id/iv_favorite"
+                android:padding="5dp"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tv_last_updated"
+                style="@style/MytextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_cred_title"
+                android:layout_marginStart="8dp"
+                android:padding="5dp"
+                android:textSize="14sp"
+                android:textStyle="italic" />
+
+            <ImageView
+                android:id="@+id/iv_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tv_cred_title"
+                android:layout_alignBottom="@+id/tv_cred_title"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/iv_edit"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:contentDescription="@string/content_desc_make_favorite"
+                android:focusable="true"
+                android:src="@drawable/favourite_off" />
+
+            <ImageView
+                android:id="@+id/iv_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tv_cred_title"
+                android:layout_alignBottom="@+id/tv_cred_title"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:contentDescription="@string/content_desc_edit"
+                android:focusable="true"
+                android:src="@drawable/edit" />
+
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/tv_cred_title"
+            android:id="@+id/tv_site_label"
+            style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_below="@+id/title"
             android:layout_marginStart="8dp"
-            android:layout_toStartOf="@+id/iv_favorite"
-            android:padding="5dp"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:text="@string/label_website"
+            android:textColor="@color/text_grey"
+            android:textSize="15sp"
+            android:visibility="gone" />
 
 
         <TextView
-            android:id="@+id/tv_last_updated"
-            style="@style/MytextColor"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_site_url"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_cred_title"
-            android:layout_marginStart="8dp"
-            android:padding="5dp"
-            android:textSize="14sp"
-            android:textStyle="italic" />
+            android:layout_below="@+id/tv_site_label"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_toStartOf="@+id/iv_copy_site_url"
+            android:padding="8dp"
+            android:textSize="20sp"
+            android:visibility="gone" />
 
         <ImageView
-            android:id="@+id/iv_favorite"
+            android:id="@+id/iv_copy_site_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tv_cred_title"
-            android:layout_alignBottom="@+id/tv_cred_title"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/iv_edit"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/favourite_off" />
-
-        <ImageView
-            android:id="@+id/iv_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tv_cred_title"
-            android:layout_alignBottom="@+id/tv_cred_title"
+            android:layout_below="@+id/title"
+            android:layout_alignTop="@+id/tv_site_url"
+            android:layout_alignBottom="@+id/tv_site_url"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="8dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:clickable="true"
+            android:contentDescription="@string/content_desc_copy_password"
             android:focusable="true"
-            android:src="@drawable/edit" />
+            android:src="@drawable/copy"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_user_name_label"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_site_url"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:text="@string/label_user_name"
+            android:textColor="@color/text_grey"
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_user_name_label"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_toStartOf="@+id/iv_copy_user_name"
+            android:padding="8dp"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_copy_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_site_url"
+            android:layout_alignTop="@+id/tv_user_name"
+            android:layout_alignBottom="@+id/tv_user_name"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="8dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/content_desc_copy_password"
+            android:focusable="true"
+            android:src="@drawable/copy"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_password_label"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_user_name"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:text="@string/label_password"
+            android:textColor="@color/text_grey"
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/tv_password"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_password_label"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_toStartOf="@+id/iv_show_password"
+            android:padding="8dp"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_copy_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_site_url"
+            android:layout_alignTop="@+id/tv_password"
+            android:layout_alignBottom="@+id/tv_password"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="8dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/content_desc_copy_password"
+            android:focusable="true"
+            android:src="@drawable/copy"
+            android:visibility="gone" />
+
+
+        <ImageView
+            android:id="@+id/iv_show_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_site_url"
+            android:layout_alignTop="@+id/tv_password"
+            android:layout_alignBottom="@+id/tv_password"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/iv_copy_password"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/content_desc_show"
+            android:focusable="true"
+            android:src="@drawable/visibility"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_comments_label"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_password"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:text="@string/label_comments"
+            android:textColor="@color/text_grey"
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/tv_comments"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_comments_label"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textSize="20sp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_site_label"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:text="@string/label_website"
-        android:textColor="@color/text_grey"
-        android:textSize="15sp"
-        android:visibility="gone" />
 
-
-    <TextView
-        android:id="@+id/tv_site_url"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_site_label"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        android:layout_toStartOf="@+id/iv_copy_site_url"
-        android:padding="8dp"
-        android:textSize="20sp" />
-
-    <ImageView
-        android:id="@+id/iv_copy_site_url"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_alignTop="@+id/tv_site_url"
-        android:layout_alignBottom="@+id/tv_site_url"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="8dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/copy"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/tv_user_name_label"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_site_url"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:text="@string/label_user_name"
-        android:textColor="@color/text_grey"
-        android:textSize="15sp"
-        android:visibility="gone" />
-
-
-    <TextView
-        android:id="@+id/tv_user_name"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_user_name_label"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        android:layout_toStartOf="@+id/iv_copy_user_name"
-        android:padding="8dp"
-        android:textSize="20sp" />
-
-    <ImageView
-        android:id="@+id/iv_copy_user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_site_url"
-        android:layout_alignTop="@+id/tv_user_name"
-        android:layout_alignBottom="@+id/tv_user_name"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="8dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/copy"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/tv_password_label"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_user_name"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:text="@string/label_password"
-        android:textColor="@color/text_grey"
-        android:textSize="15sp"
-        android:visibility="gone" />
-
-
-    <TextView
-        android:id="@+id/tv_password"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_password_label"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        android:layout_toStartOf="@+id/iv_show_password"
-        android:padding="8dp"
-        android:textSize="20sp" />
-
-    <ImageView
-        android:id="@+id/iv_copy_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_site_url"
-        android:layout_alignTop="@+id/tv_password"
-        android:layout_alignBottom="@+id/tv_password"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="8dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/copy"
-        android:visibility="gone" />
-
-
-    <ImageView
-        android:id="@+id/iv_show_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_site_url"
-        android:layout_alignTop="@+id/tv_password"
-        android:layout_alignBottom="@+id/tv_password"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_toStartOf="@+id/iv_copy_password"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/visibility"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/tv_comments_label"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_password"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:text="@string/label_comments"
-        android:textColor="@color/text_grey"
-        android:textSize="15sp"
-        android:visibility="gone" />
-
-
-    <TextView
-        android:id="@+id/tv_comments"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_comments_label"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:visibility="gone"
-        android:textSize="20sp" />
-
-
-</RelativeLayout>
+</ScrollView>

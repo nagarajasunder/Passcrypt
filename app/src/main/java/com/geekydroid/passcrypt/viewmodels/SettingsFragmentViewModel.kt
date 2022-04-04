@@ -11,9 +11,11 @@ import javax.inject.Inject
 class SettingsFragmentViewModel @Inject constructor(private val repository: SettingsFragmentRepository) :
     ViewModel() {
 
-    fun updateSelfDestruction() {
+    val userSettings = repository.getUserSettings()
+
+    fun updateSelfDestruction(switch: Boolean) {
         viewModelScope.launch {
-            repository.updateSelfDestruction()
+            repository.updateSelfDestruction(switch)
         }
     }
 }

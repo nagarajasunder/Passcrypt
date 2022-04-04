@@ -33,7 +33,7 @@
     <string name="bank_details">Bank Details</string>
     <string name="hint_pin">PIN</string>
     <string name="content_desc_credit_card">Credit Card</string>
-    <string name="content_desc_copy_password">Copy Password</string>
+    <string name="content_desc_copy_password">Copy</string>
     <string name="content_desc_cred_type">Type of Credential</string>
     <string name="menu_option_settings">Settings</string>
     <string name="remaining_number_of_attempts">Remaining Number of Attempts - %1s</string>
@@ -70,7 +70,7 @@
     <string name="self_destruction">Self Destruction</string>
     <string name="general">General</string>
     <string name="self_destruction_description">When you enter a wrong master password a certain number of times , stored credentials will be deleted and cannot be recovered.</string>
-    <string name="number_of_attempts">Number of attempts</string>
+    <string name="number_of_attempts">Maximum Number of attempts - %1s</string>
     <string name="change_master_password">Change Master Password</string>
     <string name="links">Links</string>
     <string name="rate_passcrypt">Rate Passcrypt</string>
@@ -95,5 +95,8 @@
     <string name="sort_from_z_a">Sort from Z-A</string>
     <string name="newest_to_oldest">Newest to Oldest</string>
     <string name="oldest_to_newest">Oldest to Newest</string>
+    <string name="content_desc_edit">Edit</string>
+    <string name="content_desc_show">Show</string>
+    <string name="maximum_login_attempts">Maximum Login attempts</string>
 
 </resources>

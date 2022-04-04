@@ -7,13 +7,11 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cred_card"
+        style="@style/cardItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:focusable="true"
-        app:cardBackgroundColor="#1976d2"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="8dp">
+        android:focusable="true">
 
 
         <RelativeLayout
@@ -27,8 +25,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="1"
-                android:textStyle="bold" />
+                android:maxLines="1" />
+
+            <ImageView
+                android:id="@+id/iv_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:contentDescription="@string/content_desc_make_favorite"
+                android:src="@drawable/favorite"
+                android:visibility="gone"
+                app:tint="@color/purple_500" />
 
             <TextView
                 android:id="@+id/tv_comments"
@@ -37,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_site_name"
                 android:layout_marginTop="8dp"
+                android:layout_toStartOf="@+id/iv_favorite"
                 android:ellipsize="end"
                 android:maxLines="1" />
 

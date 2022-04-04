@@ -55,7 +55,7 @@ interface AccountCredDao {
                 "CREATED_ON as createdOn, " +
                 "IS_FAVORITE as isFavorite " +
                 "FROM ACCOUNT_CRED) as data " +
-                "WHERE credTitle LIKE '%' || :searchText || '%' ORDER BY isFavorite DESC ,credTitle ASC"
+                "WHERE credTitle LIKE '%' || :searchText || '%' OR credComments LIKE '%' || :searchText || '%' ORDER BY isFavorite DESC ,credTitle ASC"
     )
     fun getCredSortedByNameAsc(searchText: String): LiveData<List<CredWrapper>>
 
@@ -74,7 +74,7 @@ interface AccountCredDao {
                 "CREATED_ON as createdOn, " +
                 "IS_FAVORITE as isFavorite " +
                 "FROM ACCOUNT_CRED) as data " +
-                "WHERE credTitle LIKE '%' || :searchText || '%' ORDER BY isFavorite DESC ,credTitle DESC"
+                "WHERE credTitle LIKE '%' || :searchText || '%' OR credComments LIKE '%' || :searchText || '%' ORDER BY isFavorite DESC ,credTitle DESC"
     )
     fun getCredSortedByNameDesc(searchText: String): LiveData<List<CredWrapper>>
 
@@ -93,7 +93,7 @@ interface AccountCredDao {
                 "CREATED_ON as createdOn, " +
                 "IS_FAVORITE as isFavorite " +
                 "FROM ACCOUNT_CRED) as data " +
-                "WHERE credTitle LIKE '%' || :searchText || '%' ORDER BY isFavorite DESC ,createdOn ASC"
+                "WHERE credTitle LIKE '%' || :searchText || '%' OR credComments LIKE '%' || :searchText || '%' ORDER BY isFavorite DESC ,createdOn ASC"
     )
     fun getCredSortedByDateAsc(searchText: String): LiveData<List<CredWrapper>>
 
@@ -112,7 +112,7 @@ interface AccountCredDao {
                 "CREATED_ON as createdOn, " +
                 "IS_FAVORITE as isFavorite " +
                 "FROM ACCOUNT_CRED) as data " +
-                "WHERE credTitle LIKE '%' || :searchText || '%' ORDER BY isFavorite DESC ,createdOn DESC"
+                "WHERE credTitle LIKE '%' || :searchText || '%' OR credComments LIKE '%' || :searchText || '%' ORDER BY isFavorite DESC ,createdOn DESC"
     )
     fun getCredSortedByDateDesc(searchText: String): LiveData<List<CredWrapper>>
 

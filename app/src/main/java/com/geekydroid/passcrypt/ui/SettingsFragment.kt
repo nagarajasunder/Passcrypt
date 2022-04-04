@@ -4,11 +4,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.geekydroid.passcrypt.R
+import com.geekydroid.passcrypt.entities.User
 import com.geekydroid.passcrypt.viewmodels.SettingsFragmentViewModel
 import com.google.android.material.switchmaterial.SwitchMaterial
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,22 +22,34 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private lateinit var fragmentView: View
 
+    private lateinit var selftDestructionCount: NumberPicker
     private lateinit var selfDestructionSwitch: SwitchMaterial
     private lateinit var tvNumberOfAttempts: TextView
     private lateinit var tvChangeMasterPassword: TextView
+    private lateinit var tvSelfDestruction: TextView
     private lateinit var tvRatePasscrypt: TextView
     private lateinit var tvSharePasscrypt: TextView
     private lateinit var tvContactSupport: TextView
     private lateinit var tvOtherApps: TextView
-
     private val viewModel: SettingsFragmentViewModel by viewModels()
+    private lateinit var userSettings: User
+    private var flagChanged = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fragmentView = view
         setUI()
 
+        viewModel.userSettings.observe(viewLifecycleOwner) { data ->
+            userSettings = data
+            updateUI()
+        }
+
+        tvSelfDestruction.setOnClickListener {
+            updateSelfDestructionSwitch()
+        }
+
         selfDestructionSwitch.setOnCheckedChangeListener { _, _ ->
-            viewModel.updateSelfDestruction()
+            updateSelfDestructionSwitch()
         }
 
         tvRatePasscrypt.setOnClickListener {
@@ -55,6 +69,21 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         tvChangeMasterPassword.setOnClickListener {
             updateMasterPassword()
         }
+
+    }
+
+    private fun updateSelfDestructionSwitch() {
+        if (flagChanged) {
+            viewModel.updateSelfDestruction(!userSettings.selfDestructive)
+        }
+        flagChanged = !flagChanged
+    }
+
+    private fun updateUI() {
+        selfDestructionSwitch.isChecked = userSettings.selfDestructive
+        flagChanged = true
+        tvNumberOfAttempts.text =
+            getString(R.string.number_of_attempts, userSettings.selfDestructiveCount.toString())
     }
 
     private fun updateMasterPassword() {
@@ -93,6 +122,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun setUI() {
+        tvSelfDestruction = fragmentView.findViewById(R.id.tv_self_destruction)
         selfDestructionSwitch = fragmentView.findViewById(R.id.switch_self_destruction)
         tvNumberOfAttempts = fragmentView.findViewById(R.id.tv_number_of_attempts)
         tvChangeMasterPassword = fragmentView.findViewById(R.id.tv_change_master_password)
@@ -100,5 +130,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         tvSharePasscrypt = fragmentView.findViewById(R.id.tv_share_passcrypt)
         tvContactSupport = fragmentView.findViewById(R.id.tv_contact_support)
         tvOtherApps = fragmentView.findViewById(R.id.tv_other_products)
+        selftDestructionCount = fragmentView.findViewById(R.id.np_number_of_attempts)
     }
 }
