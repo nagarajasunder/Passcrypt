@@ -38,7 +38,7 @@ class PasswordGenerator : Fragment(R.layout.fragment_password_generator) {
 
     private var currentPasswordConfig = PasswordGeneratorConfig()
 
-    private val ViewModel: PasswordGeneratorViewModel by viewModels()
+    private val viewModel: PasswordGeneratorViewModel by viewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,7 +48,7 @@ class PasswordGenerator : Fragment(R.layout.fragment_password_generator) {
         setUI()
 
 
-        ViewModel.generatedPassword.observe(viewLifecycleOwner) {
+        viewModel.getGeneratedPass().observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 generatedPassword = it
                 setPassword(it)
@@ -62,38 +62,38 @@ class PasswordGenerator : Fragment(R.layout.fragment_password_generator) {
             tvPasswordLengthLabel.text =
                 getString(R.string.password_length, value.toInt().toString())
             currentPasswordConfig.passwordSize = value.toInt()
-            ViewModel.passwordConfig.value = currentPasswordConfig
+            viewModel.passwordConfig.value = currentPasswordConfig
         }
 
         switchSmallLetters.setOnCheckedChangeListener { _, b ->
             currentPasswordConfig.smallLetters = b
-            ViewModel.passwordConfig.value = currentPasswordConfig
+            viewModel.passwordConfig.value = currentPasswordConfig
         }
 
         switchCaptialLetters.setOnCheckedChangeListener { _, b ->
             currentPasswordConfig.capitalLetters = b
-            ViewModel.passwordConfig.value = currentPasswordConfig
+            viewModel.passwordConfig.value = currentPasswordConfig
         }
 
         switchSpecialCharacters.setOnCheckedChangeListener { _, b ->
             currentPasswordConfig.specialCharacters = b
-            ViewModel.passwordConfig.value = currentPasswordConfig
+            viewModel.passwordConfig.value = currentPasswordConfig
         }
 
         switchNumbers.setOnCheckedChangeListener { _, b ->
             currentPasswordConfig.numbers = b
-            ViewModel.passwordConfig.value = currentPasswordConfig
+            viewModel.passwordConfig.value = currentPasswordConfig
         }
 
         switchNoDuplicates.setOnCheckedChangeListener { _, b ->
 
             currentPasswordConfig.removeDuplicates = b
-            ViewModel.passwordConfig.value = currentPasswordConfig
+            viewModel.passwordConfig.value = currentPasswordConfig
 
         }
 
         ivRefresh.setOnClickListener {
-            ViewModel.passwordConfig.value = currentPasswordConfig
+            viewModel.passwordConfig.value = currentPasswordConfig
         }
 
         ivCopy.setOnClickListener {
@@ -106,11 +106,11 @@ class PasswordGenerator : Fragment(R.layout.fragment_password_generator) {
         val manager = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = ClipData.newPlainText("GENERATED_PASS", generatedPassword)
         manager.setPrimaryClip(clipData)
-        showSnackBar("Password copied to clipboard")
+        "Password copied to clipboard".showSnackBar()
     }
 
-    private fun showSnackBar(message: String) {
-        Snackbar.make(fragmentView, message, Snackbar.LENGTH_SHORT).show()
+    private fun String.showSnackBar() {
+        Snackbar.make(fragmentView, this, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun showWarning() {

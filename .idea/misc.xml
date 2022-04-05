@@ -29,12 +29,13 @@
         <entry key="app/src/main/res/layout/fragment_enter_master_password.xml" value="0.8009367681498829" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.8009367681498829" />
         <entry key="app/src/main/res/layout/fragment_password_generator.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/fragment_set_master_pass.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.8009367681498829" />
+        <entry key="app/src/main/res/layout/fragment_set_master_pass.xml" value="0.7630208333333334" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_update_master_password.xml" value="0.7876344086021505" />
         <entry key="app/src/main/res/layout/fragment_view_account_cred.xml" value="0.8009367681498829" />
         <entry key="app/src/main/res/layout/fragment_view_bank_cred.xml" value="0.8009367681498829" />
         <entry key="app/src/main/res/layout/self_destruction_login_count_dialog.xml" value="0.8009367681498829" />
+        <entry key="app/src/main/res/layout/update_self_destruction_count_dialog.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/waiting_dialog_view.xml" value="0.8009367681498829" />
         <entry key="app/src/main/res/menu/add_cred_menu.xml" value="0.8009367681498829" />
         <entry key="app/src/main/res/menu/home_options_menu.xml" value="0.1" />

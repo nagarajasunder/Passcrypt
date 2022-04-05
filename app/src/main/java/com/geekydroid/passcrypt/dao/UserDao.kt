@@ -19,9 +19,6 @@ interface UserDao {
     @Query("SELECT isMasterPassSet FROM USER")
     fun isMasterPasswordSet(): Boolean
 
-    @Query("UPDATE USER set selfDestructive = :flag , selfDestructiveCount = 3 WHERE userId = 1")
-    suspend fun updateSelfDestruction(flag: Boolean)
-
     @Update
     suspend fun updateUser(user: User): Int
 
@@ -29,7 +26,7 @@ interface UserDao {
     suspend fun resetUser(passwordHash: String): Long {
         val user = getUserForAuth()
         user?.let {
-            user.selfDestructiveCount = 0
+            user.selfDestructiveCount = 3
             user.selfDestructive = false
             user.masterPassHash = passwordHash
             val result = updateUser(user)

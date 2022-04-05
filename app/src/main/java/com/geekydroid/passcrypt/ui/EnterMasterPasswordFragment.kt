@@ -77,7 +77,7 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
                 if (it.selfDestructiveCount < 0) {
                     showLimitExceededCards()
                 } else {
-                    numberOfAttempts = it.selfDestructiveCount
+                    numberOfAttempts = it.selfDestructiveCount - 1
                     showSelfDestructiveCards()
                 }
             }
@@ -231,6 +231,8 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
         tvAttempts = fragmentView.findViewById(R.id.tv_attempts)
         btnSetNewPassword = fragmentView.findViewById(R.id.btn_set_new_master_password)
         limitExceededCard = fragmentView.findViewById(R.id.limit_crossed_card)
+
+        etPassword.requestFocus()
     }
 
 

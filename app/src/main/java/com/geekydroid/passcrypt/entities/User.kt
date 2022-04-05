@@ -10,7 +10,7 @@ data class User(
     var masterPassHash: String,
     val isMasterPassSet: Boolean,
     var selfDestructive: Boolean = false,
-    var selfDestructiveCount: Int = 0,
+    var selfDestructiveCount: Int = 3,
     val createdOn: Long = System.currentTimeMillis(),
     var updatedOn: Long
 )

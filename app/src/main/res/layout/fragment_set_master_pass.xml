@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="16dp">
 
         <TextView
@@ -27,18 +27,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_title"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:layout_toEndOf="@+id/iv_warning"
             android:text="@string/note"
             android:textSize="20sp" />
 
         <ImageView
+            android:id="@+id/iv_warning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_title"
             android:layout_alignTop="@+id/tv_note"
             android:layout_alignBottom="@+id/tv_note"
-            android:layout_marginStart="8dp"
-            android:layout_toEndOf="@+id/tv_note"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
             android:contentDescription="@string/content_desc_warning_icon"
             android:src="@drawable/warning"
             app:tint="@color/warning_color" />
@@ -49,8 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_note"
             android:layout_marginTop="8dp"
+            android:padding="8dp"
             android:text="@string/master_pass_instruction"
-            android:textAlignment="center"
             android:textSize="18sp" />
 
         <com.google.android.material.textfield.TextInputLayout

@@ -4,25 +4,25 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.NumberPicker
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.entities.User
+import com.geekydroid.passcrypt.listeners.GenericOnClickListener
 import com.geekydroid.passcrypt.viewmodels.SettingsFragmentViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class SettingsFragment : Fragment(R.layout.fragment_settings) {
+class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickListener<Int> {
 
 
     private lateinit var fragmentView: View
-
-    private lateinit var selftDestructionCount: NumberPicker
     private lateinit var selfDestructionSwitch: SwitchMaterial
     private lateinit var tvNumberOfAttempts: TextView
     private lateinit var tvChangeMasterPassword: TextView
@@ -31,16 +31,19 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private lateinit var tvSharePasscrypt: TextView
     private lateinit var tvContactSupport: TextView
     private lateinit var tvOtherApps: TextView
+    private lateinit var ivEditSelfDestructionCount: ImageView
     private val viewModel: SettingsFragmentViewModel by viewModels()
     private lateinit var userSettings: User
     private var flagChanged = false
+    private var selftDestructionCount = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fragmentView = view
         setUI()
 
-        viewModel.userSettings.observe(viewLifecycleOwner) { data ->
+        viewModel.getUserSetting().observe(viewLifecycleOwner) { data ->
             userSettings = data
+            selftDestructionCount = userSettings.selfDestructiveCount
             updateUI()
         }
 
@@ -70,11 +73,29 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             updateMasterPassword()
         }
 
+        ivEditSelfDestructionCount.setOnClickListener {
+            if (userSettings.selfDestructive) {
+                showUpdateDialog()
+            } else {
+                "Self Destruction option is not enabled".showSnackBar()
+            }
+        }
+    }
+
+    private fun String.showSnackBar() {
+        Snackbar.make(fragmentView, this, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun showUpdateDialog() {
+        val dialog = UpdateSelfDestructionCountDialog(selftDestructionCount, this)
+        val fm = requireActivity().supportFragmentManager
+        dialog.show(fm, "update_self_destruction_count")
     }
 
     private fun updateSelfDestructionSwitch() {
         if (flagChanged) {
-            viewModel.updateSelfDestruction(!userSettings.selfDestructive)
+            userSettings.selfDestructive = !userSettings.selfDestructive
+            viewModel.updateUserSettings(userSettings)
         }
         flagChanged = !flagChanged
     }
@@ -130,6 +151,16 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         tvSharePasscrypt = fragmentView.findViewById(R.id.tv_share_passcrypt)
         tvContactSupport = fragmentView.findViewById(R.id.tv_contact_support)
         tvOtherApps = fragmentView.findViewById(R.id.tv_other_products)
-        selftDestructionCount = fragmentView.findViewById(R.id.np_number_of_attempts)
+        ivEditSelfDestructionCount = fragmentView.findViewById(R.id.iv_edit_self_destruction_count)
+    }
+
+    override fun onClick(value: Int) {
+        selftDestructionCount = value
+        userSettings.selfDestructiveCount = selftDestructionCount
+        updateSettings()
+    }
+
+    private fun updateSettings() {
+        viewModel.updateUserSettings(userSettings)
     }
 }

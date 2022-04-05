@@ -142,6 +142,7 @@ class SetMasterPassFragment : Fragment(R.layout.fragment_set_master_pass) {
         etPassword = fragmentView.findViewById(R.id.ed_master_password)
         etConfirmPassword = fragmentView.findViewById(R.id.ed_confirm_password)
         btnSetup = fragmentView.findViewById(R.id.btn_set_password)
+        etPassword.requestFocus()
     }
 
 

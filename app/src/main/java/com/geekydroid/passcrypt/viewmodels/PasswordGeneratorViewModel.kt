@@ -1,5 +1,6 @@
 package com.geekydroid.passcrypt.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.geekydroid.passcrypt.entities.PasswordGeneratorConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,9 +19,11 @@ class PasswordGeneratorViewModel @Inject constructor() : ViewModel() {
         PasswordGeneratorConfig()
     )
 
-    val generatedPassword: LiveData<String> = Transformations.switchMap(passwordConfig) {
+    private val generatedPassword: LiveData<String> = Transformations.switchMap(passwordConfig) {
         getPassword(it)
     }
+
+    fun getGeneratedPass() = generatedPassword
 
 
     private fun getPassword(config: PasswordGeneratorConfig): LiveData<String> {
