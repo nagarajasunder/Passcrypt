@@ -16,34 +16,12 @@
         <entry key="..\:/Users/the_developer/AndroidStudioProjects/Passcrypt/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Users/the_developer/AndroidStudioProjects/Passcrypt/app/src/main/res/layout/fragment_set_master_pass.xml" value="0.2359375" />
         <entry key="..\:/Users/the_developer/AndroidStudioProjects/Passcrypt/app/src/main/res/layout/fragment_settings.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/the_developer/AndroidStudioProjects/Passcrypt/app/src/main/res/layout/fragment_view_account_cred.xml" value="0.2047008547008547" />
         <entry key="..\:/Users/the_developer/AndroidStudioProjects/Passcrypt/app/src/main/res/menu/home_options_menu.xml" value="0.20555555555555555" />
-        <entry key="app/src/main/res/drawable/favourite_off.xml" value="0.284" />
-        <entry key="app/src/main/res/layout-v26/fragment_password_generator.xml" value="0.35625" />
-        <entry key="app/src/main/res/layout/account_cred_item.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/bank_card_layout.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/card_cred_read_only.xml" value="0.7630208333333334" />
-        <entry key="app/src/main/res/layout/fragment_add_new_bank_cred.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/fragment_add_new_password.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/fragment_edit_account_cred.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/fragment_edit_bank_account_cred.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/fragment_enter_master_password.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/fragment_password_generator.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/fragment_set_master_pass.xml" value="0.7630208333333334" />
-        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.35625" />
-        <entry key="app/src/main/res/layout/fragment_update_master_password.xml" value="0.7876344086021505" />
-        <entry key="app/src/main/res/layout/fragment_view_account_cred.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/fragment_view_bank_cred.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/self_destruction_login_count_dialog.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/layout/update_self_destruction_count_dialog.xml" value="0.35625" />
-        <entry key="app/src/main/res/layout/waiting_dialog_view.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/menu/add_cred_menu.xml" value="0.8009367681498829" />
-        <entry key="app/src/main/res/menu/home_options_menu.xml" value="0.1" />
-        <entry key="app/src/main/res/menu/view_cred_menu.xml" value="0.8009367681498829" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

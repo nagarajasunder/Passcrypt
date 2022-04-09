@@ -35,7 +35,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickLis
     private val viewModel: SettingsFragmentViewModel by viewModels()
     private lateinit var userSettings: User
     private var flagChanged = false
-    private var selftDestructionCount = 0
+    private var selfDestructionCount = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fragmentView = view
@@ -43,7 +43,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickLis
 
         viewModel.getUserSetting().observe(viewLifecycleOwner) { data ->
             userSettings = data
-            selftDestructionCount = userSettings.selfDestructiveCount
+            selfDestructionCount = userSettings.selfDestructiveCount
             updateUI()
         }
 
@@ -87,7 +87,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickLis
     }
 
     private fun showUpdateDialog() {
-        val dialog = UpdateSelfDestructionCountDialog(selftDestructionCount, this)
+        val dialog = UpdateSelfDestructionCountDialog(selfDestructionCount, this)
         val fm = requireActivity().supportFragmentManager
         dialog.show(fm, "update_self_destruction_count")
     }
@@ -155,8 +155,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickLis
     }
 
     override fun onClick(value: Int) {
-        selftDestructionCount = value
-        userSettings.selfDestructiveCount = selftDestructionCount
+        selfDestructionCount = value
+        userSettings.selfDestructiveCount = selfDestructionCount
         updateSettings()
     }
 

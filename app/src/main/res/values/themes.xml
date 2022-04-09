@@ -31,4 +31,8 @@
         <item name="cardElevation">8dp</item>
     </style>
 
+    <style name="viewCredential" parent="@android:style/Widget">
+        <item name="android:background">@color/purple_500</item>
+    </style>
+
 </resources>

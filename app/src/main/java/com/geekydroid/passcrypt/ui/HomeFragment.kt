@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.Utils.SortPreference
 import com.geekydroid.passcrypt.adapters.AccountCredAdapter
@@ -32,6 +33,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
     private lateinit var fabAdd: FloatingActionButton
     private lateinit var fabAccount: FloatingActionButton
     private lateinit var fabBank: FloatingActionButton
+    private lateinit var emptyListAnim: LottieAnimationView
     private var addButtonClicked = false
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: AccountCredAdapter
@@ -77,6 +79,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
 
         viewmodel.getAccountCreds().observe(viewLifecycleOwner) { credList ->
             adapter.submitList(credList)
+            if (credList.isEmpty()) {
+                showEmptyListAnim(true)
+            } else {
+                showEmptyListAnim(false)
+            }
         }
         viewmodel.sortPreferences.observe(viewLifecycleOwner) {
             userFilters.sortPreference = it
@@ -96,6 +103,15 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
             addButtonClicked = !addButtonClicked
             val action = HomeFragmentDirections.actionHomeFragmentToAddNewBankCred()
             fragmentView.findNavController().navigate(action)
+        }
+    }
+
+    private fun showEmptyListAnim(visibility: Boolean) {
+
+        if (visibility) {
+            emptyListAnim.visibility = View.VISIBLE
+        } else {
+            emptyListAnim.visibility = View.GONE
         }
     }
 
@@ -136,6 +152,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), CredOnClickListener {
         fabAccount = fragmentView.findViewById(R.id.fab_add_account)
         fabBank = fragmentView.findViewById(R.id.fab_add_bank)
         recyclerView = fragmentView.findViewById(R.id.recycler_view)
+        emptyListAnim = fragmentView.findViewById(R.id.empty_list_anim)
 
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

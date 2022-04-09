@@ -30,4 +30,8 @@
         <item name="android:focusable">true</item>
         <item name="cardElevation">8dp</item>
     </style>
+
+    <style name="viewCredential" parent="@android:style/Widget">
+        <item name="android:background">@color/dark_mode</item>
+    </style>
 </resources>
