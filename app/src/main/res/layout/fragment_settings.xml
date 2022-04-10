@@ -106,11 +106,27 @@
             android:text="@string/change_master_password"
             android:textSize="18sp" />
 
+
+        <TextView
+            android:id="@+id/tv_export_csv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_change_master_password"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:text="@string/export_data_to_xslx"
+            android:textSize="18sp" />
+
+
         <View
             android:id="@+id/line_1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/tv_change_master_password"
+            android:layout_below="@+id/tv_export_csv"
             android:layout_marginTop="8dp"
             android:background="@color/settings_label_color" />
 

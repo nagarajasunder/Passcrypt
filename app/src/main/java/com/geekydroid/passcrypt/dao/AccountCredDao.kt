@@ -130,4 +130,7 @@ interface AccountCredDao {
 
     @Delete
     suspend fun deleteCredential(accountCred: AccountCred)
+
+    @Query("SELECT * FROM ACCOUNT_CRED")
+    suspend fun getAllAccountData(): List<AccountCred>
 }

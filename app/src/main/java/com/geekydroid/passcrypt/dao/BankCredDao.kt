@@ -46,4 +46,7 @@ interface BankCredDao {
 
     @Delete
     suspend fun deleteBank(bankCred: BankCred)
+
+    @Query("SELECT * FROM BANK_CRED")
+    suspend fun getAllBankData(): List<BankCred>
 }

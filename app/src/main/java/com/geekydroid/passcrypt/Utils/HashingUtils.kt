@@ -2,6 +2,7 @@ package com.geekydroid.passcrypt.Utils
 
 import java.math.BigInteger
 import java.security.SecureRandom
+import java.text.DateFormat
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
 import kotlin.experimental.xor
@@ -71,4 +72,6 @@ object HashingUtils {
         }
         return diff == 0
     }
+
+    fun getCurrentTimeInMs() = DateFormat.getDateTimeInstance().format(System.currentTimeMillis())
 }

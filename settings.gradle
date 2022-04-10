@@ -1,9 +1,13 @@
 pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
+
+
+        repositories {
+            gradlePluginPortal()
+            google()
+            mavenCentral()
+            maven { url 'https://jitpack.io' }
+        }
+
 
 
 //    resolutionStrategy {
@@ -24,6 +28,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "Passcrypt"

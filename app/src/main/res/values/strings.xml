@@ -101,5 +101,6 @@
     <string name="self_destruction_attempts_hint">Enter the maximum attempts</string>
     <string name="set_maximum_failed_login_attempts">Set Maximum Failed Login Attempts</string>
     <string name="update">Update</string>
+    <string name="export_data_to_xslx">Export Data to XSLX</string>
 
 </resources>

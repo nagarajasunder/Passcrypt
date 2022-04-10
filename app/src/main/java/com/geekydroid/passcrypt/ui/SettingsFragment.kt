@@ -1,27 +1,35 @@
 package com.geekydroid.passcrypt.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.geekydroid.passcrypt.PasscryptApp
 import com.geekydroid.passcrypt.R
+import com.geekydroid.passcrypt.Utils.HashingUtils
 import com.geekydroid.passcrypt.entities.User
+import com.geekydroid.passcrypt.enums.Result
 import com.geekydroid.passcrypt.listeners.GenericOnClickListener
 import com.geekydroid.passcrypt.viewmodels.SettingsFragmentViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickListener<Int> {
 
-
+    @Inject
+    lateinit var application: PasscryptApp
     private lateinit var fragmentView: View
     private lateinit var selfDestructionSwitch: SwitchMaterial
     private lateinit var tvNumberOfAttempts: TextView
@@ -32,10 +40,20 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickLis
     private lateinit var tvContactSupport: TextView
     private lateinit var tvOtherApps: TextView
     private lateinit var ivEditSelfDestructionCount: ImageView
+    private lateinit var exportDataToCSV: TextView
     private val viewModel: SettingsFragmentViewModel by viewModels()
     private lateinit var userSettings: User
     private var flagChanged = false
     private var selfDestructionCount = 0
+    private var activityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val uri = result.data!!.data
+
+                viewModel.exportData(application, uri)
+
+            }
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fragmentView = view
@@ -80,6 +98,40 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickLis
                 "Self Destruction option is not enabled".showSnackBar()
             }
         }
+
+        exportDataToCSV.setOnClickListener {
+            subscribeToExportResult()
+            openFilePicker()
+        }
+
+    }
+
+    private fun subscribeToExportResult() {
+        viewModel.exportSucess.observe(viewLifecycleOwner) { result ->
+            if (result == Result.SUCCESS) {
+                showToast("The details are exported to a Excel file successfully")
+            } else {
+                showToast("Cannot Export data to Excel. Please Try again")
+            }
+        }
+    }
+
+
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun openFilePicker() {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "application/vnd.ms-excel"
+            putExtra(
+                Intent.EXTRA_TITLE,
+                "Passcrypt ${HashingUtils.getCurrentTimeInMs()}"
+            )
+        }
+        activityResultLauncher.launch(intent)
     }
 
     private fun String.showSnackBar() {
@@ -151,6 +203,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickLis
         tvSharePasscrypt = fragmentView.findViewById(R.id.tv_share_passcrypt)
         tvContactSupport = fragmentView.findViewById(R.id.tv_contact_support)
         tvOtherApps = fragmentView.findViewById(R.id.tv_other_products)
+        exportDataToCSV = fragmentView.findViewById(R.id.tv_export_csv)
         ivEditSelfDestructionCount = fragmentView.findViewById(R.id.iv_edit_self_destruction_count)
     }
 

@@ -29,4 +29,7 @@ data class BankCred(
 ) {
     val updatedOnFormatted: String
         get() = DateFormat.getDateTimeInstance().format(updatedOn)
+
+    val createdOnFormated: String
+        get() = DateFormat.getDateTimeInstance().format(createdOn)
 }
