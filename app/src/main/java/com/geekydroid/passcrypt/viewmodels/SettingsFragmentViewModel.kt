@@ -7,17 +7,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.geekydroid.passcrypt.PasscryptApp
+import com.geekydroid.passcrypt.Utils.HashingUtils
 import com.geekydroid.passcrypt.entities.AccountCred
 import com.geekydroid.passcrypt.entities.BankCred
 import com.geekydroid.passcrypt.entities.User
+import com.geekydroid.passcrypt.enums.MasterPasswordChangeEvent
 import com.geekydroid.passcrypt.enums.Result
 import com.geekydroid.passcrypt.repository.SettingsFragmentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.apache.poi.hssf.record.crypto.Biff8EncryptionKey
+import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
-import org.apache.poi.ss.usermodel.Workbook
-import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,13 +28,12 @@ class SettingsFragmentViewModel @Inject constructor(private val repository: Sett
 
 
     init {
-        Log.d("SETTINGS", ": queried once")
+        Log.d("SETTINGS_PAGE", ": queried once")
     }
 
     private val userSettings: LiveData<User> = repository.getUserSettings()
-
-    val exportSucess: MutableLiveData<Result> = MutableLiveData()
-
+    val exportSuccess: MutableLiveData<Result?> = MutableLiveData(null)
+    var userAuthenticated: MutableLiveData<MasterPasswordChangeEvent?> = MutableLiveData(null)
 
     fun getUserSetting() = userSettings
 
@@ -42,32 +43,42 @@ class SettingsFragmentViewModel @Inject constructor(private val repository: Sett
         }
     }
 
-    fun exportData(application: PasscryptApp, uri: Uri?) {
-
+    fun exportData(application: PasscryptApp, uri: Uri?, userEnteredPass: String) {
         viewModelScope.launch {
             val accountData = repository.getCompleteAccountData()
             val bankData = repository.getCompleteBankData()
             val workbook = createWorkBook(accountData, bankData)
-            createExcel(application, workbook, uri)
+            createExcel(application, workbook, uri, userEnteredPass)
 
         }
 
     }
 
-    private fun createExcel(application: PasscryptApp, workbook: Workbook, uri: Uri?) {
+    private fun createExcel(
+        application: PasscryptApp,
+        workbook: HSSFWorkbook,
+        uri: Uri?,
+        userEnteredPass: String
+    ) {
         try {
             val fos = application.contentResolver.openOutputStream(uri!!)
+            Biff8EncryptionKey.setCurrentUserPassword(userEnteredPass)
+            workbook.writeProtectWorkbook(Biff8EncryptionKey.getCurrentUserPassword(), "")
             workbook.write(fos)
             fos!!.close()
-            exportSucess.postValue(Result.SUCCESS)
+            exportSuccess.postValue(Result.SUCCESS)
         } catch (e: Exception) {
-            exportSucess.postValue(Result.ERROR)
+//            Log.d("SETTINGS_PAGE", "createExcel: ${e.message}")
+            exportSuccess.postValue(Result.ERROR)
         }
     }
 
-    private fun createWorkBook(accountData: List<AccountCred>, bankData: List<BankCred>): Workbook {
+    private fun createWorkBook(
+        accountData: List<AccountCred>,
+        bankData: List<BankCred>
+    ): HSSFWorkbook {
 
-        val workBook = XSSFWorkbook()
+        val workBook = HSSFWorkbook()
         val accountSheet = workBook.createSheet("Account Details")
         val bankSheet = workBook.createSheet("Bank Details")
         createSheetHeader(
@@ -131,5 +142,14 @@ class SettingsFragmentViewModel @Inject constructor(private val repository: Sett
     private fun createCell(rowIndex: Row, columnIndex: Int, value: String) {
         val cell = rowIndex.createCell(columnIndex)
         cell?.setCellValue(value)
+    }
+
+    fun verifyPassword(userEnteredPass: String, masterPassHash: String) {
+        val result = HashingUtils.verifyPassword(userEnteredPass, masterPassHash)
+        if (result) {
+            userAuthenticated.value = MasterPasswordChangeEvent.USER_AUTHENTICATED
+        } else {
+            userAuthenticated.value = MasterPasswordChangeEvent.USER_AUTH_ERROR
+        }
     }
 }

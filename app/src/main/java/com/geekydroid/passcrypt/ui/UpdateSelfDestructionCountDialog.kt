@@ -12,7 +12,7 @@ import com.geekydroid.passcrypt.listeners.GenericOnClickListener
 
 class UpdateSelfDestructionCountDialog(
     private var pickerValue: Int = 0,
-    private val clickListener: GenericOnClickListener<Int>
+    private val clickListener: GenericOnClickListener<Any>
 ) : DialogFragment() {
 
     private lateinit var numberPicker: NumberPicker

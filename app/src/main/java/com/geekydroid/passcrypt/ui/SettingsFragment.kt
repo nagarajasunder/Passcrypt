@@ -16,6 +16,7 @@ import com.geekydroid.passcrypt.PasscryptApp
 import com.geekydroid.passcrypt.R
 import com.geekydroid.passcrypt.Utils.HashingUtils
 import com.geekydroid.passcrypt.entities.User
+import com.geekydroid.passcrypt.enums.MasterPasswordChangeEvent
 import com.geekydroid.passcrypt.enums.Result
 import com.geekydroid.passcrypt.listeners.GenericOnClickListener
 import com.geekydroid.passcrypt.viewmodels.SettingsFragmentViewModel
@@ -26,7 +27,8 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickListener<Int> {
+class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickListener<Any> {
+
 
     @Inject
     lateinit var application: PasscryptApp
@@ -44,13 +46,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickLis
     private val viewModel: SettingsFragmentViewModel by viewModels()
     private lateinit var userSettings: User
     private var flagChanged = false
+    private var userEnteredPass: String = ""
     private var selfDestructionCount = 0
     private var activityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val uri = result.data!!.data
-
-                viewModel.exportData(application, uri)
+                viewModel.exportData(application, uri, userEnteredPass)
 
             }
         }
@@ -64,6 +66,24 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickLis
             selfDestructionCount = userSettings.selfDestructiveCount
             updateUI()
         }
+
+        viewModel.exportSuccess.observe(viewLifecycleOwner) { result ->
+            userEnteredPass = ""
+            if (result == Result.SUCCESS) {
+                showToast("The details are exported to a Excel file successfully")
+            } else if (result == Result.ERROR) {
+                showToast("Cannot Export data to Excel. Please Try again")
+            }
+        }
+
+        viewModel.userAuthenticated.observe(viewLifecycleOwner) { result ->
+            if (result == MasterPasswordChangeEvent.USER_AUTHENTICATED) {
+                openFilePicker()
+            } else if (result == MasterPasswordChangeEvent.USER_AUTH_ERROR) {
+                showToast("Master password doesn't match. Please try again!")
+            }
+        }
+
 
         tvSelfDestruction.setOnClickListener {
             updateSelfDestructionSwitch()
@@ -100,22 +120,16 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickLis
         }
 
         exportDataToCSV.setOnClickListener {
-            subscribeToExportResult()
-            openFilePicker()
+            verifyMasterPassword()
         }
 
     }
 
-    private fun subscribeToExportResult() {
-        viewModel.exportSucess.observe(viewLifecycleOwner) { result ->
-            if (result == Result.SUCCESS) {
-                showToast("The details are exported to a Excel file successfully")
-            } else {
-                showToast("Cannot Export data to Excel. Please Try again")
-            }
-        }
+    private fun verifyMasterPassword() {
+        val dialog = EnterMasterPasswordDialog(this)
+        val sm = requireActivity().supportFragmentManager
+        dialog.show(sm, "")
     }
-
 
 
     private fun showToast(message: String) {
@@ -207,13 +221,26 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), GenericOnClickLis
         ivEditSelfDestructionCount = fragmentView.findViewById(R.id.iv_edit_self_destruction_count)
     }
 
-    override fun onClick(value: Int) {
-        selfDestructionCount = value
-        userSettings.selfDestructiveCount = selfDestructionCount
-        updateSettings()
+    override fun onClick(value: Any) {
+        if (value is Int) {
+            selfDestructionCount = value
+            userSettings.selfDestructiveCount = selfDestructionCount
+            updateSettings()
+        } else if (value is String) {
+            userEnteredPass = value
+            viewModel.verifyPassword(value, userSettings.masterPassHash)
+        }
     }
 
     private fun updateSettings() {
         viewModel.updateUserSettings(userSettings)
     }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.exportSuccess.value = null
+        viewModel.userAuthenticated.value = null
+    }
+
+
 }

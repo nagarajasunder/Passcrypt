@@ -121,12 +121,23 @@
             android:text="@string/export_data_to_xslx"
             android:textSize="18sp" />
 
+        <TextView
+            android:id="@+id/tv_export_csv_instruction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_export_csv"
+            android:layout_marginStart="12dp"
+            android:padding="8dp"
+            android:text="@string/export_data_to_excel_instruction"
+            android:textColor="@color/text_grey"
+            android:textSize="16sp" />
+
 
         <View
             android:id="@+id/line_1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/tv_export_csv"
+            android:layout_below="@+id/tv_export_csv_instruction"
             android:layout_marginTop="8dp"
             android:background="@color/settings_label_color" />
 
