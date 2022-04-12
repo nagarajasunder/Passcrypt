@@ -125,6 +125,9 @@ dependencies {
     implementation 'com.github.SUPERCILEX.poi-android:poi:3.17'
     compileOnly 'org.apache.poi:poi-ooxml:3.17'
 
+    //Splash Screen API
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+
 }
 
 
