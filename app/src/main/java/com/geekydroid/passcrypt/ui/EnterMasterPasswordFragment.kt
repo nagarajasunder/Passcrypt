@@ -237,6 +237,3 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
 
 
 }
-
-
-

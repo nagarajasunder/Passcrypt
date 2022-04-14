@@ -2,7 +2,7 @@
 <resources>
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/dark_mode</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/passcrypt_logo</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/passcrypt</item>
         <item name="postSplashScreenTheme">@style/Theme.Passcrypt</item>
     </style>
 </resources>
