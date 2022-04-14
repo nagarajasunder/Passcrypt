@@ -1,6 +1,7 @@
 package com.geekydroid.passcrypt.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -38,7 +39,6 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
     private val viewmodel: EnterMasterPasswordViewModel by viewModels()
     private var selfDestructive = false
     private var numberOfAttempts = 0
-    private lateinit var currentUser: User
     private var userEnteredPass = ""
     private lateinit var waitingDialog: AlertDialog
 
@@ -67,22 +67,34 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
         fragmentView = view
         setUI()
 
-
-
-
-        viewmodel.user.observe(viewLifecycleOwner) {
-            if (it != null && it.selfDestructive) {
-                currentUser = it
-                selfDestructive = true
-                if (it.selfDestructiveCount < 0) {
-                    showLimitExceededCards()
-                } else {
-                    numberOfAttempts = it.selfDestructiveCount - 1
+        viewmodel.isSelfDestructionEnabled().observe(viewLifecycleOwner)
+        { result ->
+            Log.d("ENTER_MASTER_PASSWORD", "onViewCreated: $result")
+            if (result != null) {
+                if (result) {
+                    selfDestructive = true
                     showSelfDestructiveCards()
                 }
             }
+
         }
 
+        viewmodel.selfDestructionCount().observe(viewLifecycleOwner)
+        { result ->
+            Log.d("ENTER_MASTER_PASSWORD", "onViewCreated: count $result")
+            if (result != null) {
+                numberOfAttempts = result - 1
+                if (numberOfAttempts < 0) {
+                    Log.d("ENTER_MASTER_PASSWORD", "onViewCreated: database deleted")
+                    deleteDatabase()
+                    showLimitExceededCards()
+                } else {
+                    Log.d("ENTER_MASTER_PASSWORD", "onViewCreated: warning shown")
+                    showWarning()
+                }
+
+            }
+        }
 
         btnSetNewPassword.setOnClickListener {
             val action =
@@ -96,25 +108,15 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
 
         viewmodel.userAuthFlag.observe(viewLifecycleOwner) { result ->
             if (result) {
+                Log.d("ENTER_MASTER_PASSWORD", "onViewCreated: auth success $result")
                 clearMasterPass()
                 waitingDialog.dismiss()
                 navigateToHome()
             } else {
+                Log.d("ENTER_MASTER_PASSWORD", "onViewCreated: auth failed $result")
                 userEnteredPass = ""
                 etPassword.error = "Master password doesn't match Please try again"
                 etPassword.editText?.text?.clear()
-                --numberOfAttempts
-                if (selfDestructive) {
-                    if (numberOfAttempts < 0) {
-                        currentUser.selfDestructiveCount = numberOfAttempts
-                        viewmodel.updateUser(currentUser)
-                        deleteDatabase()
-                        showLimitExceededCards()
-                    } else {
-                        showWarning()
-                    }
-                }
-
             }
         }
 
@@ -127,8 +129,7 @@ class EnterMasterPasswordFragment : Fragment(R.layout.fragment_enter_master_pass
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (selfDestructive) {
-                        currentUser.selfDestructiveCount = numberOfAttempts
-                        viewmodel.updateUser(currentUser)
+                        viewmodel.updateUser()
                     }
                     activity?.finish()
                 }

@@ -17,12 +17,35 @@ class EnterMasterPasswordViewModel @Inject constructor(private val repo: EnterMa
     ViewModel() {
 
     val userAuthFlag = MutableLiveData<Boolean>()
+    private var user: User? = null
+    private var selfDestructionEnabled = MutableLiveData(false)
+    private var selfDestructionCount = MutableLiveData<Int>()
 
-    val user = repo.getUser()
+    init {
+        viewModelScope.launch {
+            user = repo.getUser()
+            updateUserDetails()
+        }
+    }
+
+    fun isSelfDestructionEnabled() = selfDestructionEnabled
+
+    fun selfDestructionCount() = selfDestructionCount
+
+
+    private fun updateUserDetails() {
+        user?.let { it ->
+            selfDestructionEnabled.value = it.selfDestructive
+            if (selfDestructionEnabled.value == true) {
+                selfDestructionCount.value = it.selfDestructiveCount
+            }
+        }
+    }
+
 
     fun authenticateUser(password: String) {
         CoroutineScope(IO).launch {
-            user.value?.let {
+            user?.let {
                 verifyHash(it, password)
             }
 
@@ -31,15 +54,21 @@ class EnterMasterPasswordViewModel @Inject constructor(private val repo: EnterMa
 
     private fun verifyHash(user: User, password: String) {
         val auth = HashingUtils.verifyPassword(password, user.masterPassHash)
-        println("EnterMasterPasswordViewModel: auth $auth")
         userAuthFlag.postValue(auth)
+        if (selfDestructionEnabled.value == true && !auth) {
+            selfDestructionCount.postValue(selfDestructionCount.value?.minus(1))
+        }
     }
 
 
-
-    fun updateUser(user:User) {
+    fun updateUser() {
         viewModelScope.launch {
-            repo.updateUser(user)
+            if (selfDestructionEnabled.value == true) {
+                user?.let { it ->
+                    it.selfDestructiveCount = selfDestructionCount.value!!
+                    repo.updateUser(it)
+                }
+            }
         }
     }
 }
